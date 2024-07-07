@@ -8,6 +8,7 @@
 	"scripts": {
 		"build": "tsup src/index.ts --format cjs,esm --dts",
 		"lint": "tsc",
+		"changeset:release": "pnpm run build && changeset publish",
 		"pub:beta": "bun build && pnpm publish --no-git-checks --access public --tag beta",
 		"pub:next": "bun build && pnpm publish --no-git-checks --access public --tag next",
 		"pub:release": "bun build && pnpm publish --access public"
