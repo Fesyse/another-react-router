@@ -21,3 +21,5 @@ jobs:
         uses: changesets/action@v1
         with:
           publish: cd packages/another-react-router && bun run build
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
