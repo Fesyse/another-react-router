@@ -6,7 +6,10 @@
 	"module": "dist/index.mjs",
 	"types": "dist/index.d.ts",
 	"scripts": {
-		"build": "tsup src/index.ts --format cjs,esm --dts"
+		"build": "tsup src/index.ts --format cjs,esm --dts",
+		"pub:beta": "bun build && pnpm publish --no-git-checks --access public --tag beta",
+		"pub:next": "bun build && pnpm publish --no-git-checks --access public --tag next",
+		"pub:release": "bun build && pnpm publish --access public"
 	},
 	"repository": {
 		"type": "git",
