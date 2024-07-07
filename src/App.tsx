@@ -1,3 +1,5 @@
+import { Providers } from "./components/providers"
+
 export const App = () => {
-  return <div>Hello another react router!</div>
+	return <Providers>Hello another react router!</Providers>
 }
