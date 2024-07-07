@@ -10,7 +10,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - run: git config --local --get remote.origin.url
       - uses: actions/checkout@v3
       - uses: oven-sh/setup-bun@v2
         with:
