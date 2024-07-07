@@ -21,4 +21,4 @@ jobs:
         id: changesets
         uses: changesets/action@v1
         with:
-          publish: bun run build
+          publish: cd packages/another-react-router && bun run build
