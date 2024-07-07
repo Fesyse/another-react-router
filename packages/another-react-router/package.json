@@ -1,39 +1,40 @@
 {
-	"name": "another-react-router",
-	"version": "0.0.1",
-	"description": "Another react router is a npm package, that allowes developers and users comfortabe route between pages on their web applications",
-	"main": "dist/index.js",
-	"module": "dist/index.mjs",
-	"types": "dist/index.d.ts",
-	"scripts": {
-		"build": "tsup src/index.ts --format cjs,esm --dts",
-		"lint": "tsc",
-		"changeset:release": "pnpm run build && changeset publish",
-		"pub:beta": "bun build && pnpm publish --no-git-checks --access public --tag beta",
-		"pub:next": "bun build && pnpm publish --no-git-checks --access public --tag next",
-		"pub:release": "bun build && pnpm publish --access public"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/Fesyse/another-react-router.git",
-		"directory": "packages/another-react-router"
-	},
-	"keywords": [
-		"router",
-		"react"
-	],
-	"author": "fesyse",
-	"license": "MIT",
-	"bugs": {
-		"url": "https://github.com/Fesyse/another-react-router/issues"
-	},
-	"homepage": "https://github.com/Fesyse/another-react-router#readme",
-	"dependencies": {
-		"react": "^18.3.1",
-		"react-dom": "^18.3.1"
-	},
-	"devDependencies": {
-		"tsup": "^8.1.0",
-		"typescript": "^5.5.3"
-	}
+  "name": "another-react-router",
+  "version": "0.0.1",
+  "description": "Another react router is a npm package, that allowes developers and users comfortabe route between pages on their web applications",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs,esm --dts",
+    "lint": "tsc",
+    "changeset:release": "pnpm run build && changeset publish",
+    "pub:beta": "bun build && pnpm publish --no-git-checks --access public --tag beta",
+    "pub:next": "bun build && pnpm publish --no-git-checks --access public --tag next",
+    "pub:release": "bun build && pnpm publish --access public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Fesyse/another-react-router.git",
+    "directory": "packages/another-react-router"
+  },
+  "keywords": [
+    "router",
+    "react"
+  ],
+  "author": "fesyse",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Fesyse/another-react-router/issues"
+  },
+  "homepage": "https://github.com/Fesyse/another-react-router#readme",
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.27.7",
+    "tsup": "^8.1.0",
+    "typescript": "^5.5.3"
+  }
 }
