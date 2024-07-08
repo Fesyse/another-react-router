@@ -1,4 +1,5 @@
 import * as fs from "fs"
+import * as path from "path"
 import type { DeepRequired } from "../types"
 
 const supportedFileExtensions = ["tsx", "jsx", "js", "ts"] as const
@@ -23,15 +24,15 @@ interface Route {
 	path: string
 	page: string
 	layout?: string
-	notFound?: string
+	"not-found"?: string
 }
 type GetRoutes = (
 	options: DeepRequired<InitRouterOptions> & { prevRoutes?: Route[] }
 ) => Route[]
-type InitRouter = (options: DeepRequired<InitRouterOptions>) => void
+type InitRouter = (options: InitRouterOptions) => void
 
 const defaultRouterOptions: DeepRequired<InitRouterOptions> = {
-	routesPath: "./src/routes/"
+	routesPath: path.join(__dirname, "./src/routes/")
 }
 
 function getFileType(fileName: string): FileType | undefined {
@@ -73,22 +74,39 @@ const getRoutes: GetRoutes = options => {
 		})
 		.filter(route => !!route)
 
-	// TODO: add nesseccary properties to new route
-	// @ts-ignore
-	const newRoute: Route = {}
+	if (!routeFiles.some(file => file.fileType === FileType.PAGE))
+		throw new Error(
+			`No page component in ${options.routesPath} directory. Add one or remove directory.`
+		)
 
+	const newRoute: Partial<Route> = {}
 	routeFiles.map(routeFile => {
-		switch (routeFile.fileType) {
-			case FileType.PAGE:
-				newRoute.path = routeFile.file.name
-		}
+		// @ts-expect-error
+		const path = routeFile.file.path as string
+		newRoute.path = path
+		newRoute[routeFile.fileType] = path + "/" + routeFile.file.name
 	})
+	routes.push(newRoute as Route)
 
-	return []
+	const routesFromFolders = folders
+		.map(folder =>
+			getRoutes({
+				...options,
+				routesPath: options.routesPath + "/" + folder,
+				prevRoutes: routes
+			})
+		)
+		.flatMap(routes => routes)
+
+	return [...routes, ...routesFromFolders]
 }
 
-const initRouter: InitRouter = (options = defaultRouterOptions) => {
+const initRouter: InitRouter = opts => {
+	const options = { ...defaultRouterOptions, ...opts }
+	options.routesPath = path.join(__dirname, options.routesPath)
 	const routes = getRoutes(options)
+	console.log(routes)
+	return routes
 }
 
-export {}
+export { initRouter }
