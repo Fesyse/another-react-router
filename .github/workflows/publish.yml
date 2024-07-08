@@ -19,6 +19,7 @@ jobs:
         with:
           bun-version: 1.1.12
 
+      - run: bun install --frozen-lockfile
       - run: cd packages/another-react-router && bun install --frozen-lockfile
       - name: Create Release Pull Request or Publish
         id: changesets
