@@ -1,3 +1,2 @@
-export type Sus = { sus: string }
+export * from "./router"
 
-export const sus = (): Sus => ({ sus: "sus" })
