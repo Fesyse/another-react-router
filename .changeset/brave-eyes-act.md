@@ -2,4 +2,4 @@
 "another-react-router": major
 ---
 
-Initial release
+initial release
