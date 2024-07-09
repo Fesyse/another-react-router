@@ -40,7 +40,6 @@ function getFileType(fileName: string): FileType | undefined {
 const getRoutes: GetRoutes = options => {
 	const routes = "prevRoutes" in options ? options.prevRoutes : []
 	const routesPath = options.routesPath
-	console.log(routesPath)
 	const originalRoutesPath =
 		"originalRoutesPath" in options ? options.originalRoutesPath : routesPath!
 

@@ -1,7 +1,3 @@
-import * as fs from "fs"
-import * as path from "path"
-import { getRoutes } from "./get-routes"
-
 enum FileType {
 	PAGE = "page",
 	LAYOUT = "layout",
@@ -14,7 +10,7 @@ interface InitRouterOptions {
 	 *
 	 * Or if you dont like file based routing provide them by yourself
 	 * @example
-	 * import { routes } from "@/another-react-router.config.json"
+	 * import { routes } from "@/another-react-router.config.ts"
 	 *
 	 * {
 	 * 	routes: routes

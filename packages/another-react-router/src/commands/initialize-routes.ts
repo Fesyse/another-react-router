@@ -3,14 +3,27 @@ import * as fs from "fs"
 import * as path from "path"
 import { handleCliError } from "../cli-utils"
 import { getRoutes } from "../router/get-routes"
+import { getConfigTemplate } from "../utils"
 
 type InitializeRoutesActionOptions = {
 	routes: string
 	config: string
 	cwd: string
+	esm: boolean
+	"no-ts": boolean
 }
 
 export const initializeRoutes = new Command("init")
+	.option(
+		"-nt, --no-ts",
+		"check if config file output will be written with typescript rules.",
+		true
+	)
+	.option(
+		"-e, --esm",
+		"check if config file output will be written with esm rules.",
+		false
+	)
 	.option("-r, --routes [routes]", "the path to your routes.", "./src/routes/")
 	.option(
 		"-c, --config [config]",
@@ -34,9 +47,12 @@ export const initializeRoutes = new Command("init")
 			const configPath = path.join(
 				options.cwd,
 				options.config,
-				"another-react-router.config.json"
+				`another-react-router.config.${options["no-ts"] ? "js" : "ts"}`
 			)
-			fs.writeFileSync(configPath, fileContent)
+			fs.writeFileSync(
+				configPath,
+				getConfigTemplate(fileContent, options["no-ts"], options.esm)
+			)
 		} catch (err) {
 			handleCliError(err)
 		}
