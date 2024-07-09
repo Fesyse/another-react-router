@@ -41,19 +41,18 @@ function getFileType(fileName: string): FileType | undefined {
 		fileNameSplitted[fileNameSplitted.length - 1]!.toLowerCase()
 	const realFileName = fileNameSplitted[0]
 
+	if (!realFileName) return undefined
 	if (!supportedFileExtensions.some(extension => fileExtension === extension))
 		return undefined
 
-	switch (realFileName) {
-		case "page":
-			return FileType.PAGE
-		case "layout":
-			return FileType.LAYOUT
-		case "not-found":
-			return FileType.NOT_FOUND
-		default:
-			return undefined
-	}
+	const valuesOfFileType = Object.values(FileType)
+	const keysOfFileType = Object.keys(FileType) as (keyof typeof FileType)[]
+	if (!valuesOfFileType.some(type => type === realFileName)) return undefined
+
+	const indexOfFileType =
+		keysOfFileType[valuesOfFileType.findIndex(type => type === realFileName)]
+
+	return indexOfFileType ? FileType[indexOfFileType] : undefined
 }
 
 const getRoutes: GetRoutes = options => {
