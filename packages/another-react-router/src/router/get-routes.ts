@@ -1,4 +1,5 @@
 import * as fs from "fs"
+import * as nodePath from "path"
 import { FileType, type Route } from "./index"
 
 const supportedFileExtensions = ["tsx", "jsx", "js", "ts"] as const
@@ -6,10 +7,11 @@ const supportedFileExtensions = ["tsx", "jsx", "js", "ts"] as const
 type GetRoutesOptions =
 	| {
 			routesPath: string
+			cwd: string
 			prevRoutes: Route[]
 			originalRoutesPath: string
 	  }
-	| { routesPath: string }
+	| { routesPath: string; cwd: string }
 
 type GetRoutes = (options: GetRoutesOptions) => Route[]
 interface RawRoute {
@@ -67,7 +69,10 @@ const getRoutes: GetRoutes = options => {
 	routeFiles.map(routeFile => {
 		// @ts-expect-error
 		const path = routeFile.file.path as string
-		newRoute.path = "/" + path.slice(originalRoutesPath.length, path.length - 1)
+		newRoute.path = nodePath.join(
+			options.cwd,
+			"/" + path.slice(originalRoutesPath.length, path.length - 1)
+		)
 		newRoute[routeFile.fileType] = path + routeFile.file.name
 	})
 	routes.push(newRoute as Route)

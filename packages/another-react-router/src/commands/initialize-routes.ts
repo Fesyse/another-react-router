@@ -41,7 +41,7 @@ export const initializeRoutes = new Command("init")
 				options.cwd,
 				options.routes.endsWith("/") ? options.routes : options.routes + "/"
 			)
-			const routes = getRoutes({ routesPath })
+			const routes = getRoutes({ routesPath, cwd: options.cwd })
 
 			const fileContent = JSON.stringify(routes)
 			const configPath = path.join(

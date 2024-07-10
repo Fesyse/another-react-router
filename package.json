@@ -9,7 +9,8 @@
 		"lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
 		"preview": "vite preview",
 		"pub:beta": "cd packages/another-react-router && bun pub:beta",
-		"pub:release": "cd packages/another-react-router && bun pub:release"
+		"pub:release": "cd packages/another-react-router && bun pub:release",
+		"router": "bun run packages/another-react-router/dist/cli.js"
 	},
 	"dependencies": {
 		"class-variance-authority": "^0.7.0",
