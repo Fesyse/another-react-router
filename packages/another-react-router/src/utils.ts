@@ -7,8 +7,9 @@ const getConfigTemplate = (
 		return `
 // THIS FILE SHOULD NOT BE MODIFIED
 // With love by another-react-router developers 💗
+import { type Route } from "another-react-router"
 
-const routes = ${fileContent} as const
+const routes = ${fileContent} satisfies Route[]
 
 export { routes }
 `
