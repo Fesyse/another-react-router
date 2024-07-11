@@ -4,7 +4,7 @@ enum FileType {
 	NOT_FOUND = "not-found"
 }
 
-interface InitRouterOptions {
+interface InitRouterOptions<TRoutes = Route[]> {
 	/**
 	 * Provide routes that you created via cli
 	 *
@@ -21,7 +21,7 @@ interface InitRouterOptions {
 	 *	path: ""
 	 * }]
 	 */
-	routes: Route[]
+	routes: TRoutes
 }
 
 interface Route {
@@ -31,13 +31,13 @@ interface Route {
 	"not-found"?: string
 }
 
-type InitRouter = (options: InitRouterOptions) => void
-
 const defaultRouterOptions: InitRouterOptions = {
 	routes: []
 }
 
-const initRouter: InitRouter = opts => {
+const initRouter = <Options extends InitRouterOptions<Options["routes"]>>(
+	opts: Options
+) => {
 	const options = { ...defaultRouterOptions, ...opts }
 	return options.routes
 }

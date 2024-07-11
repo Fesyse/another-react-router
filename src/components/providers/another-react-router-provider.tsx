@@ -5,5 +5,7 @@ import { routes } from "../../another-react-router.config"
 export const AnotherReactRouterProvider: FC<PropsWithChildren> = ({
 	children
 }) => {
-	return <RouterProvider routes={routes}>{children}</RouterProvider>
+	return (
+		<RouterProvider<typeof routes> routes={routes}>{children}</RouterProvider>
+	)
 }
