@@ -65,18 +65,17 @@ const getRoutes: GetRoutes = options => {
 			`No page component in ${routesPath} directory. Add one or remove directory.`
 		)
 
+	// now we are creating new route
 	const newRoute: Partial<Route> = {}
 	routeFiles.map(routeFile => {
 		// @ts-expect-error
 		const path = routeFile.file.path as string
-		newRoute.path = nodePath.join(
-			options.cwd,
-			"/" + path.slice(originalRoutesPath.length, path.length - 1)
-		)
+		newRoute.path = "/" + path.slice(originalRoutesPath.length, path.length - 1)
 		newRoute[routeFile.fileType] = path + routeFile.file.name
 	})
 	routes.push(newRoute as Route)
 
+	// then mapping through all folders in directory
 	folders
 		.map(folder => {
 			if (folder.startsWith("_")) return
