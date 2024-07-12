@@ -7,11 +7,10 @@ const supportedFileExtensions = ["tsx", "jsx", "js", "ts"] as const
 type GetRoutesOptions =
 	| {
 			routesPath: string
-			cwd: string
 			prevRoutes: Route[]
 			originalRoutesPath: string
 	  }
-	| { routesPath: string; cwd: string }
+	| { routesPath: string }
 
 type GetRoutes = (options: GetRoutesOptions) => Route[]
 interface RawRoute {
@@ -44,6 +43,7 @@ const getRoutes: GetRoutes = options => {
 	const routesPath = options.routesPath
 	const originalRoutesPath =
 		"originalRoutesPath" in options ? options.originalRoutesPath : routesPath!
+	nodePath.sep
 
 	const folders: string[] = []
 	const routeFiles: RawRoute[] = fs
@@ -62,7 +62,7 @@ const getRoutes: GetRoutes = options => {
 
 	if (!routeFiles.some(file => file.fileType === FileType.PAGE))
 		throw new Error(
-			`No page component in ${routesPath} directory. Add one or remove directory.`
+			`No page component in ${routesPath} directory. Add one or remove directory.\nVisit ${process.env.DOCS_WEBSITE_URL}/docs/routing for aditional information.`
 		)
 
 	// now we are creating new route

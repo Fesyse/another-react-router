@@ -1,7 +1,7 @@
 {
 	"compilerOptions": {
 		"jsx": "react",
-		"target": "es2020",
+		"target": "ES2023",
 		"module": "ESNext",
 		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true,

@@ -1,4 +1,5 @@
-import React from "react"
+import * as path from "path"
+import React, { useEffect, useState } from "react"
 import { type InitRouterOptions, type Route, useInitRouter } from "../router"
 import type {
 	LayoutComponent,
@@ -10,30 +11,35 @@ import type {
 export function AnotherReactRouterProvider<T extends Route[]>(
 	props: InitRouterOptions<T>
 ) {
+	const [component, setComponent] = useState<React.ReactNode>()
+
 	const currentPath = useInitRouter(props)
-	let Page: PageComponent
-	let Layout: LayoutComponent | undefined
-	let NotFound: NotFoundComponent | undefined
-	let params: PageProps["params"]
+	useEffect(() => {
+		;(async () => {
+			const route = props.routes.find(route => {
+				return route.path === "/"
+			})
+			if (!route) return
+			const Page = (await import(`./${route.page}`)) as PageComponent
+			const Layout = route.layout
+				? ((await import(`./${route.layout}`)) as LayoutComponent)
+				: undefined
+			const NotFound = route["not-found"]
+				? ((await import(`./${route["not-found"]}`)) as NotFoundComponent)
+				: undefined
+			const params = {}
 
-	const route = props.routes.find(route => {
-		return route.path === "/"
-	})
-	if (!route) return
-	Page = require(route.page) as PageComponent
-	Layout = route.layout ? (require(route.layout) as LayoutComponent) : undefined
-	NotFound = route["not-found"]
-		? (require(route["not-found"]) as NotFoundComponent)
-		: undefined
-	params = {}
-	console.log(route)
+			setComponent(
+				Layout ? (
+					<Layout params={params}>
+						<Page params={params} />
+					</Layout>
+				) : (
+					<Page params={params} />
+				)
+			)
+		})()
+	}, [currentPath])
 
-	if (Layout) {
-		return (
-			<Layout params={params}>
-				<Page params={params} />
-			</Layout>
-		)
-	}
-	return <Page params={params} />
+	return component
 }

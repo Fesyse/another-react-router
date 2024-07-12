@@ -2,6 +2,7 @@ import { Command } from "commander"
 import * as fs from "fs"
 import * as path from "path"
 import { handleCliError } from "../cli-utils"
+import { Route } from "../router"
 import { getRoutes } from "../router/get-routes"
 import { getConfigTemplate } from "../utils"
 
@@ -38,10 +39,21 @@ export const initializeRoutes = new Command("init")
 	.action(async (options: InitializeRoutesActionOptions) => {
 		try {
 			const routesPath = path.join(
-				options.cwd,
 				options.routes.endsWith("/") ? options.routes : options.routes + "/"
 			)
-			const routes = getRoutes({ routesPath, cwd: options.cwd })
+			let routes = getRoutes({ routesPath })
+
+			routes = routes.map<Route>(route => {
+				const page = route.page.replaceAll("\\", "/")
+				const notFound = route["not-found"]?.replaceAll("\\", "/")
+				const layout = route.layout?.replaceAll("\\", "/")
+				return {
+					...route,
+					page,
+					"not-found": notFound,
+					layout
+				}
+			})
 
 			const fileContent = JSON.stringify(routes)
 			const configPath = path.join(
