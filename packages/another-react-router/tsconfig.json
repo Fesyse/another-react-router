@@ -10,5 +10,6 @@
 		"noEmit": true,
 		"moduleResolution": "node",
 		"noUncheckedIndexedAccess": true
-	}
+	},
+	"exclude": ["./src/another-react-router.config.ts"]
 }

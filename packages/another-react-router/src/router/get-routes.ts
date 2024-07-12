@@ -1,19 +1,27 @@
 import * as fs from "fs"
 import * as nodePath from "path"
-import { FileType, type Route } from "./index"
+import {
+	LayoutComponent,
+	NotFoundComponent,
+	PageComponent
+} from "../components"
+import { FileType, RawRoute, type Route } from "./index"
 
 const supportedFileExtensions = ["tsx", "jsx", "js", "ts"] as const
 
+type NeccessaryRoutesOptions = {
+	routesPath: string
+	cwd: string
+}
 type GetRoutesOptions =
-	| {
-			routesPath: string
-			prevRoutes: Route[]
+	| (NeccessaryRoutesOptions & {
+			prevRoutes: RawRoute[]
 			originalRoutesPath: string
-	  }
-	| { routesPath: string }
+	  })
+	| NeccessaryRoutesOptions
 
-type GetRoutes = (options: GetRoutesOptions) => Route[]
-interface RawRoute {
+type GetRawRoutes = (options: GetRoutesOptions) => RawRoute[]
+interface RawFileRoute {
 	fileType: FileType
 	file: fs.Dirent
 }
@@ -38,7 +46,7 @@ function getFileType(fileName: string): FileType | undefined {
 	return indexOfFileType ? FileType[indexOfFileType] : undefined
 }
 
-const getRoutes: GetRoutes = options => {
+const getRawRoutes: GetRawRoutes = options => {
 	const routes = "prevRoutes" in options ? options.prevRoutes : []
 	const routesPath = options.routesPath
 	const originalRoutesPath =
@@ -46,7 +54,7 @@ const getRoutes: GetRoutes = options => {
 	nodePath.sep
 
 	const folders: string[] = []
-	const routeFiles: RawRoute[] = fs
+	const routeFiles: RawFileRoute[] = fs
 		.readdirSync(routesPath!, { withFileTypes: true })
 		.map(file => {
 			if (file.isDirectory()) {
@@ -60,26 +68,32 @@ const getRoutes: GetRoutes = options => {
 		})
 		.filter(route => !!route)
 
+	// making sure there always page.tsx file
 	if (!routeFiles.some(file => file.fileType === FileType.PAGE))
 		throw new Error(
 			`No page component in ${routesPath} directory. Add one or remove directory.\nVisit ${process.env.DOCS_WEBSITE_URL}/docs/routing for aditional information.`
 		)
 
 	// now we are creating new route
-	const newRoute: Partial<Route> = {}
+	const newRoute: Partial<RawRoute> = {}
+
+	// @ts-expect-error
+	const path = routeFiles[0]!.file.path as string
+	newRoute.path = "/" + path.slice(originalRoutesPath.length, path.length - 1)
 	routeFiles.map(routeFile => {
-		// @ts-expect-error
-		const path = routeFile.file.path as string
-		newRoute.path = "/" + path.slice(originalRoutesPath.length, path.length - 1)
-		newRoute[routeFile.fileType] = path + routeFile.file.name
+		newRoute[routeFile.fileType] = nodePath.join(
+			options.cwd,
+			path,
+			routeFile.file.name
+		)
 	})
-	routes.push(newRoute as Route)
+	routes.push(newRoute as RawRoute)
 
 	// then mapping through all folders in directory
 	folders
 		.map(folder => {
 			if (folder.startsWith("_")) return
-			return getRoutes({
+			return getRawRoutes({
 				...options,
 				routesPath: routesPath + folder + "\\",
 				prevRoutes: routes,
@@ -91,4 +105,31 @@ const getRoutes: GetRoutes = options => {
 	return routes
 }
 
-export { getRoutes }
+const getRoutesFromConfig = async <T extends RawRoute[]>(
+	routes: T
+): Promise<Route[]> => {
+	return Promise.all(
+		routes.map<Promise<Route>>(async rawRoute => {
+			const page = await import(rawRoute.page)
+			const layout = rawRoute.layout ? await import(rawRoute.layout) : undefined
+			const notFound = rawRoute["not-found"]
+				? await import(rawRoute["not-found"])
+				: undefined
+
+			const route = {
+				path: rawRoute.path,
+				page: (page.default ?? page.Page) as PageComponent,
+				layout: layout
+					? ((layout.default ?? layout.Layout) as LayoutComponent)
+					: undefined,
+				"not-found": notFound
+					? ((notFound.default ?? notFound.NotFoundPage) as NotFoundComponent)
+					: undefined
+			} satisfies Route
+
+			return route
+		})
+	)
+}
+
+export { getRawRoutes, getRoutesFromConfig }
