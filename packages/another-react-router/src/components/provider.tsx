@@ -14,9 +14,15 @@ export function AnotherReactRouterProvider<T extends Route[]>(
 				return route.path === "/"
 			})
 			if (!route) return
-			const Page = route.page
-			const Layout = route.layout
-			const NotFound = route["not-found"]
+			const pageModule = await import(route.page)
+			const layoutModule = route.layout ? await import(route.layout) : undefined
+			const notFoundModule = route["not-found"]
+				? await import(route["not-found"])
+				: undefined
+
+			const Page = pageModule.default ?? pageModule.Page
+			const Layout = layoutModule?.default ?? layoutModule?.Layout
+			const NotFound = notFoundModule?.default ?? notFoundModule?.NotFound
 			const params = {}
 
 			setComponent(

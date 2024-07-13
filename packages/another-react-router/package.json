@@ -9,6 +9,7 @@
 		"build": "tsc && tsup src/index.ts --format cjs,esm --dts && tsup src/cli.ts --format cjs,esm --dts",
 		"lint": "tsc",
 		"changeset:release": "pnpm run build && changeset publish",
+		"router": "bun run src/cli.ts",
 		"pub:beta": "bun build && pnpm publish --no-git-checks --access public --tag beta",
 		"pub:next": "bun build && pnpm publish --no-git-checks --access public --tag next",
 		"pub:release": "bun build && pnpm publish --access public"
@@ -30,16 +31,18 @@
 	},
 	"homepage": "https://github.com/Fesyse/another-react-router#readme",
 	"dependencies": {
+		"bun": "^1.1.20",
 		"chalk": "^5.3.0",
+		"commander": "^10.0.0",
 		"fs-extra": "^11.2.0",
 		"ora": "^8.0.1",
 		"react": "^18.3.1",
 		"react-dom": "^18.3.1",
 		"type-fest": "^4.21.0",
-		"zod": "^3.23.8",
-		"commander": "^10.0.0"
+		"zod": "^3.23.8"
 	},
 	"devDependencies": {
+		"@types/bun": "^1.1.6",
 		"@changesets/cli": "^2.27.7",
 		"@types/fs-extra": "^11.0.4",
 		"prettier": "^3.3.2",

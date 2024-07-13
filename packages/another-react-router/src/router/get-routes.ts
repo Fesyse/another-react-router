@@ -1,11 +1,8 @@
+import { $ } from "bun"
 import * as fs from "fs"
 import * as nodePath from "path"
-import {
-	LayoutComponent,
-	NotFoundComponent,
-	PageComponent
-} from "../components"
-import { FileType, RawRoute, type Route } from "./index"
+import { handleCliError } from "../cli-utils"
+import { FileType, type Route } from "./index"
 
 const supportedFileExtensions = ["tsx", "jsx", "js", "ts"] as const
 
@@ -15,12 +12,12 @@ type NeccessaryRoutesOptions = {
 }
 type GetRoutesOptions =
 	| (NeccessaryRoutesOptions & {
-			prevRoutes: RawRoute[]
+			prevRoutes: Route[]
 			originalRoutesPath: string
 	  })
 	| NeccessaryRoutesOptions
 
-type GetRawRoutes = (options: GetRoutesOptions) => RawRoute[]
+type GetRoutes = (options: GetRoutesOptions) => Route[]
 interface RawFileRoute {
 	fileType: FileType
 	file: fs.Dirent
@@ -46,7 +43,7 @@ function getFileType(fileName: string): FileType | undefined {
 	return indexOfFileType ? FileType[indexOfFileType] : undefined
 }
 
-const getRawRoutes: GetRawRoutes = options => {
+const getRawRoutes: GetRoutes = options => {
 	const routes = "prevRoutes" in options ? options.prevRoutes : []
 	const routesPath = options.routesPath
 	const originalRoutesPath =
@@ -58,6 +55,7 @@ const getRawRoutes: GetRawRoutes = options => {
 		.readdirSync(routesPath!, { withFileTypes: true })
 		.map(file => {
 			if (file.isDirectory()) {
+				if (file.name.startsWith("_") || file.name.startsWith("dist")) return
 				folders.push(file.name)
 				return undefined
 			}
@@ -75,27 +73,24 @@ const getRawRoutes: GetRawRoutes = options => {
 		)
 
 	// now we are creating new route
-	const newRoute: Partial<RawRoute> = {}
+	const newRoute: Partial<Route> = {}
 
 	// @ts-expect-error
 	const path = routeFiles[0]!.file.path as string
 	newRoute.path = "/" + path.slice(originalRoutesPath.length, path.length - 1)
 	routeFiles.map(routeFile => {
-		newRoute[routeFile.fileType] = nodePath.join(
-			options.cwd,
-			path,
-			routeFile.file.name
-		)
+		newRoute[routeFile.fileType] = nodePath
+			.join(path, routeFile.file.name)
+			.replaceAll("\\", "/")
 	})
-	routes.push(newRoute as RawRoute)
+	routes.push(newRoute as Route)
 
 	// then mapping through all folders in directory
 	folders
 		.map(folder => {
-			if (folder.startsWith("_")) return
 			return getRawRoutes({
 				...options,
-				routesPath: routesPath + folder + "\\",
+				routesPath: routesPath + folder + "/",
 				prevRoutes: routes,
 				originalRoutesPath
 			})
@@ -105,31 +100,63 @@ const getRawRoutes: GetRawRoutes = options => {
 	return routes
 }
 
-const getRoutesFromConfig = async <T extends RawRoute[]>(
-	routes: T
+const getRoutes = async (
+	routes: Route[],
+	routesPath: string
 ): Promise<Route[]> => {
 	return Promise.all(
-		routes.map<Promise<Route>>(async rawRoute => {
-			const page = await import(rawRoute.page)
-			const layout = rawRoute.layout ? await import(rawRoute.layout) : undefined
-			const notFound = rawRoute["not-found"]
-				? await import(rawRoute["not-found"])
-				: undefined
+		routes.map<Promise<Route>>(async route => {
+			try {
+				// removing previous dist folder
+				fs.rmdirSync(routesPath + "dist", { recursive: true })
 
-			const route = {
-				path: rawRoute.path,
-				page: (page.default ?? page.Page) as PageComponent,
-				layout: layout
-					? ((layout.default ?? layout.Layout) as LayoutComponent)
-					: undefined,
-				"not-found": notFound
-					? ((notFound.default ?? notFound.NotFoundPage) as NotFoundComponent)
-					: undefined
-			} satisfies Route
+				// we are removing current working directory and page.tsx file path so we can add transpaled js file to dist folder
+				const pathWithoutCwd = route.page.slice(routesPath.length)
+				const isPathEndsWithSlash =
+					pathWithoutCwd.endsWith("/") || pathWithoutCwd.endsWith("\\")
+				const pathWithoutLastSlash = pathWithoutCwd.slice(
+					0,
+					pathWithoutCwd.length - (isPathEndsWithSlash ? 1 : 0)
+				)
+				// it ends with slash, be carefull | for example
+				// pathToRoute = "/" or pathToRoute = "/user/"
+				let pathToRoute = nodePath
+					.normalize(
+						pathWithoutCwd.slice(
+							0,
+							pathWithoutCwd.length -
+								"page".length -
+								(isPathEndsWithSlash ? 1 : 0) -
+								(pathWithoutLastSlash.endsWith("ts") ||
+								pathWithoutLastSlash.endsWith("js")
+									? ".ts".length
+									: ".tsx".length)
+						)
+					)
+					.replaceAll("\\", "/")
+				if (pathToRoute.startsWith(".")) pathToRoute = ""
 
-			return route
+				const outdir = `${routesPath}dist/${pathToRoute}`
+				await $`bun build ${route.page} --outdir ${outdir}`.throws(true)
+				if (route.layout)
+					await $`bun build ${route.layout} --outdir ${outdir}`.throws(true)
+				if (route["not-found"])
+					await $`bun build ${route["not-found"]} --outdir ${outdir}`.throws(
+						true
+					)
+
+				return {
+					path: route.path,
+					page: outdir + "page.js",
+					layout: route.layout ? outdir + "layout.js" : undefined,
+					"not-found": route["not-found"] ? outdir + "not-found.js" : undefined
+				}
+			} catch (err) {
+				handleCliError(err)
+				throw err
+			}
 		})
 	)
 }
 
-export { getRawRoutes, getRoutesFromConfig }
+export { getRoutes, getRawRoutes }

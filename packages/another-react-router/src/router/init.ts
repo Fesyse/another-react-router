@@ -1,9 +1,4 @@
 import { useEffect, useState } from "react"
-import {
-	LayoutComponent,
-	NotFoundComponent,
-	PageComponent
-} from "../components"
 
 enum FileType {
 	PAGE = "page",
@@ -11,7 +6,7 @@ enum FileType {
 	NOT_FOUND = "not-found"
 }
 
-interface InitRouterOptions<TRoutes = RawRoute[]> {
+interface InitRouterOptions<TRoutes = Route[]> {
 	/**
 	 * Provide routes that you created via cli
 	 *
@@ -31,18 +26,11 @@ interface InitRouterOptions<TRoutes = RawRoute[]> {
 	routes: TRoutes
 }
 
-interface RawRoute {
+interface Route {
 	path: string
 	page: string
 	layout?: string
 	"not-found"?: string
-}
-
-interface Route {
-	path: string
-	page: PageComponent
-	layout?: LayoutComponent
-	"not-found"?: NotFoundComponent
 }
 
 const defaultRouterOptions: InitRouterOptions = {
@@ -102,4 +90,4 @@ const useInitRouter = <Options extends InitRouterOptions<Options["routes"]>>(
 	return currentPath
 }
 
-export { useInitRouter, InitRouterOptions, RawRoute, Route, FileType }
+export { useInitRouter, InitRouterOptions, Route, FileType }

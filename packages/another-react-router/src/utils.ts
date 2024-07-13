@@ -9,20 +9,16 @@ const getConfigTemplate = (
 	if (!noTs) {
 		return `
 ${WARNING}
-import { type RawRoute, getRoutesFromConfig } from "another-react-router"
+import { type Route } from "another-react-router"
 
-const rawRoutes = ${fileContent} as const satisfies RawRoute[]
-const routes = await getRoutesFromConfig(rawRoutes)
+const routes = ${fileContent}  as const satisfies Route[]
 
 export { routes }
 `
 	} else if (esm) {
 		return `
 ${WARNING}
-import { getRoutesFromConfig } from "another-react-router"
-
-const rawRoutes = ${fileContent}
-const routes = await getRoutesFromConfig(rawRoutes)
+const routes = ${fileContent}
 
 export { routes }
 `
@@ -30,10 +26,7 @@ export { routes }
 		return `
 ${WARNING}
 
-const getRoutesFromConfig = require("another-react-router").getRoutesFromConfig
-
-const rawRoutes = await getRoutesFromConfig(${fileContent})
-const routes = await getRoutesFromConfig(rawRoutes)
+const routes = ${fileContent}
 
 module.exports = { routes }
 `
