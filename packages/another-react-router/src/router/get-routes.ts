@@ -107,7 +107,7 @@ const getRoutes = async (
 	return Promise.all(
 		routes.map<Promise<Route>>(async route => {
 			try {
-				// removing previous dist folder
+				// removing old dist folder
 				fs.rmdirSync(routesPath + "dist", { recursive: true })
 
 				// we are removing current working directory and page.tsx file path so we can add transpaled js file to dist folder
@@ -138,6 +138,8 @@ const getRoutes = async (
 
 				const outdir = `${routesPath}dist/${pathToRoute}`
 				await $`bun build ${route.page} --outdir ${outdir}`.throws(true)
+				if (route.layout)
+					console.log(`bun build ${route.layout} --outdir ${outdir}`)
 				if (route.layout)
 					await $`bun build ${route.layout} --outdir ${outdir}`.throws(true)
 				if (route["not-found"])

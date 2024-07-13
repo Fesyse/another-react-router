@@ -1,12 +1,8 @@
 const WARNING = `// THIS FILE SHOULD NOT BE MODIFIED
 // With love by another-react-router developers 💗`
 
-const getConfigTemplate = (
-	fileContent: string,
-	noTs: boolean,
-	esm: boolean
-) => {
-	if (!noTs) {
+const getConfigTemplate = (fileContent: string, ts: boolean, esm: boolean) => {
+	if (ts) {
 		return `
 ${WARNING}
 import { type Route } from "another-react-router"

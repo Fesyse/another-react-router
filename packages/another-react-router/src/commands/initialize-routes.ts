@@ -10,12 +10,12 @@ type InitializeRoutesActionOptions = {
 	config: string
 	cwd: string
 	esm: boolean
-	"no-ts": boolean
+	ts: boolean
 }
 
 export const initializeRoutes = new Command("init")
 	.option(
-		"-nt, --no-ts",
+		"-ts, --ts",
 		"check if config file output will be written with typescript rules.",
 		true
 	)
@@ -27,8 +27,8 @@ export const initializeRoutes = new Command("init")
 	.option("-r, --routes [routes]", "the path to your routes.", "./src/routes/")
 	.option(
 		"-c, --config [config]",
-		"the path where another-react-router.config.json will be initialized.",
-		"./src/"
+		"the path where another-react-router.config.(ts/js) file will be initialized.",
+		"./"
 	)
 	.option(
 		"-cw, --cwd <cwd>",
@@ -50,11 +50,11 @@ export const initializeRoutes = new Command("init")
 			const configPath = path.join(
 				options.cwd,
 				options.config,
-				`another-react-router.config.${options["no-ts"] ? "js" : "ts"}`
+				`another-react-router.config.${options.ts ? "ts" : "js"}`
 			)
 			fs.writeFileSync(
 				configPath,
-				getConfigTemplate(fileContent, options["no-ts"], options.esm)
+				getConfigTemplate(fileContent, options.ts, options.esm)
 			)
 		} catch (err) {
 			handleCliError(err)
