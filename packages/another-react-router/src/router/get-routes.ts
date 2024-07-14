@@ -118,8 +118,8 @@ const getRoutes = async (
 					0,
 					pathWithoutCwd.length - (isPathEndsWithSlash ? 1 : 0)
 				)
-				// it ends with slash, be carefull | for example
-				// pathToRoute = "/" or pathToRoute = "/user/"
+				// it doesnt starts with slash, be carefull | for example
+				// pathToRoute = "" or pathToRoute = "user/"
 				let pathToRoute = nodePath
 					.normalize(
 						pathWithoutCwd.slice(
