@@ -7,7 +7,7 @@ const getConfigTemplate = (fileContent: string, ts: boolean, esm: boolean) => {
 ${WARNING}
 import { type Route } from "another-react-router"
 
-const routes = ${fileContent}  as const satisfies Route[]
+const routes = ${fileContent} as const satisfies Route[]
 
 export { routes }
 `
