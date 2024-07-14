@@ -137,15 +137,15 @@ const getRoutes = async (
 				if (pathToRoute.startsWith(".")) pathToRoute = ""
 
 				const outdir = `${routesPath}dist/${pathToRoute}`
-				await $`bun build ${route.page} --outdir ${outdir}`.throws(true)
-				if (route.layout)
-					console.log(`bun build ${route.layout} --outdir ${outdir}`)
-				if (route.layout)
-					await $`bun build ${route.layout} --outdir ${outdir}`.throws(true)
-				if (route["not-found"])
-					await $`bun build ${route["not-found"]} --outdir ${outdir}`.throws(
-						true
-					)
+				await Promise.all([
+					$`bun build ${route.page} --outdir ${outdir}`.throws(true),
+					route.layout
+						? $`bun build ${route.layout} --outdir ${outdir}`.throws(true)
+						: undefined,
+					route["not-found"]
+						? $`bun build ${route["not-found"]} --outdir ${outdir}`.throws(true)
+						: undefined
+				])
 
 				return {
 					path: route.path,
