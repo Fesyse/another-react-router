@@ -3,10 +3,7 @@
 import { type Route } from "another-react-router"
 
 const routes = [
-	{
-		path: "/",
-		page: "./routes/dist/page.js"
-	}
+	{ path: "/", page: "src/routes/dist/page.js" }
 ] as const satisfies Route[]
 
 export { routes }

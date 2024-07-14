@@ -102,7 +102,8 @@ const getRawRoutes: GetRoutes = options => {
 
 const getRoutes = async (
 	routes: Route[],
-	routesPath: string
+	routesPath: string,
+	configPath: string
 ): Promise<Route[]> => {
 	return Promise.all(
 		routes.map<Promise<Route>>(async route => {

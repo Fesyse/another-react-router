@@ -11,5 +11,6 @@
 		"moduleResolution": "node",
 		"noUncheckedIndexedAccess": true
 	},
+	"include": ["src"],
 	"exclude": ["./src/another-react-router.config.ts"]
 }

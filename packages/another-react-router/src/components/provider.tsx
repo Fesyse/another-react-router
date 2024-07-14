@@ -10,30 +10,20 @@ export function AnotherReactRouterProvider<T extends Route[]>(
 	const currentPath = useInitRouter(props)
 	useEffect(() => {
 		;(async () => {
-			const route = props.routes.find(route => {
-				return route.path === "/"
-			})
+			const route = props.routes[0]
 			if (!route) return
-			const pageModule = await import(route.page)
-			const layoutModule = route.layout ? await import(route.layout) : undefined
-			const notFoundModule = route["not-found"]
-				? await import(route["not-found"])
-				: undefined
+			const [pageModule, layoutModule, notFoundModule] = await Promise.all([
+				import(`./${route.page}`),
+				route.layout ? import(`./${route.layout}`) : undefined,
+				route["not-found"] ? import(`./${route["not-found"]}`) : undefined
+			])
 
 			const Page = pageModule.default ?? pageModule.Page
 			const Layout = layoutModule?.default ?? layoutModule?.Layout
 			const NotFound = notFoundModule?.default ?? notFoundModule?.NotFound
 			const params = {}
 
-			setComponent(
-				Layout ? (
-					<Layout params={params}>
-						<Page params={params} />
-					</Layout>
-				) : (
-					<Page params={params} />
-				)
-			)
+			setComponent(<Page params={params} />)
 		})()
 	}, [currentPath])
 
