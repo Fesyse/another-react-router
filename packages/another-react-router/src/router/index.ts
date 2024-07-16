@@ -39,12 +39,14 @@ interface Route {
 	page: string
 	layout?: string
 	"not-found"?: string
+	useOleg?: boolean
 }
 interface RouteWithComponents {
 	path: string
 	page: PageComponent
 	layout?: LayoutComponent
 	"not-found"?: NotFoundComponent
+	useOleg?: boolean
 }
 
 interface RawRoute {
@@ -52,6 +54,7 @@ interface RawRoute {
 	page: Promise<Module<"Page", PageComponent>>
 	layout?: Promise<Module<"Layout", LayoutComponent>>
 	"not-found"?: Promise<Module<"NotFoundPage", NotFoundComponent>>
+	useOleg?: boolean
 }
 
 export * from "./get-routes-components"

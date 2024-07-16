@@ -1,3 +1,5 @@
+"use oleg"
+
 import React from "react"
 
 export default function Page() {
