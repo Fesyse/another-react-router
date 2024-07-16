@@ -2,7 +2,7 @@ import { Command } from "commander"
 import * as fs from "fs"
 import * as path from "path"
 import { cliLogger, handleCliError } from "../cli-utils"
-import { getRawRoutes } from "../router/get-routes"
+import { getRoutes } from "../router/get-routes"
 import { getConfigTemplate } from "../utils"
 
 type InitializeRoutesActionOptions = {
@@ -43,7 +43,7 @@ export const initializeRoutes = new Command("init")
 					options.routes.endsWith("/") ? options.routes : options.routes + "/"
 				)
 				.replaceAll("\\", "/")
-			let routes = getRawRoutes({ routesPath, cwd: options.cwd })
+			let routes = getRoutes({ routesPath, cwd: options.cwd })
 			routes = routes.map(route => ({
 				path: route.path,
 				page: path.relative(options.config, route.page).replaceAll("\\", "/"),
@@ -54,7 +54,8 @@ export const initializeRoutes = new Command("init")
 					? path
 							.relative(options.config, route["not-found"])
 							.replaceAll("\\", "/")
-					: undefined
+					: undefined,
+				useOleg: route.useOleg ? true : undefined
 			}))
 
 			const fileContent =
@@ -62,15 +63,17 @@ export const initializeRoutes = new Command("init")
 				routes
 					.map(
 						route =>
-							`{path:"${route.path}",page:import('./${route.page}')${route.layout ? `,layout:import('./${route.layout}')` : ""}${route["not-found"] ? `,"not-found":import('./${route["not-found"]}')` : ""}}`
+							`{path:"${route.path}",page:import('./${route.page}')${route.layout ? `,layout:import('./${route.layout}')` : ""}${route["not-found"] ? `,"not-found":import('./${route["not-found"]}')` : ""}${route?.useOleg ? `,useOleg:true` : ""}}`
 					)
 					.join(",") +
 				"]"
+
 			const configPath = path.join(
 				options.cwd,
 				options.config,
 				`another-react-router.config.${options.ts ? "ts" : "js"}`
 			)
+
 			fs.writeFileSync(
 				configPath,
 				getConfigTemplate(fileContent, options.ts, options.esm)

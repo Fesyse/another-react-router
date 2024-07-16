@@ -1,8 +1,7 @@
-import { $ } from "bun"
+/* eslint-disable no-mixed-spaces-and-tabs */
 import * as fs from "fs"
 import * as nodePath from "path"
-import { handleCliError } from "../cli-utils"
-import { FileType, RawRoute, type Route, RouteWithComponents } from "./index"
+import { FileType, type Route } from "./index"
 
 const supportedFileExtensions = ["tsx", "jsx", "js", "ts"] as const
 
@@ -21,6 +20,7 @@ type GetRoutes = (options: GetRoutesOptions) => Route[]
 interface RawFileRoute {
 	fileType: FileType
 	file: fs.Dirent
+	useOleg?: boolean
 }
 
 function getFileType(fileName: string): FileType | undefined {
@@ -43,7 +43,7 @@ function getFileType(fileName: string): FileType | undefined {
 	return indexOfFileType ? FileType[indexOfFileType] : undefined
 }
 
-const getRawRoutes: GetRoutes = options => {
+const getRoutes: GetRoutes = options => {
 	const routes = "prevRoutes" in options ? options.prevRoutes : []
 	const routesPath = options.routesPath
 	const originalRoutesPath =
@@ -61,8 +61,17 @@ const getRawRoutes: GetRoutes = options => {
 			}
 
 			const fileType = getFileType(file.name)
+
 			if (!fileType) return undefined
-			return { fileType, file }
+			if (fileType !== FileType.PAGE) return { fileType, file }
+
+			//@ts-expect-error asd
+			const content = fs.readFileSync(file.path + file.name).toString()
+
+			const useOleg =
+				content.includes('"use oleg"') || content.includes("'use oleg'")
+
+			return { fileType, file, useOleg }
 		})
 		.filter(route => !!route)
 
@@ -75,22 +84,27 @@ const getRawRoutes: GetRoutes = options => {
 	// now we are creating new route
 	const newRoute: Partial<Route> = {}
 
-	// @ts-expect-error
+	// @ts-expect-error asd
 	const path = routeFiles[0]!.file.path as string
 	const newRoutePath =
 		"/" + path.slice(originalRoutesPath.length, path.length - 1)
 	newRoute.path = newRoutePath.length === 1 ? newRoutePath : newRoutePath + "/"
 	routeFiles.map(routeFile => {
+		if (routeFile?.useOleg) {
+			newRoute.useOleg = true
+		}
+
 		newRoute[routeFile.fileType] = nodePath
 			.join(path, routeFile.file.name)
 			.replaceAll("\\", "/")
 	})
+
 	routes.push(newRoute as Route)
 
 	// then mapping through all folders in directory
 	folders
 		.map(folder => {
-			return getRawRoutes({
+			return getRoutes({
 				...options,
 				routesPath: routesPath + folder + "/",
 				prevRoutes: routes,
@@ -102,4 +116,4 @@ const getRawRoutes: GetRoutes = options => {
 	return routes
 }
 
-export { getRawRoutes }
+export { getRoutes }
