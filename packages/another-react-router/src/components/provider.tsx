@@ -2,8 +2,14 @@ import React, { useEffect, useState } from "react"
 import { useParams } from "../hooks"
 import { useInitRouter } from "../hooks/use-init-router"
 import { type InitRouterOptions, type RouteWithComponents } from "../router"
+import { isRouterPathMatchesWithCurrentPath } from "../utils"
 
-const getNotFoundPage = (routes: RouteWithComponents[]) => {}
+const getNotFoundPage = (
+	path: string,
+	routes: RouteWithComponents[]
+): React.ReactNode => {
+	return
+}
 
 export function AnotherReactRouterProvider<T extends RouteWithComponents[]>(
 	props: InitRouterOptions<T>
@@ -12,8 +18,10 @@ export function AnotherReactRouterProvider<T extends RouteWithComponents[]>(
 
 	const currentPath = useInitRouter(props)
 	useEffect(() => {
-		const route = props.routes.find(route => route.path === currentPath)
-		if (!route) return
+		const route = props.routes.find(route =>
+			isRouterPathMatchesWithCurrentPath(route.path, currentPath)
+		)
+		if (!route) return setComponent(getNotFoundPage(currentPath, props.routes))
 		const params = useParams()
 		setComponent(
 			route.layout ? (

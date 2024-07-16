@@ -35,5 +35,11 @@ module.exports = { routes }
 `
 	}
 }
+const isRouterPathMatchesWithCurrentPath = (
+	routerPath: string,
+	currentPath: string
+): boolean => {
+	return routerPath === currentPath
+}
 
-export { getConfigTemplate }
+export { getConfigTemplate, isRouterPathMatchesWithCurrentPath }

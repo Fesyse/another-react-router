@@ -1,5 +1,7 @@
-import { PageProps } from "another-react-router"
+import { useState } from "react"
 
-export default function HomePage(props: PageProps) {
-	return <div>hello world!asdasdasd</div>
+export default function HomePage() {
+	const [count, setCount] = useState(0)
+
+	return <button onClick={() => setCount(p => p + 1)}>Count: {count}</button>
 }

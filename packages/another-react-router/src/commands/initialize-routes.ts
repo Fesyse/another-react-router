@@ -1,8 +1,7 @@
 import { Command } from "commander"
 import * as fs from "fs"
 import * as path from "path"
-import { handleCliError } from "../cli-utils"
-import { RawRoute, Route } from "../router"
+import { cliLogger, handleCliError } from "../cli-utils"
 import { getRawRoutes } from "../router/get-routes"
 import { getConfigTemplate } from "../utils"
 
@@ -76,6 +75,15 @@ export const initializeRoutes = new Command("init")
 				configPath,
 				getConfigTemplate(fileContent, options.ts, options.esm)
 			)
+
+			const _configPath = path
+				.join(
+					options.config,
+					`another-react-router.config.${options.ts ? "ts" : "js"}`
+				)
+				.replaceAll("\\", "/")
+
+			cliLogger.success(`✨ Successfully initialized routes in ${_configPath}.`)
 		} catch (err) {
 			handleCliError(err)
 		}
