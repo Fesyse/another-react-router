@@ -77,7 +77,9 @@ const getRawRoutes: GetRoutes = options => {
 
 	// @ts-expect-error
 	const path = routeFiles[0]!.file.path as string
-	newRoute.path = "/" + path.slice(originalRoutesPath.length, path.length - 1)
+	const newRoutePath =
+		"/" + path.slice(originalRoutesPath.length, path.length - 1)
+	newRoute.path = newRoutePath.length === 1 ? newRoutePath : newRoutePath + "/"
 	routeFiles.map(routeFile => {
 		newRoute[routeFile.fileType] = nodePath
 			.join(path, routeFile.file.name)
@@ -100,66 +102,4 @@ const getRawRoutes: GetRoutes = options => {
 	return routes
 }
 
-const getRoutes = async (
-	routes: Route[],
-	routesPath: string,
-	configPath: string
-): Promise<Route[]> => {
-	return Promise.all(
-		routes.map<Promise<Route>>(async route => {
-			try {
-				// removing old dist folder
-				fs.rmdirSync(routesPath + "dist", { recursive: true })
-
-				// we are removing current working directory and page.tsx file path so we can add transpaled js file to dist folder
-				const pathWithoutCwd = route.page.slice(routesPath.length)
-				const isPathEndsWithSlash =
-					pathWithoutCwd.endsWith("/") || pathWithoutCwd.endsWith("\\")
-				const pathWithoutLastSlash = pathWithoutCwd.slice(
-					0,
-					pathWithoutCwd.length - (isPathEndsWithSlash ? 1 : 0)
-				)
-				// it doesnt starts with slash, be carefull | for example
-				// pathToRoute = "" or pathToRoute = "user/"
-				let pathToRoute = nodePath
-					.normalize(
-						pathWithoutCwd.slice(
-							0,
-							pathWithoutCwd.length -
-								"page".length -
-								(isPathEndsWithSlash ? 1 : 0) -
-								(pathWithoutLastSlash.endsWith("ts") ||
-								pathWithoutLastSlash.endsWith("js")
-									? ".ts".length
-									: ".tsx".length)
-						)
-					)
-					.replaceAll("\\", "/")
-				if (pathToRoute.startsWith(".")) pathToRoute = ""
-
-				const outdir = `${routesPath}dist/${pathToRoute}`
-				await Promise.all([
-					$`bun build ${route.page} --outdir ${outdir}`.throws(true),
-					route.layout
-						? $`bun build ${route.layout} --outdir ${outdir}`.throws(true)
-						: undefined,
-					route["not-found"]
-						? $`bun build ${route["not-found"]} --outdir ${outdir}`.throws(true)
-						: undefined
-				])
-
-				return {
-					path: route.path,
-					page: outdir + "page.js",
-					layout: route.layout ? outdir + "layout.js" : undefined,
-					"not-found": route["not-found"] ? outdir + "not-found.js" : undefined
-				}
-			} catch (err) {
-				handleCliError(err)
-				throw err
-			}
-		})
-	)
-}
-
-export { getRoutes, getRawRoutes }
+export { getRawRoutes }

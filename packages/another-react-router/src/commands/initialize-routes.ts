@@ -3,7 +3,7 @@ import * as fs from "fs"
 import * as path from "path"
 import { handleCliError } from "../cli-utils"
 import { RawRoute, Route } from "../router"
-import { getRawRoutes, getRoutes } from "../router/get-routes"
+import { getRawRoutes } from "../router/get-routes"
 import { getConfigTemplate } from "../utils"
 
 type InitializeRoutesActionOptions = {
@@ -63,7 +63,7 @@ export const initializeRoutes = new Command("init")
 				routes
 					.map(
 						route =>
-							`{path:"${route.path}",page:import('./${route.page}')${route.layout ? `,layout:import('${route.layout}')` : ""}${route["not-found"] ? `,"not-found":import('${route["not-found"]}')` : ""}}`
+							`{path:"${route.path}",page:import('./${route.page}')${route.layout ? `,layout:import('./${route.layout}')` : ""}${route["not-found"] ? `,"not-found":import('./${route["not-found"]}')` : ""}}`
 					)
 					.join(",") +
 				"]"
