@@ -5,9 +5,11 @@ const getRoutesComponents = <TRoutes extends RawRoute[]>(
 ): Promise<RouteWithComponents[]> => {
 	return Promise.all(
 		routes.map<Promise<RouteWithComponents>>(async route => {
-			const page = await route.page
-			const layout = await route.layout
-			const notFound = await route["not-found"]
+			const [page, layout, notFound] = await Promise.all([
+				route.page,
+				route.layout,
+				route["not-found"]
+			])
 
 			return {
 				path: route.path as (typeof route)["path"],
