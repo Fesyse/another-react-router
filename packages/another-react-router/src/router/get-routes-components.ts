@@ -8,7 +8,6 @@ const getRoutesComponents = <TRoutes extends RawRoute[]>(
 			const page = await route.page
 			const layout = await route.layout
 			const notFound = await route["not-found"]
-
 			return {
 				path: route.path as (typeof route)["path"],
 				page: "default" in page ? page.default : page.Page,
@@ -21,7 +20,8 @@ const getRoutesComponents = <TRoutes extends RawRoute[]>(
 					? "default" in notFound
 						? notFound?.default
 						: notFound?.NotFoundPage
-					: undefined
+					: undefined,
+				useOleg: route.useOleg
 			} satisfies RouteWithComponents
 		})
 	)
