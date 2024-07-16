@@ -1,5 +1,5 @@
 import { PageProps } from "another-react-router"
 
-export function HomePage(props: PageProps) {
+export default function HomePage(props: PageProps) {
 	return <div>hello world!</div>
 }

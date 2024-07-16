@@ -1,47 +1,10 @@
 import { useEffect, useState } from "react"
-
-enum FileType {
-	PAGE = "page",
-	LAYOUT = "layout",
-	NOT_FOUND = "not-found"
-}
-
-interface InitRouterOptions<TRoutes = Route[]> {
-	/**
-	 * Provide routes that you created via cli
-	 *
-	 * Or if you dont like file based routing provide them by yourself
-	 * @example
-	 * import { routes } from "@/another-react-router.config.ts"
-	 *
-	 * {
-	 * 	routes: routes
-	 * }
-	 *
-	 * @example
-	 * routes: [{
-	 *	path: ""
-	 * }]
-	 */
-	routes: TRoutes
-}
-
-interface Route {
-	path: string
-	page: string
-	layout?: string
-	"not-found"?: string
-}
+import { type InitRouterOptions } from "../router"
 
 const defaultRouterOptions: InitRouterOptions = {
 	routes: []
 }
 
-/**
- *
- * THIS FUNCTION SHOULD NOT BE USED
- * USE AnotherReactProvider INSTEAD
- */
 const useInitRouter = <Options extends InitRouterOptions<Options["routes"]>>(
 	opts: Options
 ) => {
@@ -90,4 +53,4 @@ const useInitRouter = <Options extends InitRouterOptions<Options["routes"]>>(
 	return currentPath
 }
 
-export { useInitRouter, InitRouterOptions, Route, FileType }
+export { useInitRouter }

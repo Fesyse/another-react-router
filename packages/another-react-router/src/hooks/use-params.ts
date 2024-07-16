@@ -1,0 +1,3 @@
+const useParams = () => ({})
+
+export { useParams }

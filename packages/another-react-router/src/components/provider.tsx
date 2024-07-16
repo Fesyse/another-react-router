@@ -1,6 +1,7 @@
-import * as path from "path"
 import React, { useEffect, useState } from "react"
-import { type InitRouterOptions, type Route, useInitRouter } from "../router"
+import { useParams } from "../hooks"
+import { useInitRouter } from "../hooks/use-init-router"
+import { type InitRouterOptions, type Route } from "../router"
 
 export function AnotherReactRouterProvider<T extends Route[]>(
 	props: InitRouterOptions<T>
@@ -17,11 +18,12 @@ export function AnotherReactRouterProvider<T extends Route[]>(
 				route.layout ? import(`./${route.layout}`) : undefined,
 				route["not-found"] ? import(`./${route["not-found"]}`) : undefined
 			])
+			console.log([pageModule, layoutModule, notFoundModule])
 
 			const Page = pageModule.default ?? pageModule.Page
 			const Layout = layoutModule?.default ?? layoutModule?.Layout
 			const NotFound = notFoundModule?.default ?? notFoundModule?.NotFound
-			const params = {}
+			const params = useParams()
 
 			setComponent(<Page params={params} />)
 		})()

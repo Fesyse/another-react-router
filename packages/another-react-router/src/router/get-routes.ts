@@ -2,7 +2,7 @@ import { $ } from "bun"
 import * as fs from "fs"
 import * as nodePath from "path"
 import { handleCliError } from "../cli-utils"
-import { FileType, type Route } from "./index"
+import { FileType, RawRoute, type Route, RouteWithComponents } from "./index"
 
 const supportedFileExtensions = ["tsx", "jsx", "js", "ts"] as const
 
