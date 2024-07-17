@@ -21,7 +21,7 @@ jobs:
 
       - run: cd packages/another-react-router && bun link && cd ../.. && bun link another-react-router
       - run: bun install --frozen-lockfile
-      - run: cd packages/another-react-router && bun install --frozen-lockfile
+      - run: cd packages/another-react-router && bun install --frozen-lockfile && cd ../..
       - name: Create Release Pull Request or Publish
         id: changesets
         uses: changesets/action@v1
