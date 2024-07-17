@@ -1,7 +1,7 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
 import * as fs from "fs"
 import * as nodePath from "path"
-import { FileType, type Route } from "@/browser"
+import { FILE_TYPE, FileType, type Route } from "@/browser"
 
 const supportedFileExtensions = ["tsx", "jsx", "js", "ts"] as const
 
@@ -33,14 +33,14 @@ function getFileType(fileName: string): FileType | undefined {
 	if (!supportedFileExtensions.some(extension => fileExtension === extension))
 		return undefined
 
-	const valuesOfFileType = Object.values(FileType)
-	const keysOfFileType = Object.keys(FileType) as (keyof typeof FileType)[]
+	const valuesOfFileType = Object.values(FILE_TYPE)
+	const keysOfFileType = Object.keys(FILE_TYPE) as (keyof typeof FILE_TYPE)[]
 	if (!valuesOfFileType.some(type => type === realFileName)) return undefined
 
 	const indexOfFileType =
 		keysOfFileType[valuesOfFileType.findIndex(type => type === realFileName)]
 
-	return indexOfFileType ? FileType[indexOfFileType] : undefined
+	return indexOfFileType ? FILE_TYPE[indexOfFileType] : undefined
 }
 
 const getRoutes: GetRoutes = options => {
@@ -63,7 +63,7 @@ const getRoutes: GetRoutes = options => {
 			const fileType = getFileType(file.name)
 
 			if (!fileType) return undefined
-			if (fileType !== FileType.PAGE) return { fileType, file }
+			if (fileType !== FILE_TYPE.PAGE) return { fileType, file }
 
 			//@ts-expect-error asd
 			const content = fs.readFileSync(file.path + file.name).toString()
@@ -76,7 +76,7 @@ const getRoutes: GetRoutes = options => {
 		.filter(route => !!route)
 
 	// making sure there always page.tsx file
-	if (!routeFiles.some(file => file.fileType === FileType.PAGE))
+	if (!routeFiles.some(file => file.fileType === FILE_TYPE.PAGE))
 		throw new Error(
 			`No page component in ${routesPath} directory. Add one or remove directory.\nVisit ${process.env.DOCS_WEBSITE_URL}/docs/routing for aditional information.`
 		)

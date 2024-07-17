@@ -3,12 +3,15 @@ import {
 	NotFoundComponent,
 	PageComponent
 } from "@/browser/components"
+import { ObjectValues } from "@/types"
 
-enum FileType {
-	PAGE = "page",
-	LAYOUT = "layout",
-	NOT_FOUND = "not-found"
-}
+const FILE_TYPE = {
+	PAGE: "page",
+	LAYOUT: "layout",
+	NOT_FOUND: "not-found"
+} as const
+
+type FileType = ObjectValues<typeof FILE_TYPE>
 
 interface InitRouterOptions<TRoutes = Route[]> {
 	/**
@@ -61,6 +64,7 @@ export * from "@/shared/get-routes-components"
 export {
 	type InitRouterOptions,
 	type Route,
+	FILE_TYPE,
 	FileType,
 	RouteWithComponents,
 	RawRoute
