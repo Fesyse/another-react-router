@@ -1,2 +1,9 @@
 dist
+node_modules
 .env
+
+# remove all testing configs and path
+another-react-router.config.ts
+another-react-router.config.js
+src/routes
+src/__test
