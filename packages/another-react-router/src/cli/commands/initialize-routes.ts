@@ -1,8 +1,8 @@
 import { Command } from "commander"
 import * as fs from "fs"
 import * as path from "path"
-import { getConfigTemplate } from "@/browser/utils"
 import { getRoutes } from "@/cli/router/get-routes"
+import { getConfigTemplate } from "@/cli/utils"
 import { cliLogger, handleCliError } from "@/cli/utils"
 
 type InitializeRoutesActionOptions = {

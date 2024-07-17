@@ -13,7 +13,7 @@ const FILE_TYPE = {
 
 type FileType = ObjectValues<typeof FILE_TYPE>
 
-interface InitRouterOptions<TRoutes = Route[]> {
+interface InitRouterOptions<TRoutes = RouteWithComponents[]> {
 	/**
 	 * Provide routes that you created via cli
 	 *
@@ -44,8 +44,8 @@ interface Route {
 	"not-found"?: string
 	useOleg?: boolean
 }
-interface RouteWithComponents {
-	path: string
+interface RouteWithComponents<TPath extends string = string> {
+	path: TPath
 	page: PageComponent
 	layout?: LayoutComponent
 	"not-found"?: NotFoundComponent

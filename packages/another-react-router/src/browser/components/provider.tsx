@@ -4,6 +4,7 @@ import { type InitRouterOptions, type RouteWithComponents } from "@/browser"
 import { useParams } from "@/browser/hooks"
 import { useInitRouter } from "@/browser/hooks/use-init-router"
 import { isRouterPathMatchesWithCurrentPath } from "@/browser/utils"
+import { ExtractHrefTypeFromRoutes } from "@/types"
 
 const getNotFoundPage = (
 	path: string,
@@ -12,9 +13,17 @@ const getNotFoundPage = (
 	return
 }
 
-export function AnotherReactRouterProvider<T extends RouteWithComponents[]>(
-	props: InitRouterOptions<T>
-) {
+type AnotherReactRouterProviderReturn<TRoutes extends RouteWithComponents[]> = {
+	children: React.ReactNode
+	link: React.FC<HTMLLinkElement & { href: ExtractHrefTypeFromRoutes<TRoutes> }>
+}
+
+export function AnotherReactRouterProvider<
+	TRoutes extends RouteWithComponents[]
+>(props: InitRouterOptions<TRoutes>) {
+	const [routerOptions, setRouterOptions] =
+		useState<InitRouterOptions<TRoutes>>(props)
+
 	const [component, setComponent] = useState<React.ReactNode>()
 
 	const currentPath = useInitRouter(props)
