@@ -2,19 +2,19 @@
 	"name": "another-react-router",
 	"version": "0.5.0",
 	"description": "Another react router is a npm package, that allowes developers and users comfortabe route between pages on their web applications",
-	"main": "dist/index.js",
-	"module": "dist/index.mjs",
-	"types": "dist/index.d.ts",
+	"main": "dist/browser/index.js",
+	"module": "dist/browser/index.mjs",
+	"types": "dist/browser/index.d.ts",
 	"scripts": {
-		"build": "tsc && tsup src/index.ts --format cjs,esm --dts && tsup src/cli/index.ts --format cjs,esm --dts",
+		"build": "tsc && tsup src/browser/index.ts src/cli/index.ts --format cjs,esm --dts",
 		"lint": "tsc",
 		"changeset:release": "pnpm run build && changeset publish",
 		"router": "bun run src/cli.ts",
-		"pub:beta": "bun build && pnpm publish --no-git-checks --access public --tag beta",
-		"pub:next": "bun build && pnpm publish --no-git-checks --access public --tag next",
-		"pub:release": "bun build && pnpm publish --access public"
+		"pub:beta": "bun run build && pnpm publish --no-git-checks --access public --tag beta",
+		"pub:next": "bun run build && pnpm publish --no-git-checks --access public --tag next",
+		"pub:release": "bun run build && pnpm publish --access public"
 	},
-	"bin": "dist/cli.js",
+	"bin": "dist/cli/index.js",
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/Fesyse/another-react-router.git",

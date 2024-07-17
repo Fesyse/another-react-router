@@ -1,4 +1,4 @@
-import { RawRoute, RouteWithComponents } from "./browser/router"
+import { RawRoute, RouteWithComponents } from "@/browser/router"
 
 const getRoutesComponents = <TRoutes extends RawRoute[]>(
 	routes: TRoutes

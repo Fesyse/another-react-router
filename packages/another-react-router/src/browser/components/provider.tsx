@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react"
-import { type InitRouterOptions, type RouteWithComponents } from "../.."
-import { useParams } from "../hooks"
-import { useInitRouter } from "../hooks/use-init-router"
-import { isRouterPathMatchesWithCurrentPath } from "../utils"
 import WithOleg from "./with-oleg"
+import { type InitRouterOptions, type RouteWithComponents } from "@/browser"
+import { useParams } from "@/browser/hooks"
+import { useInitRouter } from "@/browser/hooks/use-init-router"
+import { isRouterPathMatchesWithCurrentPath } from "@/browser/utils"
 
 const getNotFoundPage = (
 	path: string,

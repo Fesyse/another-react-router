@@ -9,7 +9,10 @@
 		"skipLibCheck": true,
 		"noEmit": true,
 		"moduleResolution": "node",
-		"noUncheckedIndexedAccess": true
+		"noUncheckedIndexedAccess": true,
+		"paths": {
+			"@/*": ["./src/*"]
+		}
 	},
 	"include": ["src"],
 	"exclude": ["./src/another-react-router.config.ts"]
