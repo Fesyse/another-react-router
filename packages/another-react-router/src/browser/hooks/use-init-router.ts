@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { type InitRouterOptions } from "../router"
+import { type InitRouterOptions } from "../.."
 
 const defaultRouterOptions: InitRouterOptions = {
 	routes: []

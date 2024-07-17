@@ -1,12 +1,12 @@
 {
 	"name": "another-react-router",
-	"version": "0.0.1",
+	"version": "0.5.0",
 	"description": "Another react router is a npm package, that allowes developers and users comfortabe route between pages on their web applications",
 	"main": "dist/index.js",
 	"module": "dist/index.mjs",
 	"types": "dist/index.d.ts",
 	"scripts": {
-		"build": "tsc && tsup src/index.ts --format cjs,esm --dts && tsup src/cli.ts --format cjs,esm --dts",
+		"build": "tsc && tsup src/index.ts --format cjs,esm --dts && tsup src/cli/index.ts --format cjs,esm --dts",
 		"lint": "tsc",
 		"changeset:release": "pnpm run build && changeset publish",
 		"router": "bun run src/cli.ts",

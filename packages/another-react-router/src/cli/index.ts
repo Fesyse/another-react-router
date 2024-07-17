@@ -1,6 +1,6 @@
 import { Command } from "commander"
-import { getPackageInfo } from "./cli-utils"
 import { initializeRoutes } from "./commands/initialize-routes"
+import { getPackageInfo } from "./utils"
 
 async function initCli() {
 	const packageInfo = await getPackageInfo()

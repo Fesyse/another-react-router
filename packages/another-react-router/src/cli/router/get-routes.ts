@@ -1,7 +1,7 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
 import * as fs from "fs"
 import * as nodePath from "path"
-import { FileType, type Route } from "./index"
+import { FileType, type Route } from "../../"
 
 const supportedFileExtensions = ["tsx", "jsx", "js", "ts"] as const
 

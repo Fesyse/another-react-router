@@ -1,2 +1,2 @@
-export * from "./router/index"
-export * from "./components/index"
+export * from "./browser"
+export * from "./get-routes-components"

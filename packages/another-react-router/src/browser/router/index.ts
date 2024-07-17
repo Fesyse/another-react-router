@@ -2,7 +2,7 @@ import {
 	LayoutComponent,
 	NotFoundComponent,
 	PageComponent
-} from "../components"
+} from "../../browser/components"
 
 enum FileType {
 	PAGE = "page",
@@ -57,7 +57,7 @@ interface RawRoute {
 	useOleg?: boolean
 }
 
-export * from "./get-routes-components"
+export * from "../../get-routes-components"
 export {
 	type InitRouterOptions,
 	type Route,
