@@ -1,50 +1,53 @@
 {
-	"name": "another-react-router",
-	"version": "0.5.0",
-	"description": "Another react router is a npm package, that allowes developers and users comfortabe route between pages on their web applications",
-	"main": "dist/browser/index.js",
-	"module": "dist/browser/index.mjs",
-	"types": "dist/browser/index.d.ts",
-	"scripts": {
-		"build": "tsc && tsup src/browser/index.ts src/cli/index.ts --format cjs,esm --dts",
-		"lint": "tsc",
-		"changeset:release": "pnpm run build && changeset publish",
-		"router": "bun run src/cli/index.ts",
-		"pub:beta": "bun run build && pnpm publish --no-git-checks --access public --tag beta",
-		"pub:next": "bun run build && pnpm publish --no-git-checks --access public --tag next",
-		"pub:release": "bun run build && pnpm publish --access public"
-	},
-	"bin": "dist/cli/index.js",
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/Fesyse/another-react-router.git",
-		"directory": "packages/another-react-router"
-	},
-	"keywords": [
-		"router",
-		"react"
-	],
-	"author": "fesyse",
-	"license": "MIT",
-	"bugs": {
-		"url": "https://github.com/Fesyse/another-react-router/issues"
-	},
-	"homepage": "https://github.com/Fesyse/another-react-router#readme",
-	"dependencies": {
-		"bun": "^1.1.20",
-		"chalk": "^5.3.0",
-		"commander": "^10.0.0",
-		"react": "^18.3.1",
-		"react-dom": "^18.3.1",
-		"type-fest": "^4.21.0"
-	},
-	"devDependencies": {
-		"@types/react": "^18.3.1",
-		"@types/bun": "^1.1.6",
-		"@changesets/cli": "^2.27.7",
-		"@types/fs-extra": "^11.0.4",
-		"prettier": "^3.3.2",
-		"tsup": "^8.1.0",
-		"typescript": "^5.5.3"
-	}
+  "name": "another-react-router",
+  "version": "0.5.0",
+  "description": "Another react router is a npm package, that allowes developers and users comfortabe route between pages on their web applications",
+  "main": "dist/browser/index.js",
+  "module": "dist/browser/index.mjs",
+  "types": "dist/browser/index.d.ts",
+  "scripts": {
+    "build": "bun lint && tsup src/browser/index.ts src/cli/index.ts --format cjs,esm --dts",
+    "lint": "tsc",
+    "changeset:release": "pnpm run build && changeset publish",
+    "router": "bun run src/cli/index.ts",
+    "pub:beta": "bun run build && pnpm publish --no-git-checks --access public --tag beta",
+    "pub:next": "bun run build && pnpm publish --no-git-checks --access public --tag next",
+    "pub:release": "bun run build && pnpm publish --access public"
+  },
+  "bin": "dist/cli/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Fesyse/another-react-router.git",
+    "directory": "packages/another-react-router"
+  },
+  "keywords": [
+    "router",
+    "react"
+  ],
+  "author": "fesyse",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Fesyse/another-react-router/issues"
+  },
+  "homepage": "https://github.com/Fesyse/another-react-router#readme",
+  "dependencies": {
+    "@types/lodash.debounce": "^4.0.9",
+    "bun": "^1.1.20",
+    "chalk": "^5.3.0",
+    "chokidar": "^3.6.0",
+    "commander": "^10.0.0",
+    "lodash.debounce": "^4.0.8",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "type-fest": "^4.21.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.1",
+    "@types/bun": "^1.1.6",
+    "@changesets/cli": "^2.27.7",
+    "@types/fs-extra": "^11.0.4",
+    "prettier": "^3.3.2",
+    "tsup": "^8.1.0",
+    "typescript": "^5.5.3"
+  }
 }

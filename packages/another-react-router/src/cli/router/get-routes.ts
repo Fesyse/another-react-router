@@ -75,31 +75,29 @@ const getRoutes: GetRoutes = options => {
 		})
 		.filter(route => !!route)
 
-	// making sure there always page.tsx file
-	if (!routeFiles.some(file => file.fileType === FILE_TYPE.PAGE))
-		throw new Error(
-			`No page component in ${routesPath} directory. Add one or remove directory.\nVisit ${process.env.DOCS_WEBSITE_URL}/docs/routing for aditional information.`
-		)
+	// making sure there always page.(js/ts/jsx/tsx) file - otherwise skipping this route
+	if (routeFiles.some(file => file.fileType === FILE_TYPE.PAGE)) {
+		// now we are creating new route
+		const newRoute: Partial<Route> = {}
 
-	// now we are creating new route
-	const newRoute: Partial<Route> = {}
+		// @ts-expect-error asd
+		const path = routeFiles[0]!.file.path as string
+		const newRoutePath =
+			"/" + path.slice(originalRoutesPath.length, path.length - 1)
+		newRoute.path =
+			newRoutePath.length === 1 ? newRoutePath : newRoutePath + "/"
+		routeFiles.map(routeFile => {
+			if (routeFile?.useOleg) {
+				newRoute.useOleg = true
+			}
 
-	// @ts-expect-error asd
-	const path = routeFiles[0]!.file.path as string
-	const newRoutePath =
-		"/" + path.slice(originalRoutesPath.length, path.length - 1)
-	newRoute.path = newRoutePath.length === 1 ? newRoutePath : newRoutePath + "/"
-	routeFiles.map(routeFile => {
-		if (routeFile?.useOleg) {
-			newRoute.useOleg = true
-		}
+			newRoute[routeFile.fileType] = nodePath
+				.join(path, routeFile.file.name)
+				.replaceAll("\\", "/")
+		})
 
-		newRoute[routeFile.fileType] = nodePath
-			.join(path, routeFile.file.name)
-			.replaceAll("\\", "/")
-	})
-
-	routes.push(newRoute as Route)
+		routes.push(newRoute as Route)
+	}
 
 	// then mapping through all folders in directory
 	folders
