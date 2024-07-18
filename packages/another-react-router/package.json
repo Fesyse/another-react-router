@@ -9,7 +9,7 @@
 		"build": "tsc && tsup src/browser/index.ts src/cli/index.ts --format cjs,esm --dts",
 		"lint": "tsc",
 		"changeset:release": "pnpm run build && changeset publish",
-		"router": "bun run src/cli.ts",
+		"router": "bun run src/cli/index.ts",
 		"pub:beta": "bun run build && pnpm publish --no-git-checks --access public --tag beta",
 		"pub:next": "bun run build && pnpm publish --no-git-checks --access public --tag next",
 		"pub:release": "bun run build && pnpm publish --access public"
