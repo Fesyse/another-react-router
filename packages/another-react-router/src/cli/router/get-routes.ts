@@ -1,4 +1,3 @@
-/* eslint-disable no-mixed-spaces-and-tabs */
 import * as fs from "fs"
 import * as nodePath from "path"
 import { FILE_TYPE, FileType, type Route } from "@/browser"

@@ -95,8 +95,10 @@ export const initializeRoutes = new Command("init")
 					)
 					.replaceAll("\\", "/")
 
+				const date = new Date()
+				const time = `[${date.getHours()}:${date.getMinutes() % 60}:${date.getSeconds() % (60 * 60)}]`
 				cliLogger.success(
-					`✨ Successfully initialized routes in ${_configPath}.`
+					time + `✨ Successfully initialized routes in ${_configPath}.`
 				)
 			}
 
