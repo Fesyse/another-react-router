@@ -26,8 +26,9 @@ const getNotFoundPage = (
 	return <NotFoundComponent />
 }
 
-export function AnotherReactRouterProvider(props: InitRouterOptions) {
+const AnotherReactRouterProvider: React.FC<InitRouterOptions> = props => {
 	const [component, setComponent] = useState<React.ReactNode>()
+	const params = useParams()
 
 	const currentPath = useInitRouter(props)
 
@@ -36,7 +37,6 @@ export function AnotherReactRouterProvider(props: InitRouterOptions) {
 			isRouterPathMatcheWithCurrentPath(route.path, currentPath)
 		)
 		if (!route) return setComponent(getNotFoundPage(currentPath, props.routes))
-		const params = useParams()
 
 		setComponent(
 			route.layout ? (
@@ -61,3 +61,5 @@ export function AnotherReactRouterProvider(props: InitRouterOptions) {
 
 	return component
 }
+
+export { AnotherReactRouterProvider }
