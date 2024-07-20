@@ -1,7 +1,6 @@
 import { type FC, type PropsWithChildren } from "react"
 
 export * from "./provider"
-export * from "./link"
 
 type PageProps = {
 	params: Record<string, unknown>

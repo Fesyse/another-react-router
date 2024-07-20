@@ -59,21 +59,13 @@ const getConfigTemplate = (
 		return `
 ${WARNING}
 import { type RawRoute, getRoutesComponents } from "another-react-router"
-import { type FC } from "react"
 
 const rawRoutes: RawRoute[] = ${routes}
 const routes = await getRoutesComponents(rawRoutes)
 
 type HrefType = ${hrefType}
 
-declare module "another-react-router" {
-	type Link = React.DetailedHTMLProps<
-	React.AnchorHTMLAttributes<HTMLAnchorElement>,
-	HTMLAnchorElement
-> & { href?: HrefType }
-}
-
-export { routes }
+export { routes, type HrefType }
 `
 	} else if (type.esm) {
 		return `
