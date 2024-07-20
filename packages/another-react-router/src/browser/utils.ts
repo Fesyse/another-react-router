@@ -1,8 +1,26 @@
-const isRouterPathMatchesWithCurrentPath = (
+const isRouterPathMatcheWithCurrentPath = (
 	routerPath: string,
-	currentPath: string
+	path: string
 ): boolean => {
-	return routerPath === currentPath
+	if (routerPath === path) return true
+
+	const splittedRouterPath = routerPath.split("/")
+	const splittedPath = path.split("/")
+
+	if (splittedRouterPath.length !== splittedPath.length) return false
+
+	for (let i = 0; i < splittedRouterPath.length; i++) {
+		if (
+			(splittedRouterPath[i]?.startsWith("[") ||
+				splittedRouterPath[i]?.startsWith("[...")) &&
+			splittedRouterPath[i]?.endsWith("]")
+		)
+			continue
+
+		if (splittedRouterPath[i] !== splittedPath[i]) return false
+	}
+
+	return true
 }
 
-export { isRouterPathMatchesWithCurrentPath }
+export { isRouterPathMatcheWithCurrentPath }

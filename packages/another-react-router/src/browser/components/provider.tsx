@@ -1,15 +1,29 @@
 import React, { useEffect, useState } from "react"
+import { NotFound } from "./not-found"
 import { WithOleg } from "./with-oleg"
 import { type InitRouterOptions, type RouteWithComponents } from "@/browser"
 import { useParams } from "@/browser/hooks"
 import { useInitRouter } from "@/browser/hooks/use-init-router"
-import { isRouterPathMatchesWithCurrentPath } from "@/browser/utils"
+import { isRouterPathMatcheWithCurrentPath } from "@/browser/utils"
+
+const findRouteFromPath = (
+	path: string,
+	routes: RouteWithComponents[]
+): RouteWithComponents | undefined => {
+	for (const route of routes) {
+		if (isRouterPathMatcheWithCurrentPath(route.path, path)) return route
+		else continue
+	}
+	return undefined
+}
 
 const getNotFoundPage = (
 	path: string,
 	routes: RouteWithComponents[]
 ): React.ReactNode => {
-	return
+	const route = findRouteFromPath(path, routes)
+	const NotFoundComponent = route?.["not-found"] ?? NotFound
+	return <NotFoundComponent />
 }
 
 export function AnotherReactRouterProvider(props: InitRouterOptions) {
@@ -19,7 +33,7 @@ export function AnotherReactRouterProvider(props: InitRouterOptions) {
 
 	useEffect(() => {
 		const route = props.routes.find(route =>
-			isRouterPathMatchesWithCurrentPath(route.path, currentPath)
+			isRouterPathMatcheWithCurrentPath(route.path, currentPath)
 		)
 		if (!route) return setComponent(getNotFoundPage(currentPath, props.routes))
 		const params = useParams()
