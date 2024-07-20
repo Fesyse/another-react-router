@@ -3,6 +3,7 @@ import { Command } from "commander"
 import * as fs from "fs"
 import debounce from "lodash.debounce"
 import * as path from "path"
+import { getHrefType } from "@/cli/router/get-href-type"
 import { getRoutes } from "@/cli/router/get-routes"
 import { getConfigTemplate } from "@/cli/utils"
 import { cliLogger, handleCliError } from "@/cli/utils"
@@ -66,8 +67,9 @@ export const initializeRoutes = new Command("init")
 						: undefined,
 					useOleg: route.useOleg ? true : undefined
 				}))
+				const hrefType = getHrefType(routes)
 
-				const fileContent =
+				const routesAsString =
 					"[" +
 					routes
 						.map(
@@ -85,7 +87,7 @@ export const initializeRoutes = new Command("init")
 
 				fs.writeFileSync(
 					configPath,
-					getConfigTemplate(fileContent, options.ts, options.esm)
+					getConfigTemplate(routesAsString, hrefType, { ...options })
 				)
 
 				const _configPath = path

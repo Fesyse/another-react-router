@@ -5,9 +5,7 @@ const defaultRouterOptions: InitRouterOptions = {
 	routes: []
 }
 
-const useInitRouter = <Options extends InitRouterOptions<Options["routes"]>>(
-	opts: Options
-) => {
+const useInitRouter = (opts: InitRouterOptions) => {
 	const [currentPath, setCurrentPath] = useState(window.location.pathname)
 
 	const handlePopState = () => {

@@ -5,6 +5,12 @@ import { type PackageJson } from "type-fest"
 
 const WARNING = `// THIS FILE SHOULD NOT BE MODIFIED
 // With love by another-react-router developers 💗`
+
+type TemplateType = {
+	ts: boolean
+	esm: boolean
+}
+
 function getPackageInfo() {
 	const packageJsonPath = path.join("package.json")
 
@@ -44,23 +50,37 @@ const handleCliError = (error: unknown) => {
 	process.exit(1)
 }
 
-const getConfigTemplate = (fileContent: string, ts: boolean, esm: boolean) => {
-	if (ts) {
+const getConfigTemplate = (
+	routes: string,
+	hrefType: string,
+	type: TemplateType
+) => {
+	if (type.ts) {
 		return `
 ${WARNING}
 import { type RawRoute, getRoutesComponents } from "another-react-router"
+import { type FC } from "react"
 
-const rawRoutes = ${fileContent} as const satisfies RawRoute[]
+const rawRoutes: RawRoute[] = ${routes}
 const routes = await getRoutesComponents(rawRoutes)
+
+type HrefType = ${hrefType}
+
+declare module "another-react-router" {
+	type Link = React.DetailedHTMLProps<
+	React.AnchorHTMLAttributes<HTMLAnchorElement>,
+	HTMLAnchorElement
+> & { href?: HrefType }
+}
 
 export { routes }
 `
-	} else if (esm) {
+	} else if (type.esm) {
 		return `
 ${WARNING}
 import { getRoutesComponents } from "another-react-router"
 
-const rawRoutes = ${fileContent}
+const rawRoutes = ${routes}
 const routes = await getRoutesComponents(rawRoutes)
 
 export { routes }
@@ -71,7 +91,7 @@ ${WARNING}
 
 const { getRoutesComponents } = require("another-react-router")
 
-const rawRoutes = ${fileContent}
+const rawRoutes = ${routes}
 const routes = await getRoutesComponents(rawRoutes)
 
 module.exports = { routes }

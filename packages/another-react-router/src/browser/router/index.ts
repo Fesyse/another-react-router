@@ -13,24 +13,19 @@ const FILE_TYPE = {
 
 type FileType = ObjectValues<typeof FILE_TYPE>
 
-interface InitRouterOptions<TRoutes = RouteWithComponents[]> {
+interface InitRouterOptions {
 	/**
 	 * Provide routes that you created via cli
-	 *
-	 * Or if you dont like file based routing provide them by yourself
 	 * @example
-	 * import { routes } from "@/another-react-router.config.ts"
+	 *```jsx
+	 * import { routes } from "../another-react-router.config.ts"
 	 *
-	 * {
-	 * 	routes: routes
+	 * const RouterProvider = () => {
+	 * 	return <AnotherReactRouterProvider routes={routes} />
 	 * }
-	 *
-	 * @example
-	 * routes: [{
-	 *	path: ""
-	 * }]
+	 * ```
 	 */
-	routes: TRoutes
+	routes: RouteWithComponents[]
 }
 
 type Module<Key extends string, Type> =
@@ -44,8 +39,8 @@ interface Route {
 	"not-found"?: string
 	useOleg?: boolean
 }
-interface RouteWithComponents<TPath extends string = string> {
-	path: TPath
+interface RouteWithComponents {
+	path: string
 	page: PageComponent
 	layout?: LayoutComponent
 	"not-found"?: NotFoundComponent

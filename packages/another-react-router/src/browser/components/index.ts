@@ -1,6 +1,7 @@
 import { type FC, type PropsWithChildren } from "react"
 
 export * from "./provider"
+export * from "./link"
 
 type PageProps = {
 	params: Record<string, unknown>
@@ -10,13 +11,14 @@ type PageComponent = FC<PageProps>
 type LayoutComponent = FC<PropsWithChildren<PageProps>>
 type NotFoundComponent = FC
 
-type LinkComponent<TRoutes> = React.FC<
-	React.ClassAttributes<HTMLAnchorElement> &
-		React.AnchorHTMLAttributes<HTMLAnchorElement> &
-		TRoutes
+type LinkComponent<THref extends string = string> = React.FC<
+	React.DetailedHTMLProps<
+		React.AnchorHTMLAttributes<HTMLAnchorElement>,
+		HTMLAnchorElement
+	> & { href?: THref }
 >
 
-export {
+export type {
 	PageProps,
 	PageComponent,
 	LayoutComponent,

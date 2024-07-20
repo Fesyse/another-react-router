@@ -13,7 +13,5 @@
 		"paths": {
 			"@/*": ["./src/*"]
 		}
-	},
-	"include": ["src"],
-	"exclude": ["./src/another-react-router.config.ts"]
+	}
 }

@@ -12,7 +12,4 @@ type ArgumentTypes<F extends Function> = F extends (...args: infer A) => any
 
 type ObjectValues<T> = T[keyof T]
 
-type ExtractHrefTypeFromRoutes<TRoutes extends RouteWithComponents[]> =
-	TRoutes[number]["path"]
-
-export { ObjectValues, ArgumentTypes, DeepRequired, ExtractHrefTypeFromRoutes }
+export { ObjectValues, ArgumentTypes, DeepRequired }
