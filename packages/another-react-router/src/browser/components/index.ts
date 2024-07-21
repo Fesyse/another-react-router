@@ -2,8 +2,10 @@ import { type FC, type PropsWithChildren } from "react"
 
 export * from "./provider"
 
+type Params = Record<string, string | string[] | undefined>
+
 type PageProps = {
-	params: Record<string, unknown>
+	params: Params
 }
 
 type PageComponent = FC<PageProps>
@@ -18,6 +20,7 @@ type LinkComponent<THref extends string = string> = React.FC<
 >
 
 export type {
+	Params,
 	PageProps,
 	PageComponent,
 	LayoutComponent,

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react"
+import { RouterContext, RouterContextProvider } from "./context"
 import { NotFound } from "./not-found"
 import { WithOleg } from "./with-oleg"
 import { type InitRouterOptions, type RouteWithComponents } from "@/browser"
@@ -59,7 +60,7 @@ const AnotherReactRouterProvider: React.FC<InitRouterOptions> = props => {
 		)
 	}, [currentPath])
 
-	return component
+	return <RouterContextProvider>{component}</RouterContextProvider>
 }
 
 export { AnotherReactRouterProvider }
