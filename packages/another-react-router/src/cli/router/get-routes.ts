@@ -54,7 +54,7 @@ const getRoutes: GetRoutes = options => {
 		.readdirSync(routesPath!, { withFileTypes: true })
 		.map(file => {
 			if (file.isDirectory()) {
-				if (file.name.startsWith("_") || file.name.startsWith("dist")) return
+				if (file.name.startsWith("_")) return
 				folders.push(file.name)
 				return undefined
 			}

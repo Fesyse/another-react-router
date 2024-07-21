@@ -60,7 +60,13 @@ const AnotherReactRouterProvider: React.FC<InitRouterOptions> = props => {
 		)
 	}, [currentPath])
 
-	return <RouterContextProvider>{component}</RouterContextProvider>
+	return (
+		<RouterContextProvider
+			routesPathnames={props.routes.map(route => route.path)}
+		>
+			{component}
+		</RouterContextProvider>
+	)
 }
 
 export { AnotherReactRouterProvider }

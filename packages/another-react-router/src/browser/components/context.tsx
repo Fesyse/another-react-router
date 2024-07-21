@@ -2,11 +2,12 @@ import React, {
 	type FC,
 	type PropsWithChildren,
 	createContext,
-	useEffect,
 	useState
 } from "react"
+import { normalizePathname } from "../utils"
 
 type TRouterContextValues = {
+	routesPathnames: string[]
 	pathname: string
 }
 type TRouterContextActions = {
@@ -14,22 +15,32 @@ type TRouterContextActions = {
 }
 type TRouterContext = TRouterContextValues & TRouterContextActions
 
-const RouterContext = createContext<TRouterContext | null>(null)
+const RouterContext = createContext<TRouterContext | null>({
+	pathname: normalizePathname(window.location.pathname),
+	routesPathnames: [],
+	setPathname: () => {}
+})
 
-const RouterContextProvider: FC<PropsWithChildren> = ({ children }) => {
-	const [router, setRouter] = useState<TRouterContext | null>(null)
+type RouterContextProviderProps = {
+	routesPathnames: string[]
+}
 
-	const setPathname: TRouterContextActions["setPathname"] = pathname => {
-		setRouter({ setPathname, pathname })
-	}
+const RouterContextProvider: FC<
+	PropsWithChildren<RouterContextProviderProps>
+> = ({ children, routesPathnames }) => {
+	const [router, setRouter] = useState<TRouterContext>({
+		pathname: normalizePathname(window.location.pathname),
+		routesPathnames,
+		setPathname: () => {}
+	})
 
-	useEffect(
-		() => setRouter({ setPathname, pathname: window.location.pathname }),
-		[]
-	)
+	const setPathname: TRouterContextActions["setPathname"] = pathname =>
+		setRouter({ setPathname, pathname, routesPathnames })
 
 	return (
-		<RouterContext.Provider value={router}>{children}</RouterContext.Provider>
+		<RouterContext.Provider value={{ ...router, setPathname }}>
+			{children}
+		</RouterContext.Provider>
 	)
 }
 

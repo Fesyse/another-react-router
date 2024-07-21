@@ -5,13 +5,23 @@ const useRouter = () => {
 	const routerContext = useContext(RouterContext)!
 
 	const push = (pathname: string) => {
-		if (pathname.startsWith("/")) return (window.location.href = pathname)
-		else return (window.location.href = pathname + routerContext.pathname)
+		return window.history.pushState(
+			null,
+			"",
+			pathname + (pathname.endsWith("/") ? "" : routerContext.pathname)
+		)
+	}
+	const replace = (pathname: string) => {
+		return window.history.replaceState(
+			null,
+			"",
+			pathname + (pathname.endsWith("/") ? "" : routerContext.pathname)
+		)
 	}
 	const back = () => window.history.back()
 	const refresh = () => window.location.reload()
 
-	return { pathname: routerContext.pathname, push, back, refresh }
+	return { pathname: routerContext.pathname, push, replace, back, refresh }
 }
 
 export { useRouter }

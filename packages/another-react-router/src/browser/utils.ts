@@ -11,8 +11,7 @@ const isRouterPathMatcheWithCurrentPath = (
 
 	for (let i = 0; i < splittedRouterPath.length; i++) {
 		if (
-			(splittedRouterPath[i]?.startsWith("[") ||
-				splittedRouterPath[i]?.startsWith("[...")) &&
+			splittedRouterPath[i]?.startsWith("[") &&
 			splittedRouterPath[i]?.endsWith("]")
 		)
 			continue
@@ -23,4 +22,7 @@ const isRouterPathMatcheWithCurrentPath = (
 	return true
 }
 
-export { isRouterPathMatcheWithCurrentPath }
+const normalizePathname = (pathname: string) =>
+	pathname.endsWith("/") ? pathname : pathname + "/"
+
+export { isRouterPathMatcheWithCurrentPath, normalizePathname }

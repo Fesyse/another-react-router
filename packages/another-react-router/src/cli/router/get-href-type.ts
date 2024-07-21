@@ -7,10 +7,7 @@ const getHrefType = (routes: Route[]) => {
 		let splittedType = type.split("/")
 		let withAngledBrackets = false
 		splittedType = splittedType.map(type => {
-			if (
-				(type.startsWith("[..") && type.endsWith("]")) ||
-				(type.startsWith("[") && type.endsWith("]"))
-			) {
+			if (type.startsWith("[") && type.endsWith("]")) {
 				withAngledBrackets = true
 				return "${string}"
 			}

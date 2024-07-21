@@ -1,3 +1,7 @@
+import { useRouter } from "another-react-router"
+
 export default function Page() {
-	return <div>PIZDA</div>
+	const router = useRouter()
+
+	return <button onClick={() => router.replace("/")}>XUESSO</button>
 }

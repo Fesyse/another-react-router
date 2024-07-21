@@ -1,34 +1,38 @@
 import { useContext, useEffect, useState } from "react"
 import { RouterContext } from "../components/context"
+import { normalizePathname } from "../utils"
 import { type InitRouterOptions } from "@/browser"
 
 const useInitRouter = (opts: InitRouterOptions) => {
-	const pathname = window.location.pathname
+	const pathname = normalizePathname(window.location.pathname)
 	const [currentPath, setCurrentPath] = useState(
 		pathname.endsWith("/") ? pathname : pathname + "/"
 	)
 	const routerContext = useContext(RouterContext)!
 
 	const handlePopState = () => {
-		const pathname = window.location.pathname.endsWith("/")
-			? window.location.pathname
-			: window.location.pathname + "/"
+		console.log("pop state event triggered")
+		const pathname = normalizePathname(window.location.pathname)
 		setCurrentPath(pathname)
 		routerContext.setPathname(pathname)
 	}
 
 	useEffect(() => {
+		// @ts-ignore
+		window.history.onpushstate = handlePopState
 		window.addEventListener("popstate", handlePopState)
+		window.addEventListener("replaceState", handlePopState)
 		return () => {
+			// @ts-ignore
+			window.history.onpushstate = undefined
 			window.removeEventListener("popstate", handlePopState)
+			window.removeEventListener("replaceState", handlePopState)
 		}
 	}, [])
 
 	useEffect(() => {
 		const handlePopState = () => {
-			const pathname = window.location.pathname.endsWith("/")
-				? window.location.pathname
-				: window.location.pathname + "/"
+			const pathname = normalizePathname(window.location.pathname)
 			setCurrentPath(pathname)
 			routerContext.setPathname(pathname)
 		}
@@ -56,6 +60,8 @@ const useInitRouter = (opts: InitRouterOptions) => {
 			document.removeEventListener("click", handleLinkClick)
 		}
 	}, [setCurrentPath])
+
+	useEffect(() => console.log(true), [window.history.state])
 
 	return currentPath
 }
