@@ -90,4 +90,21 @@ module.exports = { routes }
 `
 	}
 }
-export { cliLogger, getConfigTemplate, handleCliError, getPackageInfo }
+
+const getTimeTemplate = () => {
+	const date = new Date()
+	const hours = date.getHours()
+	const minutes = date.getMinutes() % 60
+	const seconds = date.getSeconds() % (60 * 60)
+
+	const time = `[${Math.floor(hours / 10)}${hours % 10}:${Math.floor(minutes / 10)}${minutes % 10}:${Math.floor(seconds / 10)}${seconds % 10}]`
+	return time
+}
+
+export {
+	cliLogger,
+	getTimeTemplate,
+	getConfigTemplate,
+	handleCliError,
+	getPackageInfo
+}
