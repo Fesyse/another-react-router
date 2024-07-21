@@ -33,10 +33,9 @@ const AnotherReactRouterProvider: React.FC<InitRouterOptions> = props => {
 	const currentPath = useInitRouter(props)
 
 	useEffect(() => {
-		const route = props.routes.find(route => {
-			console.log(route.path, currentPath)
-			return isRouterPathMatcheWithCurrentPath(route.path, currentPath)
-		})
+		const route = props.routes.find(route =>
+			isRouterPathMatcheWithCurrentPath(route.path, currentPath)
+		)
 		if (!route) return setComponent(getNotFoundPage(currentPath, props.routes))
 
 		setComponent(

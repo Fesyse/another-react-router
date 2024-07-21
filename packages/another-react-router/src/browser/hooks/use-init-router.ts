@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react"
 import { type InitRouterOptions } from "@/browser"
 
-const defaultRouterOptions: InitRouterOptions = {
-	routes: []
-}
-
 const useInitRouter = (opts: InitRouterOptions) => {
-	const [currentPath, setCurrentPath] = useState(window.location.pathname)
+	const pathname = window.location.pathname
+	const [currentPath, setCurrentPath] = useState(
+		pathname.endsWith("/") ? pathname : pathname + "/"
+	)
 
 	const handlePopState = () => {
-		setCurrentPath(window.location.pathname)
+		const pathname = window.location.pathname
+		setCurrentPath(pathname.endsWith("/") ? pathname : pathname + "/")
 	}
 
 	useEffect(() => {
@@ -21,7 +21,8 @@ const useInitRouter = (opts: InitRouterOptions) => {
 
 	useEffect(() => {
 		const handlePopState = () => {
-			setCurrentPath(window.location.pathname)
+			const pathname = window.location.pathname
+			setCurrentPath(pathname.endsWith("/") ? pathname : pathname + "/")
 		}
 
 		const handleLinkClick = (e: MouseEvent) => {

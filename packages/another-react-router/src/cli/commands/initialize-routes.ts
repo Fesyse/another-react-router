@@ -5,7 +5,7 @@ import debounce from "lodash.debounce"
 import * as path from "path"
 import { getHrefType } from "@/cli/router/get-href-type"
 import { getRoutes } from "@/cli/router/get-routes"
-import { getConfigTemplate } from "@/cli/utils"
+import { getConfigTemplate, getTimeTemplate } from "@/cli/utils"
 import { cliLogger, handleCliError } from "@/cli/utils"
 
 type InitializeRoutesActionOptions = {
@@ -97,15 +97,9 @@ export const initializeRoutes = new Command("init")
 					)
 					.replaceAll("\\", "/")
 
-				const date = new Date()
-				const hours = date.getHours()
-				const minutes = date.getMinutes() % 60
-				const seconds = date.getSeconds() % (60 * 60)
-
-				const time = `[${Math.floor(hours / 10)}${hours % 10}:${Math.floor(minutes / 10)}${minutes % 10}:${Math.floor(seconds / 10)}${seconds % 10}]`
-
 				cliLogger.success(
-					time + `✨ Successfully initialized routes in ${_configPath}.`
+					getTimeTemplate() +
+						`✨ Successfully initialized routes in ${_configPath}.`
 				)
 			}
 
@@ -113,7 +107,11 @@ export const initializeRoutes = new Command("init")
 			const debouncedInitializeRoutes = debounce(initializeRoutes, 1000)
 
 			const watcher = watch(options.routes)
-			watcher.on("all", () => debouncedInitializeRoutes())
+
+			watcher.on("add", () => debouncedInitializeRoutes())
+			watcher.on("addDir", () => debouncedInitializeRoutes())
+			watcher.on("unlink", () => debouncedInitializeRoutes())
+			watcher.on("unlinkDir", () => debouncedInitializeRoutes())
 		} catch (err) {
 			handleCliError(err)
 		}

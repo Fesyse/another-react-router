@@ -13,5 +13,6 @@
 		"paths": {
 			"@/*": ["./src/*"]
 		}
-	}
+	},
+	"exclude": ["another-react-router.config.ts"]
 }
