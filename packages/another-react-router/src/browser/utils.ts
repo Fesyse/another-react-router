@@ -4,8 +4,8 @@ const isRouterPathMatcheWithCurrentPath = (
 ): boolean => {
 	if (routerPath === path) return true
 
-	const splittedRouterPath = routerPath.split("/")
-	const splittedPath = path.split("/")
+	const splittedRouterPath = routerPath.split("/").filter(path => path !== "")
+	const splittedPath = path.split("/").filter(path => path !== "")
 
 	if (splittedRouterPath.length !== splittedPath.length) return false
 

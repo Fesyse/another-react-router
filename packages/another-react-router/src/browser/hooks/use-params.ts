@@ -7,7 +7,7 @@ const useParams = (): Params => {
 	const { pathname, routesPathnames } = useContext(RouterContext)!
 	const params: Params = {}
 
-	const splittedPathname = pathname.split("/")
+	const splittedPathname = pathname.split("/").filter(path => path !== "")
 
 	for (const routePathname of routesPathnames) {
 		if (isRouterPathMatcheWithCurrentPath(routePathname, pathname)) {
@@ -18,6 +18,7 @@ const useParams = (): Params => {
 					// otherwise 1 because of "["
 					const isSpreadRoute = path.startsWith("[...")
 					const paramName = path.slice(isSpreadRoute ? 4 : 1, -1)
+					console.log(splittedPathname)
 					params[paramName] = isSpreadRoute
 						? splittedPathname.slice(i, splittedPathname.length)
 						: splittedPathname[i]
