@@ -108,10 +108,7 @@ export const initializeRoutes = new Command("init")
 
 			const watcher = watch(options.routes)
 
-			watcher.on("add", () => debouncedInitializeRoutes())
-			watcher.on("addDir", () => debouncedInitializeRoutes())
-			watcher.on("unlink", () => debouncedInitializeRoutes())
-			watcher.on("unlinkDir", () => debouncedInitializeRoutes())
+			watcher.on("all", debouncedInitializeRoutes)
 		} catch (err) {
 			handleCliError(err)
 		}

@@ -16,7 +16,9 @@ type TRouterContextActions = {
 type TRouterContext = TRouterContextValues & TRouterContextActions
 
 const RouterContext = createContext<TRouterContext | null>({
-	pathname: normalizePathname(window.location.pathname),
+	pathname: normalizePathname(
+		typeof window === "undefined" ? "" : window.location.pathname
+	),
 	routesPathnames: [],
 	setPathname: () => {}
 })
