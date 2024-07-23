@@ -13,8 +13,10 @@ const isRouterPathMatcheWithCurrentPath = (
 		if (
 			splittedRouterPath[i]?.startsWith("[") &&
 			splittedRouterPath[i]?.endsWith("]")
-		)
+		) {
+			if (splittedPath[i]?.startsWith("[...")) break
 			continue
+		}
 
 		if (splittedRouterPath[i] !== splittedPath[i]) return false
 	}
