@@ -16,8 +16,11 @@ const useParams = (): Params => {
 				if (path.startsWith("[") && path.endsWith("]")) {
 					// checking if pathg starts with "[..." if so removing 4 letters
 					// otherwise 1 because of "["
-					const paramName = path.slice(path.startsWith("[...") ? 4 : 1, -1)
-					params[paramName] = splittedPathname[i]
+					const isSpreadRoute = path.startsWith("[...")
+					const paramName = path.slice(isSpreadRoute ? 4 : 1, -1)
+					params[paramName] = isSpreadRoute
+						? splittedPathname.slice(i, splittedPathname.length)
+						: splittedPathname[i]
 				}
 			})
 		} else continue
