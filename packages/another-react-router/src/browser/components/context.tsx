@@ -22,25 +22,16 @@ const RouterContext = createContext<TRouterContext | null>({
 })
 
 type RouterContextProviderProps = {
+	pathname: string
+	setPathname: React.Dispatch<React.SetStateAction<string>>
 	routesPathnames: string[]
 }
 
 const RouterContextProvider: FC<
 	PropsWithChildren<RouterContextProviderProps>
-> = ({ children, routesPathnames }) => {
-	const [router, setRouter] = useState<TRouterContext>({
-		pathname: normalizePathname(window.location.pathname),
-		routesPathnames,
-		setPathname: () => {}
-	})
-
-	const setPathname: TRouterContextActions["setPathname"] = pathname =>
-		setRouter({ setPathname, pathname, routesPathnames })
-
+> = ({ children, ...props }) => {
 	return (
-		<RouterContext.Provider value={{ ...router, setPathname }}>
-			{children}
-		</RouterContext.Provider>
+		<RouterContext.Provider value={props}>{children}</RouterContext.Provider>
 	)
 }
 

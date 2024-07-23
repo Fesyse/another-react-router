@@ -2,10 +2,7 @@
 	"files": [],
 	"compilerOptions": {
 		"target": "ES2022",
-		"baseUrl": ".",
-		"paths": {
-			"@/*": ["./src/*"]
-		}
+		"baseUrl": "."
 	},
 
 	"references": [

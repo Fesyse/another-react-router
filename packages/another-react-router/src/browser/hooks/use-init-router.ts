@@ -11,20 +11,15 @@ const useInitRouter = (opts: InitRouterOptions) => {
 	const routerContext = useContext(RouterContext)!
 
 	const handlePopState = () => {
-		console.log("pop state event triggered")
 		const pathname = normalizePathname(window.location.pathname)
 		setCurrentPath(pathname)
 		routerContext.setPathname(pathname)
 	}
 
 	useEffect(() => {
-		// @ts-ignore
-		window.history.onpushstate = handlePopState
 		window.addEventListener("popstate", handlePopState)
 		window.addEventListener("replaceState", handlePopState)
 		return () => {
-			// @ts-ignore
-			window.history.onpushstate = undefined
 			window.removeEventListener("popstate", handlePopState)
 			window.removeEventListener("replaceState", handlePopState)
 		}
@@ -61,9 +56,7 @@ const useInitRouter = (opts: InitRouterOptions) => {
 		}
 	}, [setCurrentPath])
 
-	useEffect(() => console.log(true), [window.history.state])
-
-	return currentPath
+	return [currentPath, setCurrentPath] as const
 }
 
 export { useInitRouter }

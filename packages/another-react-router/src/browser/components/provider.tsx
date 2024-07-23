@@ -31,7 +31,7 @@ const AnotherReactRouterProvider: React.FC<InitRouterOptions> = props => {
 	const [component, setComponent] = useState<React.ReactNode>()
 	const params = useParams()
 
-	const currentPath = useInitRouter(props)
+	const [currentPath, setCurrentPath] = useInitRouter(props)
 
 	useEffect(() => {
 		const route = props.routes.find(route =>
@@ -62,6 +62,8 @@ const AnotherReactRouterProvider: React.FC<InitRouterOptions> = props => {
 
 	return (
 		<RouterContextProvider
+			pathname={currentPath}
+			setPathname={setCurrentPath}
 			routesPathnames={props.routes.map(route => route.path)}
 		>
 			{component}
