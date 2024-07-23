@@ -7,20 +7,16 @@ const isRouterPathMatcheWithCurrentPath = (
 	const splittedRouterPath = routerPath.split("/").filter(path => path !== "")
 	const splittedPath = path.split("/").filter(path => path !== "")
 
-	if (splittedRouterPath.length !== splittedPath.length) return false
-
 	for (let i = 0; i < splittedRouterPath.length; i++) {
 		if (
 			splittedRouterPath[i]?.startsWith("[") &&
 			splittedRouterPath[i]?.endsWith("]")
 		) {
-			if (splittedPath[i]?.startsWith("[...")) break
-			continue
+			if (splittedRouterPath[i]?.startsWith("[...")) break
+			else continue
 		}
-
 		if (splittedRouterPath[i] !== splittedPath[i]) return false
 	}
-
 	return true
 }
 
