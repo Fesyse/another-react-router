@@ -3,7 +3,7 @@ const config = {
 	semi: false,
 	trailingComma: "none",
 	tabWidth: 2,
-	useTabs: true,
+	useTabs: false,
 	singleQuote: false,
 	arrowParens: "avoid",
 	importOrder: [

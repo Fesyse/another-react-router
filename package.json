@@ -1,7 +1,7 @@
 {
 	"name": "another-react-router-app",
 	"private": true,
-	"version": "1.2.0",
+	"version": "1.2.1",
 	"type": "module",
 	"scripts": {
 		"dev": "sh -c 'bunx another-react-router init --watch & vite'",
