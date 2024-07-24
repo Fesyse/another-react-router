@@ -1,11 +1,5 @@
 # another-react-router-app
 
-## 1.2.1
-
-### Patch Changes
-
-- add readme.md file
-
 ## 1.2.0
 
 ### Minor Changes
@@ -34,7 +28,7 @@ and pathname in browser `/store/987/164`, so now params should be
 
 ```json
 {
-  "slug": ["987", "164"]
+	"slug": ["987", "164"]
 }
 ```
 
