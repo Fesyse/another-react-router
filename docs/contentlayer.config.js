@@ -1,5 +1,4 @@
 import { defineDocumentType, makeSource } from "contentlayer2/source-files"
-import { getHighlighter, loadTheme } from "@shikijs/compat"
 import rehypeAutolinkHeadings from "rehype-autolink-headings"
 import rehypePrettyCode from "rehype-pretty-code"
 import rehypeSlug from "rehype-slug"
@@ -72,12 +71,6 @@ export default makeSource({
       [
         rehypePrettyCode,
         {
-          getHighlighter: async () => {
-            const theme = await loadTheme(
-              path.join(process.cwd(), "./src/lib/highlighter-theme.json")
-            )
-            return await getHighlighter({ theme })
-          },
           onVisitLine(node) {
             // Prevent lines from collapsing in `display: grid` mode, and allow empty
             // lines to be copy/pasted

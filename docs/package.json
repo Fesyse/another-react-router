@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbo",
+    "dev:contentlayer": "sh -c 'bun dev & bun contentlayer2 dev'",
     "build": "contentlayer build && next build",
     "start": "next start",
     "lint": "next lint"
