@@ -1,9 +1,10 @@
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
+import { Comfortaa } from "next/font/google"
 import "@/globals.css"
 import { siteConfig } from "@/config/site"
+import { ThemeProvider } from "@/components/theme-provider"
 
-const inter = Inter({ subsets: ["latin"] })
+const comfortaa = Comfortaa({ subsets: ["latin"] })
 
 export const metadata: Metadata = siteConfig
 
@@ -14,7 +15,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body className={inter.className}>{children}</body>
+      <body className={comfortaa.className}>
+        <ThemeProvider attribute='class' defaultTheme='dark' enableSystem>
+          {children}
+        </ThemeProvider>
+      </body>
     </html>
   )
 }

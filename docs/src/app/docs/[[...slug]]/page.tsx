@@ -1,3 +1,4 @@
+import { Mdx } from "@/components/mdx"
 import { absoluteUrl } from "@/lib/utils"
 import { allDocs } from "contentlayer/generated"
 import type { Metadata } from "next"
@@ -49,5 +50,9 @@ export default async function Page(props: DocPageProps) {
   const doc = await getDocFromParams(props.params)
   if (!doc) notFound()
 
-  return <div className='text-red-500'>asd</div>
+  return (
+    <div>
+      <Mdx code={doc.body.code} />
+    </div>
+  )
 }
