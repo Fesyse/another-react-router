@@ -1,7 +1,13 @@
 import { type Metadata } from "next"
 
 export const siteConfig = {
-  title: "%s | Another react router",
+  shortenTitle: "ARR",
+  title: {
+    default: "Another react router",
+    template: "%s | Another react router",
+  },
+  keywords: ["React", "React router", "Router", "Npm", "Package"],
+  creator: "Fesyse",
   authors: [
     {
       name: "Another react router team",
@@ -12,4 +18,13 @@ export const siteConfig = {
   description:
     "Another react router is a npm package, that allowes developers and users comfortable route between pages on their web applications.",
   icon: "/icon.svg",
-} satisfies Metadata & { icon: string }
+  links: {
+    github: "https://github.com/another-react-router/another-react-router/",
+  },
+} satisfies Metadata & {
+  shortenTitle: string
+  icon: string
+  links: {
+    github: string
+  }
+}

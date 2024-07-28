@@ -7,13 +7,17 @@
     "dev:contentlayer": "sh -c 'bun dev & bun contentlayer2 dev'",
     "build": "contentlayer build && next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "ui": "bunx shadcn-ui@latest"
   },
   "dependencies": {
+    "@radix-ui/react-dialog": "^1.1.1",
     "@radix-ui/react-dropdown-menu": "^2.1.1",
+    "@radix-ui/react-scroll-area": "^1.1.0",
     "@radix-ui/react-slot": "^1.1.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "cmdk": "^1.0.0",
     "contentlayer2": "^0.4.6",
     "lucide-react": "^0.416.0",
     "next": "14.3.0-canary.43",
