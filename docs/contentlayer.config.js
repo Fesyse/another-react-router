@@ -106,10 +106,6 @@ export default makeSource({
               preElement.properties["__src__"] = node.__src__
             }
 
-            if (node.__event__) {
-              preElement.properties["__event__"] = node.__event__
-            }
-
             if (node.__style__) {
               preElement.properties["__style__"] = node.__style__
             }

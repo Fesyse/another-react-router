@@ -2,6 +2,7 @@ import { cn } from "@/lib/utils"
 import { CopyButton, CopyCommandButton } from "./copy-button"
 import { type NpmCommands } from "@/types/unist"
 import { useMDXComponent } from "next-contentlayer2/hooks"
+import { Button } from "./ui/button"
 
 const mdxComponents = {
   h1: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
@@ -182,6 +183,7 @@ const mdxComponents = {
       {...props}
     />
   ),
+  Button,
 }
 
 interface MdxProps {
