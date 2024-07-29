@@ -20,6 +20,7 @@ interface CopyButtonProps extends ButtonProps {
 
 interface CopyNpmCommandButtonProps extends DropdownMenuTriggerProps {
   commands: Required<NpmCommands>
+  iconClassName?: string
 }
 
 export function copyToClipboard(value: string) {
@@ -64,6 +65,7 @@ export function CopyButton({
 export function CopyCommandButton({
   commands,
   className,
+  iconClassName,
   ...props
 }: CopyNpmCommandButtonProps) {
   const [hasCopied, setHasCopied] = useState(false)
@@ -87,11 +89,12 @@ export function CopyCommandButton({
             "relative z-10 h-6 w-6 text-zinc-50 hover:bg-zinc-700 hover:text-zinc-50",
             className
           )}
+          {...props}
         >
           {hasCopied ? (
-            <CheckIcon className='h-3 w-3' />
+            <CheckIcon className={cn("h-3 w-3", iconClassName)} />
           ) : (
-            <ClipboardIcon className='h-3 w-3' />
+            <ClipboardIcon className={cn("h-3 w-3", iconClassName)} />
           )}
           <span className='sr-only'>Copy</span>
         </Button>

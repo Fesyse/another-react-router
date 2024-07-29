@@ -11,7 +11,7 @@ export const siteConfig = {
   authors: [
     {
       name: "Another react router team",
-      url: "https://github.com/another-react-router",
+      url: "https://github.com/fesyse/another-react-router",
     },
   ],
   applicationName: "Another react router",
@@ -19,7 +19,7 @@ export const siteConfig = {
     "Another react router is a npm package, that allowes developers and users comfortable route between pages on their web applications.",
   icon: "/icon.svg",
   links: {
-    github: "https://github.com/another-react-router/another-react-router/",
+    github: "https://github.com/fesyse/another-react-router/",
   },
 } satisfies Metadata & {
   shortenTitle: string
