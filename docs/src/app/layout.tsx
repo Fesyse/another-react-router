@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next"
 import { Comfortaa } from "next/font/google"
-import "@/globals.css"
+import "@/styles/globals.css"
 import { siteConfig } from "@/config/site"
 import { ThemeProvider } from "@/components/theme-provider"
 import { PropsWithChildren } from "react"
@@ -33,7 +33,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
         <ThemeProvider attribute='class' defaultTheme='dark' enableSystem>
           <div className='relative flex min-h-screen flex-col bg-background'>
             <Header />
-            <main className='flex-1'>{children}</main>
+            <main className='h-[calc(100vh-3.5rem)]'>{children}</main>
             <Footer />
           </div>
         </ThemeProvider>

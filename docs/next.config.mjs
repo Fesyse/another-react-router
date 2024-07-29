@@ -1,7 +1,9 @@
 // next.config.js
-const { withContentlayer } = await import("next-contentlayer2")
+import { createContentlayerPlugin } from "next-contentlayer2"
 
 /** @type {import('next').NextConfig} */
 const nextConfig = { reactStrictMode: true }
+
+const withContentlayer = createContentlayerPlugin({})
 
 export default withContentlayer(nextConfig)

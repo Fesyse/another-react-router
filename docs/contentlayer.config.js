@@ -1,3 +1,4 @@
+import { getHighlighter, loadTheme } from "@shikijs/compat"
 import { defineDocumentType, makeSource } from "contentlayer2/source-files"
 import rehypeAutolinkHeadings from "rehype-autolink-headings"
 import rehypePrettyCode from "rehype-pretty-code"
@@ -19,6 +20,28 @@ const computedFields = {
     resolve: doc => doc._raw.flattenedPath.split("/").slice(1).join("/"),
   },
 }
+/** @type {import('rehype-pretty-code').Options} */
+const rehypePrettyCodeOptions = {
+  getHighlighter: async () => {
+    const theme = await loadTheme(
+      path.join(process.cwd(), "/lib/highlighter-theme.json")
+    )
+    return await getHighlighter({ theme })
+  },
+  onVisitLine(node) {
+    // Prevent lines from collapsing in `display: grid` mode, and allow empty
+    // lines to be copy/pasted
+    if (node.children.length === 0) {
+      node.children = [{ type: "text", value: " " }]
+    }
+  },
+  onVisitHighlightedLine(node) {
+    node.properties.className.push("line--highlighted")
+  },
+  onVisitHighlightedWord(node) {
+    node.properties.className = ["word--highlighted"]
+  },
+}
 
 export const Doc = defineDocumentType(() => ({
   name: "Doc",
@@ -31,6 +54,11 @@ export const Doc = defineDocumentType(() => ({
     },
     description: {
       type: "string",
+      required: false,
+    },
+    toc: {
+      type: "boolean",
+      default: true,
       required: false,
     },
   },
@@ -68,35 +96,14 @@ export default makeSource({
           }
         })
       },
-      [
-        rehypePrettyCode,
-        {
-          onVisitLine(node) {
-            // Prevent lines from collapsing in `display: grid` mode, and allow empty
-            // lines to be copy/pasted
-            if (node.children.length === 0) {
-              node.children = [{ type: "text", value: " " }]
-            }
-          },
-          onVisitHighlightedLine(node) {
-            node.properties.className.push("line--highlighted")
-          },
-          onVisitHighlightedWord(node) {
-            node.properties.className = ["word--highlighted"]
-          },
-        },
-      ],
+      [rehypePrettyCode, rehypePrettyCodeOptions],
       () => tree => {
         visit(tree, node => {
           if (node?.type === "element" && node?.tagName === "div") {
-            if (!("data-rehype-pretty-code-fragment" in node.properties)) {
-              return
-            }
+            if (!("data-rehype-pretty-code-fragment" in node.properties)) return
 
             const preElement = node.children.at(-1)
-            if (preElement.tagName !== "pre") {
-              return
-            }
+            if (preElement.tagName !== "pre") return
 
             preElement.properties["__withMeta__"] =
               node.children.at(0).tagName === "div"
@@ -115,6 +122,7 @@ export default makeSource({
       rehypeNpmCommand,
       [
         rehypeAutolinkHeadings,
+        // options
         {
           properties: {
             className: ["subheading-anchor"],

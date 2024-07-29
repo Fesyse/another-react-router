@@ -1,11 +1,16 @@
 import { Mdx } from "@/components/mdx"
 import { DocsPager } from "@/components/ui/docs-pager"
+import { Separator } from "@/components/ui/separator"
+import { getTableOfContents } from "@/lib/toc"
 import { absoluteUrl, cn } from "@/lib/utils"
 import { allDocs } from "contentlayer/generated"
 import { ChevronRightIcon } from "lucide-react"
 import type { Metadata } from "next"
+import "@/styles/mdx.css"
 import { notFound } from "next/navigation"
 import Balancer from "react-wrap-balancer"
+import { ScrollArea } from "@/components/ui/scroll-area"
+import { DashboardTableOfContents } from "@/components/toc"
 interface DocPageProps {
   params: {
     slug?: string[]
@@ -25,9 +30,7 @@ export async function generateMetadata({
 }: DocPageProps): Promise<Metadata> {
   const doc = await getDocFromParams(params)
 
-  if (!doc) {
-    return {}
-  }
+  if (!doc) return {}
 
   return {
     title: doc.title,
@@ -53,6 +56,7 @@ export default async function Page(props: DocPageProps) {
   const doc = await getDocFromParams(props.params)
   if (!doc) notFound()
 
+  const toc = await getTableOfContents(doc.body.raw)
   return (
     <main className='relative py-6 lg:gap-10 lg:py-8 xl:grid xl:grid-cols-[1fr_300px]'>
       <div className='mx-auto w-full min-w-0'>
@@ -71,11 +75,23 @@ export default async function Page(props: DocPageProps) {
             </p>
           )}
         </div>
-        <div className='pb-12 pt-8'>
+        <div className='pt-8'>
           <Mdx code={doc.body.code} />
         </div>
+        <Separator className='my-4' />
         <DocsPager doc={doc} />
       </div>
+      {doc.toc && (
+        <div className='hidden text-sm xl:block'>
+          <div className='sticky top-16 -mt-10 pt-4'>
+            <ScrollArea className='pb-10'>
+              <div className='sticky top-16 -mt-10 h-[calc(100vh-3.5rem)] py-12'>
+                <DashboardTableOfContents toc={toc} />
+              </div>
+            </ScrollArea>
+          </div>
+        </div>
+      )}
     </main>
   )
 }
