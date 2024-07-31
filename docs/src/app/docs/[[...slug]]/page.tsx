@@ -75,10 +75,9 @@ export default async function Page(props: DocPageProps) {
             </p>
           )}
         </div>
-        <div className='pt-8'>
+        <div className='pt-8 mb-4'>
           <Mdx code={doc.body.code} />
         </div>
-        <Separator className='my-4' />
         <DocsPager doc={doc} />
       </div>
       {doc.toc && (

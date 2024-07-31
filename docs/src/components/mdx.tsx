@@ -4,8 +4,18 @@ import { type NpmCommands } from "@/types/unist"
 import { useMDXComponent } from "next-contentlayer2/hooks"
 import { Button } from "@/components/ui/button"
 import { Tree } from "@/components/ui/tree-view"
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
 
 const mdxComponents = {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
   h1: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h1
       className={cn(

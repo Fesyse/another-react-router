@@ -14,9 +14,7 @@ interface DocsPagerProps {
 export function DocsPager({ doc }: DocsPagerProps) {
   const pager = getPagerForDoc(doc)
 
-  if (!pager) {
-    return null
-  }
+  if (!pager) return null
 
   return (
     <div className='flex flex-row items-center justify-between'>
