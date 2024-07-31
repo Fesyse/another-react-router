@@ -48,7 +48,7 @@ const homeFeatures: HomeFeature[] = [
 
 export default function Home() {
   return (
-    <div className='container pt-20 flex flex-col items-center gap-2'>
+    <div className='container relative md:mt-20 mt-10 flex flex-col items-center gap-2 before:dark:hidden before:w-72 before:aspect-square before:bg-red-500/50 before:absolute before:-left-16 before:top-6 before:blur-[75px] before:rounded-full after:dark:hidden after:w-72 after:aspect-square after:bg-red-500/50 after:absolute after:-right-52 after:bottom-24 after:blur-[75px] after:rounded-full'>
       <h1 className='text-center lg:text-6xl md:text-5xl text-3xl font-bold'>
         <Balancer>Another react router</Balancer>
       </h1>
@@ -78,7 +78,18 @@ export default function Home() {
           }}
         />
       </div>
-      <div className='py-20 lg:py-40'>
+      <p className='text-foreground/50'>Ready to get started?</p>
+      <div className='flex gap-3 items-center max-[400px]:flex-col max-[400px]:items-stretch'>
+        <Button asChild size='lg'>
+          <Link href='/docs/installation/'>Documentation</Link>
+        </Button>
+        <Button asChild variant='secondary' size='lg' className='gap-2'>
+          <Link href={siteConfig.links.github}>
+            Github <LinkIcon size={20} />
+          </Link>
+        </Button>
+      </div>
+      <div className='mt-8 md:mt-20'>
         <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 md:gap-2 max-w-7xl mx-auto'>
           {homeFeatures.map((feature, i) => (
             <div
@@ -103,17 +114,6 @@ export default function Home() {
             </div>
           ))}
         </div>
-      </div>
-      <p className='text-foreground/50'>Ready to get started?</p>
-      <div className='flex gap-3 items-center'>
-        <Button asChild size='lg'>
-          <Link href='/docs/installation/'>Documentation</Link>
-        </Button>
-        <Button asChild variant='secondary' size='lg' className='gap-2'>
-          <Link href={siteConfig.links.github}>
-            Github <LinkIcon size={20} />
-          </Link>
-        </Button>
       </div>
     </div>
   )
