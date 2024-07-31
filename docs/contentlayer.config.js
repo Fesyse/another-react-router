@@ -22,11 +22,11 @@ const computedFields = {
 }
 /** @type {import('rehype-pretty-code').Options} */
 const rehypePrettyCodeOptions = {
-  getHighlighter: async () => {
+  getHighlighter: async options => {
     const theme = await loadTheme(
-      path.join(process.cwd(), "/lib/highlighter-theme.json")
+      path.join(process.cwd(), "/src/lib/highlighter-theme.json")
     )
-    return await getHighlighter({ theme })
+    return await getHighlighter({ ...options, theme })
   },
   onVisitLine(node) {
     // Prevent lines from collapsing in `display: grid` mode, and allow empty
@@ -92,7 +92,6 @@ export default makeSource({
 
             node.__rawString__ = codeEl.children?.[0].value
             node.__src__ = node.properties?.__src__
-            node.__style__ = node.properties?.__style__
           }
         })
       },
@@ -111,10 +110,6 @@ export default makeSource({
 
             if (node.__src__) {
               preElement.properties["__src__"] = node.__src__
-            }
-
-            if (node.__style__) {
-              preElement.properties["__style__"] = node.__style__
             }
           }
         })

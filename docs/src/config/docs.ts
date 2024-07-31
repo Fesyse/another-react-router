@@ -18,13 +18,13 @@ export const docsConfig: DocsConfig = {
       href: "/",
       items: [
         {
-          title: "Installation",
-          href: "/docs/installation",
+          title: "Introduction",
+          href: "/docs/introduction",
           items: [],
         },
         {
-          title: "Getting started",
-          href: "/docs/getting-started",
+          title: "Installation",
+          href: "/docs/installation",
           items: [],
         },
       ],
