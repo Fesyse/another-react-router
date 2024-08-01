@@ -1,7 +1,7 @@
 {
   "name": "another-react-router-wrapper",
   "private": true,
-  "version": "1.2.1",
+  "version": "1.2.2",
   "type": "module",
   "scripts": {
     "pub:beta": "cd packages/another-react-router && bun pub:beta",
