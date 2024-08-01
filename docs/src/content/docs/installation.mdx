@@ -1,8 +1,86 @@
 ---
 title: Installation
-description: Installation
 ---
+
+### Install package
 
 ```bash
 npm install another-react-router
 ```
+
+### Create directory where all routes will contain
+
+<Tree
+  className='rounded-md h-60 bg-background overflow-hidden p-2'
+  initialSelectedId='6'
+>
+  <Folder element='src' value='1'>
+    <Folder value='2' element='routes'>
+      <File value='6'>
+        <p> page.tsx </p>
+      </File>
+    </Folder>
+    <Folder value='3' element='components' />
+    <File value='4'>
+      <p> app.tsx </p>
+    </File>
+    <File value='5'>
+      <p> main.tsx </p>
+    </File>
+  </Folder>
+  <File value='7'>
+    <p> tsconfig.json </p>
+  </File>
+  <File value='8'>
+    <p> package.json </p>
+  </File>
+  <CollapseButton />
+</Tree>
+
+Go to `page.tsx` file, and for example copy and paste following code
+
+```tsx
+export default function Page() {
+  return <div>Hello another react router!</div>
+}
+```
+
+### Run CLI
+
+```bash
+npx another-react-router init
+```
+
+By default it will create `another-react-router.config.ts` at the same level as `src` folder
+
+### Add router provider component
+
+```tsx
+import { AnotherReactRouterProvider } from "another-react-router"
+import { routes } from "another-react-router.config.ts"
+
+export function App() {
+  return <AnotherReactRouterProvider routes={routes} />
+}
+```
+
+To import `routes` from **another-react-router.config.ts** you need to change your tsconfig.json
+
+```json
+{
+  // ... other options ...
+  "compilerOptions": {
+    // ... other options ...
+    "paths": {
+      "baseUrl": ".",
+      "another-react-router.config.ts": ["another-react-router.config.ts"]
+    }
+  }
+}
+```
+
+Or if you are using **vite** you need to change 2 files which is `tsconfig.json` and `tsconfig.app.json` and past code above
+
+### That's it
+
+Now you can start your project and go to `localhost:3000` and see that router is working perfectly!

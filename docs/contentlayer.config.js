@@ -85,7 +85,6 @@ export default makeSource({
               const regex = /event="([^"]*)"/
               const match = codeEl.data?.meta.match(regex)
               if (match) {
-                node.__event__ = match ? match[1] : null
                 codeEl.data.meta = codeEl.data.meta.replace(regex, "")
               }
             }
@@ -95,7 +94,7 @@ export default makeSource({
           }
         })
       },
-      [rehypePrettyCode, rehypePrettyCodeOptions],
+      // [rehypePrettyCode, rehypePrettyCodeOptions],
       () => tree => {
         visit(tree, node => {
           if (node?.type === "element" && node?.tagName === "div") {

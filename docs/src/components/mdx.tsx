@@ -3,7 +3,7 @@ import { CopyButton, CopyCommandButton } from "./copy-button"
 import { type NpmCommands } from "@/types/unist"
 import { useMDXComponent } from "next-contentlayer2/hooks"
 import { Button } from "@/components/ui/button"
-import { Tree } from "@/components/ui/tree-view"
+import { CollapseButton, File, Folder, Tree } from "@/components/ui/tree-view"
 import {
   Accordion,
   AccordionContent,
@@ -156,7 +156,7 @@ const mdxComponents = {
       <div>
         <pre
           className={cn(
-            "mb-4 mt-6 max-h-[650px] overflow-x-auto rounded-lg border bg-zinc-950 py-4 dark:bg-zinc-900",
+            "mb-4 mt-6 max-h-[650px] overflow-x-auto rounded-lg border bg-zinc-950 py-4 dark:bg-zinc-900 [&>code]:bg-transparent pl-4",
             className
           )}
           {...props}
@@ -196,6 +196,24 @@ const mdxComponents = {
   ),
   Button,
   Tree,
+  Folder,
+  File,
+  CollapseButton,
+  Step: ({ className, ...props }: React.ComponentProps<"h3">) => (
+    <h3
+      className={cn(
+        "font-heading mt-8 scroll-m-20 text-xl font-semibold tracking-tight",
+        className
+      )}
+      {...props}
+    />
+  ),
+  Steps: ({ ...props }) => (
+    <div
+      className='[&>h3]:step steps mb-12 ml-4 border-l pl-8 [counter-reset:step]'
+      {...props}
+    />
+  ),
 }
 
 interface MdxProps {
