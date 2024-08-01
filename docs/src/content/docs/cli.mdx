@@ -1,0 +1,60 @@
+---
+title: CLI
+description: Use the CLI to make another-react-router work
+---
+
+### Basic info
+
+```txt
+Usage: arr [options] [command]
+
+cli that helps configuring your router with another-react-router npm package
+
+Options:
+  -v, --version   display the version number
+  -h, --help      display help for command
+
+Commands:
+  init [options]
+  help [command]  display help for command
+```
+
+### init
+
+This is the main command that you will be executing many times
+
+It loops trought your directory with routes and create's `another-react-router.config.ts` with `routes` and exc.
+
+#### Options
+
+```txt
+Usage: arr init [options]
+
+Options:
+  -w, --watch            check if routes path should be watching for file changes, and regenerate config if it is.
+                         (default: false)
+  -ts, --ts              check if config file output will be written with typescript rules. (default: true)
+  -e, --esm              check if config file output will be written with esm rules. (default: false)
+  -r, --routes [routes]  the path to your routes. (default: "./src/routes/")
+  -c, --config [config]  the path where another-react-router.config.(ts/js) file will be initialized. (default: "./")
+  -cw, --cwd <cwd>       the working directory. defaults to the current directory. (default:
+                         "CWD_PATH")
+  -h, --help             display help for command
+```
+
+### Tips
+
+#### Watching for file changes in parallel
+
+If you want to watch for file changes in your routes directory, you can use the `-w` flag on `init` command
+But what if you want to watch in parallel with your bundler do it's work?
+
+You can update your `scripts` in `package.json` (vite example, replace vite for your bundler that will work in watch mode)
+
+```json
+{
+  "scripts": {
+    "dev": "sh -c 'vite && npm run another-react-router init --watch'"
+  }
+}
+```

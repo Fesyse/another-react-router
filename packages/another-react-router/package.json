@@ -5,6 +5,9 @@
   "main": "dist/browser/index.js",
   "module": "dist/browser/index.mjs",
   "types": "dist/browser/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "bun lint && tsup src/browser/index.ts src/cli/index.ts --format cjs,esm --dts",
     "lint": "tsc",
@@ -14,7 +17,9 @@
     "pub:next": "bun run build && pnpm publish --no-git-checks --access public --tag next",
     "pub:release": "bun run build && pnpm publish --access public"
   },
-  "bin": "dist/cli/index.js",
+  "bin": {
+    "arr": "dist/cli/index.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Fesyse/another-react-router.git",

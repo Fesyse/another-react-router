@@ -27,6 +27,11 @@ export const docsConfig: DocsConfig = {
           href: "/docs/installation",
           items: [],
         },
+        {
+          title: "CLI",
+          href: "/docs/cli",
+          items: [],
+        },
       ],
     },
   ],
