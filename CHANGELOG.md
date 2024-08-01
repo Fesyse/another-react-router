@@ -1,5 +1,11 @@
 # another-react-router-app
 
+## 1.2.2
+
+### Patch Changes
+
+- 9d59349: Shorten cli name
+
 ## 1.2.0
 
 ### Minor Changes
@@ -28,7 +34,7 @@ and pathname in browser `/store/987/164`, so now params should be
 
 ```json
 {
-	"slug": ["987", "164"]
+  "slug": ["987", "164"]
 }
 ```
 
