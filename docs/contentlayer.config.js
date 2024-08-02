@@ -86,41 +86,42 @@ export default makeSource({
               const regex = /event="([^"]*)"/
               const match = codeEl.data?.meta.match(regex)
               if (match) {
+                node.__event__ = match ? match[1] : null
                 codeEl.data.meta = codeEl.data.meta.replace(regex, "")
               }
             }
 
-            node.properties.__rawstring__ = codeEl.children?.[0].value
+            node.__rawString__ = codeEl.children?.[0].value
+            node.__src__ = node.properties?.__src__
           }
         })
       },
       [rehypePrettyCode, rehypePrettyCodeOptions],
       () => tree => {
         visit(tree, node => {
-          if (node?.type === "element" && node?.tagName === "div") {
-            if (!("data-rehype-pretty-code-fragment" in node.properties)) return
+          if (node?.type === "element" && node?.tagName === "figure") {
+            if (!("data-rehype-pretty-code-figure" in node.properties)) return
 
-            const preElement = node.children.at(-1)
-            if (preElement.tagName !== "pre") return
+            const preElement = node.children[0]
+            if (preElement.tagName !== "pre") {
+              return
+            }
 
-            preElement.properties["__withMeta__"] =
-              node.children.at(0).tagName === "div"
             preElement.properties["__rawString__"] = node.__rawString__
 
             if (node.__src__) {
               preElement.properties["__src__"] = node.__src__
             }
+
+            if (node.__style__) {
+              preElement.properties["__style__"] = node.__style__
+            }
           }
         })
       },
-      [
-        () => tree => {
-          rehypeNpmCommand()(tree)
-        },
-      ],
+      rehypeNpmCommand,
       [
         rehypeAutolinkHeadings,
-        // options
         {
           properties: {
             className: ["subheading-anchor"],

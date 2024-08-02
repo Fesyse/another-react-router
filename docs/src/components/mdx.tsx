@@ -153,10 +153,10 @@ const mdxComponents = {
     __src__?: string
   } & NpmCommands) => {
     return (
-      <div>
+      <div className='relative'>
         <pre
           className={cn(
-            "mb-4 mt-6 max-h-[650px] overflow-x-auto rounded-lg border bg-zinc-950 py-4 dark:bg-zinc-900",
+            "mb-4 mt-6 max-h-[650px] overflow-x-auto rounded-lg border !bg-zinc-950 py-4 dark:!bg-zinc-900",
             className
           )}
           {...props}
