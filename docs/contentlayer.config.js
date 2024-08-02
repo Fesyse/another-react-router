@@ -37,7 +37,12 @@ const rehypePrettyCodeOptions = {
     }
   },
   onVisitHighlightedLine(node) {
-    node.properties.className.push("line--highlighted")
+    const nodeClass = node.properties.className
+    if (nodeClass && nodeClass.length > 0) {
+      node.properties.className.push("line--highlighted")
+    } else {
+      node.properties.className = ["line--highlighted"]
+    }
   },
   onVisitHighlightedWord(node) {
     node.properties.className = ["word--highlighted"]
