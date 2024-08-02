@@ -48,14 +48,15 @@ Options:
 
 #### Watching for file changes in parallel
 
-If you want to watch for file changes in your routes directory, you can use the `-w` flag on `init` command
-But what if you want to watch in parallel with your bundler do it's work?
+If you want to watch for file changes in your routes directory, you can use the `-w` flag on `init` command. But what if you want to watch in parallel with your bundler do it's work?
 
-You can update your `scripts` in `package.json` (vite example, replace vite for your bundler that will work in watch mode)
+You can update your `scripts` in `package.json` (replace vite for your bundler that will work in watch mode)
 
-```json
+```json title="package.json" {5}
 {
+  // ... other options ...
   "scripts": {
+    // ... other scripts ...
     "dev": "sh -c 'vite & bun arr init --watch'"
   }
 }

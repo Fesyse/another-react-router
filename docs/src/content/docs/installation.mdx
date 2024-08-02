@@ -1,5 +1,6 @@
 ---
 title: Installation
+description: How to integrate another react router with your project
 ---
 
 ### Install package
@@ -37,7 +38,7 @@ npm install another-react-router
   <CollapseButton />
 </Tree>
 
-Go to `page.tsx` file, and for example copy and paste following code
+Open `page.tsx` file and paste example code
 
 ```tsx
 export default function Page() {
@@ -56,7 +57,7 @@ See [cli docs](/docs/cli) for more information
 
 ### Add router provider component
 
-```tsx
+```tsx title="/src/app.tsx" {5}
 import { AnotherReactRouterProvider } from "another-react-router"
 import { routes } from "another-react-router.config.ts"
 
@@ -67,11 +68,11 @@ export function App() {
 
 To import `routes` from **another-react-router.config.ts** you need to change your tsconfig.json
 
-```json {6-7} showLineNumbers
+```json title="tsconfig.json" {6-7} showLineNumbers
 {
   // ... other options ...
   "compilerOptions": {
-    // ... other options ...
+    // ... compiler options ...
     "paths": {
       "baseUrl": ".",
       "another-react-router.config.ts": ["another-react-router.config.ts"]
