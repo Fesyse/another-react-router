@@ -1,4 +1,3 @@
-import { getHighlighter, loadTheme } from "@shikijs/compat"
 import { defineDocumentType, makeSource } from "contentlayer2/source-files"
 import rehypeAutolinkHeadings from "rehype-autolink-headings"
 import rehypePrettyCode from "rehype-pretty-code"
@@ -8,6 +7,8 @@ import remarkGfm from "remark-gfm"
 import { visit } from "unist-util-visit"
 
 import { rehypeNpmCommand } from "./src/lib/rehype-npm-command"
+import * as path from "path"
+import * as fs from "fs"
 
 /** @type {import('contentlayer/source-files').ComputedFields} */
 const computedFields = {
@@ -22,12 +23,12 @@ const computedFields = {
 }
 /** @type {import('rehype-pretty-code').Options} */
 const rehypePrettyCodeOptions = {
-  getHighlighter: async options => {
-    const theme = await loadTheme(
-      path.join(process.cwd(), "/src/lib/highlighter-theme.json")
+  theme: JSON.parse(
+    fs.readFileSync(
+      path.join(process.cwd(), "/src/lib/highlighter-theme.json"),
+      "utf-8"
     )
-    return await getHighlighter({ ...options, theme })
-  },
+  ),
   onVisitLine(node) {
     // Prevent lines from collapsing in `display: grid` mode, and allow empty
     // lines to be copy/pasted
@@ -89,12 +90,11 @@ export default makeSource({
               }
             }
 
-            node.__rawString__ = codeEl.children?.[0].value
-            node.__src__ = node.properties?.__src__
+            node.properties.__rawstring__ = codeEl.children?.[0].value
           }
         })
       },
-      // [rehypePrettyCode, rehypePrettyCodeOptions],
+      [rehypePrettyCode, rehypePrettyCodeOptions],
       () => tree => {
         visit(tree, node => {
           if (node?.type === "element" && node?.tagName === "div") {
@@ -113,7 +113,11 @@ export default makeSource({
           }
         })
       },
-      rehypeNpmCommand,
+      [
+        () => tree => {
+          rehypeNpmCommand()(tree)
+        },
+      ],
       [
         rehypeAutolinkHeadings,
         // options

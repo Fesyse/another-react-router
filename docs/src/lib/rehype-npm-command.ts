@@ -4,6 +4,7 @@ import { visit } from "unist-util-visit"
 export function rehypeNpmCommand() {
   return (tree: UnistTree) => {
     visit(tree, (node: UnistNode) => {
+      // FIXME: add function to get node with __rawString
       if (node.type !== "element" || node?.tagName !== "pre") {
         return
       }
