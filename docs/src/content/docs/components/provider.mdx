@@ -1,0 +1,61 @@
+---
+title: Provider
+description: Main component that provides all router functionality
+---
+
+### Props
+
+| Prop     | Type                   | Description                        | Default Value |
+| -------- | ---------------------- | ---------------------------------- | ------------- |
+| `routes` | `RouteWithComponent[]` | Array of route objects from config | `[]`          |
+
+### Example
+
+You can directly pass provider to `app.tsx`
+
+```tsx title="/src/app.tsx" {5}
+import { AnotherReactRouterProvider } from "another-react-router"
+import { routes } from "another-react-router.config.ts"
+
+export function App() {
+  return <AnotherReactRouterProvider routes={routes} />
+}
+```
+
+Or create a separate component and use it as shown above
+
+```tsx title="/src/components/router.tsx" {5}
+import { AnotherReactRouterProvider } from "another-react-router"
+import { routes } from "another-react-router.config.ts"
+
+export function RouterProvider() {
+  return <AnotherReactRouterProvider routes={routes} />
+}
+```
+
+Even tho we recommend using **file based** routing with [CLI](/docs/cli) you can do something like following
+
+```tsx title="/src/components/router.tsx" {8-18}
+import {
+  AnotherReactRouterProvider,
+  type RouteWithComponent,
+} from "another-react-router"
+import { HomePage, HomeLayout } from "@/routes/home-page"
+import { VideoPage } from "@/routes/video-page"
+
+export function RouterProvider() {
+  const routes: RouteWithComponent[] = [
+    {
+      path: "/",
+      page: HomePage,
+      layout: HomeLayout,
+    },
+    {
+      path: "/video/[id]/",
+      page: VideoPage,
+      layout: HomeLayout,
+    },
+  ]
+  return <AnotherReactRouterProvider routes={routes} />
+}
+```

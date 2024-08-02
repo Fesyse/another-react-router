@@ -17,13 +17,11 @@ export const siteConfig = {
   applicationName: "Another react router",
   description:
     "Another react router is a npm package, that allowes developers and users comfortable route between pages on their web applications.",
-  icon: "/icon.svg",
   links: {
     github: "https://github.com/fesyse/another-react-router/",
   },
 } satisfies Metadata & {
   shortenTitle: string
-  icon: string
   links: {
     github: string
   }

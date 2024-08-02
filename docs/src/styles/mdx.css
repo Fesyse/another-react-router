@@ -45,6 +45,9 @@
 [data-rehype-pretty-code-figure] .line--highlighted {
   @apply bg-zinc-700/50;
 }
+[data-rehype-pretty-code-figure] [data-highlighted-chars] {
+  @apply bg-zinc-700/50 py-0.5 px-1 rounded;
+}
 
 [data-rehype-pretty-code-figure] .line-highlighted span {
   @apply relative;

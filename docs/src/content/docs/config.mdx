@@ -1,0 +1,29 @@
+---
+title: Config
+description: Automaticaly generated file by CLI
+---
+
+### File containts
+
+| Property   | Variable/Type | Type                   | Description                                                           |
+| ---------- | ------------- | ---------------------- | --------------------------------------------------------------------- |
+| `routes`   | variable      | `RouteWithComponent[]` | Containts all routes from your files                                  |
+| `HrefType` | type          | -----                  | This type represents href type that can be used with `Link` component |
+
+### Example
+
+```ts title="another-react-router.config.ts"
+// THIS FILE SHOULD NOT BE MODIFIED
+// With love by another-react-router developers 💗
+import { type RawRoute, getRoutesComponents } from "another-react-router"
+
+const rawRoutes: RawRoute[] = [
+  { path: "/", page: import("./src/routes/page.tsx") },
+  { path: "/user/[id]/", page: import("./src/routes/user/[id]/page.tsx") },
+]
+const routes = await getRoutesComponents(rawRoutes)
+
+type HrefType = "" | `user/${string}`
+
+export { routes, type HrefType }
+```

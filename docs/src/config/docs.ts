@@ -32,6 +32,27 @@ export const docsConfig: DocsConfig = {
           href: "/docs/cli",
           items: [],
         },
+        {
+          title: "Config",
+          href: "/docs/config",
+          items: [],
+        },
+      ],
+    },
+    {
+      title: "Components",
+      href: "/components",
+      items: [
+        {
+          title: "Provider",
+          href: "/docs/components/provider",
+          items: [],
+        },
+        {
+          title: "Link",
+          href: "/docs/components/link",
+          items: [],
+        },
       ],
     },
   ],
