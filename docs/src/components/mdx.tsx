@@ -3,13 +3,20 @@ import { CopyButton, CopyCommandButton } from "./copy-button"
 import { type NpmCommands } from "@/types/unist"
 import { useMDXComponent } from "next-contentlayer2/hooks"
 import { Button } from "@/components/ui/button"
-import { CollapseButton, File, Folder, Tree } from "@/components/ui/tree-view"
+import {
+  CollapseButton,
+  File,
+  Folder,
+  Tree,
+  TreeViewProps,
+} from "@/components/ui/tree-view"
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
+import { forwardRef } from "react"
 
 const mdxComponents = {
   Accordion,
@@ -195,7 +202,11 @@ const mdxComponents = {
     />
   ),
   Button,
-  Tree,
+  Tree: forwardRef<HTMLDivElement, TreeViewProps>(
+    ({ className, ...props }, ref) => (
+      <Tree className={cn("border mt-2", className)} {...props} ref={ref} />
+    )
+  ),
   Folder,
   File,
   CollapseButton,

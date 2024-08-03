@@ -48,7 +48,7 @@ interface TreeViewComponentProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 type Direction = "rtl" | "ltr" | undefined
 
-type TreeViewProps = {
+export type TreeViewProps = {
   initialSelectedId?: string
   indicator?: boolean
   elements?: TreeViewElement[]

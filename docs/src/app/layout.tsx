@@ -33,7 +33,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
         <ThemeProvider attribute='class' defaultTheme='dark' enableSystem>
           <div className='relative flex min-h-screen flex-col bg-background'>
             <Header />
-            <main className='flex-1 min-h-[calc(100vh-3.5rem)]'>
+            <main className='flex-1 min-h-[calc(100vh-3.5rem)] before:dark:hidden before:z-50 before:w-72 before:aspect-square before:bg-red-500/50 before:fixed before:left-2 before:top-12 before:blur-[100px] before:rounded-full after:z-50 after:dark:hidden after:w-72 after:aspect-square after:bg-red-500/50 after:fixed after:right-2 after:-bottom-2 after:blur-[100px] after:rounded-full'>
               {children}
             </main>
             <Footer />

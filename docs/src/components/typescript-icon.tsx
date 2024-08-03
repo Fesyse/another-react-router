@@ -4,7 +4,7 @@ import { useTheme } from "next-themes"
 import { IconProps } from "./icons"
 
 export const TypescriptIcon = (props: IconProps) => {
-  const { theme } = useTheme()
+  const { theme = "dark" } = useTheme()
 
   return (
     <svg

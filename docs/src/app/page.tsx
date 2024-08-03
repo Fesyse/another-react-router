@@ -48,7 +48,7 @@ const homeFeatures: HomeFeature[] = [
 
 export default function Home() {
   return (
-    <div className='container relative md:mt-20 mt-10 flex flex-col items-center gap-2 before:dark:hidden before:w-72 before:aspect-square before:bg-red-500/50 before:absolute before:-left-16 before:top-6 before:blur-[75px] before:rounded-full after:dark:hidden after:w-72 after:aspect-square after:bg-red-500/50 after:absolute after:-right-52 after:bottom-24 after:blur-[75px] after:rounded-full'>
+    <div className='container relative md:mt-20 mt-10 flex flex-col items-center gap-2'>
       <h1 className='text-center lg:text-6xl md:text-5xl text-3xl font-bold'>
         <Balancer>Another react router</Balancer>
       </h1>
