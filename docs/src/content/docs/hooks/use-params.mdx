@@ -1,0 +1,37 @@
+---
+title: useParams
+description: useParams hook that can be used to get params
+---
+
+Params is an object with route's dynamic params filled in by the current URL.
+And `useParams` help's with giving you current params.
+
+[Read more about **dynamic-routing**](/docs/routing/dynamic-routing/).
+
+### Example
+
+Following example uses [@tanstack/react-query](https://tanstack.com/query/latest/docs/framework/react/overview)
+
+```tsx title="/src/routes/user/[id]/page.tsx"
+import { useParams } from "another-react-router"
+import { useQuery } from "@tanstack/react-query"
+import { useService } from "@/services/user.service"
+import { Spinner } from "@/components/ui/spinner"
+
+export default function ProfilePage() {
+  const params = useParams()
+  const { data: user, isLoading } = useQuery({
+    queryKey: ["user", params.id],
+    queryFn: () => userService.getById(params.id),
+  })
+
+  return isLoading || !user ? (
+    <Spinner />
+  ) : (
+    <div className='profile-wrapper'>
+      <Avatar src={user.avatar} />
+      <h2 className='profile-username'>{user.username}</h2> qq
+    </div>
+  )
+}
+```

@@ -15,7 +15,6 @@ export const docsConfig: DocsConfig = {
   sidebarNav: [
     {
       title: "Getting started",
-      href: "/",
       items: [
         {
           title: "Introduction",
@@ -41,7 +40,6 @@ export const docsConfig: DocsConfig = {
     },
     {
       title: "Components",
-      href: "/components",
       items: [
         {
           title: "Provider",
@@ -51,6 +49,31 @@ export const docsConfig: DocsConfig = {
         {
           title: "Link",
           href: "/docs/components/link",
+          items: [],
+        },
+      ],
+    },
+    {
+      title: "Hooks",
+      items: [
+        {
+          title: "useRouter",
+          href: "/docs/hooks/use-router",
+          items: [],
+        },
+        {
+          title: "usePathname",
+          href: "/docs/hooks/use-pathname",
+          items: [],
+        },
+        {
+          title: "useParams",
+          href: "/docs/hooks/use-params",
+          items: [],
+        },
+        {
+          title: "useSearchParams",
+          href: "/docs/hooks/use-search-params",
           items: [],
         },
       ],

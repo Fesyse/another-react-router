@@ -17,6 +17,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 import { forwardRef } from "react"
+import { Callout } from "./callout"
 
 const mdxComponents = {
   Accordion,
@@ -210,6 +211,7 @@ const mdxComponents = {
   Folder,
   File,
   CollapseButton,
+  Callout,
   Step: ({ className, ...props }: React.ComponentProps<"h3">) => (
     <h3
       className={cn(
