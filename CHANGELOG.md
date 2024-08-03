@@ -1,5 +1,11 @@
 # another-react-router-app
 
+## 1.2.4
+
+### Patch Changes
+
+- 50d2145: deploy website to vercel
+
 ## 1.2.3
 
 ### Patch Changes
