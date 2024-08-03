@@ -1,5 +1,13 @@
 # another-react-router-app
 
+## 1.2.3
+
+### Patch Changes
+
+- e484e96: `useSearchParams` hook
+  `forward` method on `useRouter()` hook
+  docs are done
+
 ## 1.2.2
 
 ### Patch Changes
