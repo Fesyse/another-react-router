@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev --turbo",
     "dev:docs": "sh -c 'bun dev & bun contentlayer2 dev'",
-    "build": "bun docs:build && next build",
+    "build": "bun build:docs && next build",
     "build:docs": "bun contentlayer2 build",
     "start": "next start",
     "lint": "next lint",
