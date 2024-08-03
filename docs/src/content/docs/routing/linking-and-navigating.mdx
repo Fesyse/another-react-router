@@ -1,0 +1,111 @@
+---
+title: Linking and Navigating
+description: This page will go through how to use each of these options, and dive deeper into how navigation works.
+---
+
+There are four ways to navigate between routes in Another react router:
+
+- Using the [\<Link> Component](#link-component)
+- Using the [useRouter hook](#userouter-hook)
+
+## \<Link> Component
+
+`<Link>` is a component that can be created by yourself it extends \<a> tag with typesafe `href` prop. Use this component **only** if you are planning on using to route **inside of your application**. I mean that if you want to navigate to **other website** just use \<a> tag, otherwise you will get `TS error` that says:
+
+<Callout className="mt-6" variant="destructive">
+**Type Error**: Type \<YOUR_HREF_TYPE> is not assignable to type \<HREF_TYPE>.
+</Callout>
+
+You can use it by importing it from path where your \<Link> is exported from, and passing a `href` prop to the component:
+
+```tsx title="/src/routes/page.tsx"
+import { Link } from "@/components/link"
+
+export default function Page() {
+  return <Link href='/dashboard'>Dashboard</Link>
+}
+```
+
+There are other optional props you can pass to `<Link>`. See the [API reference](/docs/components/link) for more.
+
+### Examples
+
+#### Linking to Dynamic Segments
+
+When linking to [dynamic segments](/docs/routing/dynamic-routes), you can use [template literals and interpolation](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Template_literals) to generate a list of links. For example, to generate a list of blog posts:
+
+```tsx title="/src/routes/blog/PostList.tsx"
+import { Link } from "@/components/link"
+
+export default function PostList({ posts }) {
+  return (
+    <ul>
+      {posts.map(post => (
+        <li key={post.id}>
+          <Link href={`/blog/${post.slug}`}>{post.title}</Link>
+        </li>
+      ))}
+    </ul>
+  )
+}
+```
+
+#### Checking Active Links
+
+You can use [`usePathname()`](/docs/hooks/use-pathname) to determine if a link is active. For example, to add a class to the active link, you can check if the current `pathname` matches the `href` of the link:
+
+```tsx title="/src/components/ui/nav-links.tsx"
+import { usePathname } from "another-react-router"
+import { Link } from "@/components/link"
+
+export function Links() {
+  const pathname = usePathname()
+
+  return (
+    <nav>
+      <Link className={`link ${pathname === "/" ? "active" : ""}`} href='/'>
+        Home
+      </Link>
+
+      <Link
+        className={`link ${pathname === "/about" ? "active" : ""}`}
+        href='/about'
+      >
+        About
+      </Link>
+    </nav>
+  )
+}
+```
+
+#### Scrolling to an `id`
+
+If you'd like to scroll to a specific `id` on navigation, you can append your URL with a `#` hash link or just pass a hash link to the `href` prop.
+
+```jsx
+<Link href='/dashboard#settings'>Settings</Link>
+```
+
+## `useRouter()` hook
+
+The `useRouter` hook allows you manipulate with current URL.
+
+```tsx title="/src/routes/page.tsx"
+import { useRouter } from "another-react-router"
+
+export default function Page() {
+  const router = useRouter()
+
+  return (
+    <button type='button' onClick={() => router.push("/dashboard")}>
+      Dashboard
+    </button>
+  )
+}
+```
+
+For a full list of `useRouter` methods, see the [API reference](/docs/hooks/use-router).
+
+<Callout>
+**Recommendation:** Use the `<Link>` component to navigate between routes unless you have a specific requirement for using `useRouter`.
+</Callout>

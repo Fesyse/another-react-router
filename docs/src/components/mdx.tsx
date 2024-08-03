@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/accordion"
 import { forwardRef } from "react"
 import { Callout } from "./callout"
+import Image from "next/image"
 
 const mdxComponents = {
   Accordion,
@@ -227,6 +228,7 @@ const mdxComponents = {
       {...props}
     />
   ),
+  Image,
 }
 
 interface MdxProps {

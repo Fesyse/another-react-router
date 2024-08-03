@@ -39,6 +39,36 @@ export const docsConfig: DocsConfig = {
       ],
     },
     {
+      title: "Routing",
+      items: [
+        {
+          title: "Fundamentals",
+          href: "/docs/routing",
+          items: [],
+        },
+        {
+          title: "Defining Routes",
+          href: "/docs/routing/defining-routes",
+          items: [],
+        },
+        {
+          title: "Pages and Layouts",
+          href: "/docs/routing/pages-and-layouts",
+          items: [],
+        },
+        {
+          title: "Linking and Navigating",
+          href: "/docs/routing/linking-and-navigating",
+          items: [],
+        },
+        {
+          title: "Dynamic Routes",
+          href: "/docs/routing/dynamic-routes",
+          items: [],
+        },
+      ],
+    },
+    {
       title: "Components",
       items: [
         {

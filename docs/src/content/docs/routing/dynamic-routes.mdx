@@ -1,0 +1,64 @@
+---
+title: Dynamic Routes
+description: Dynamic Routes can be used to programmatically generate route segments from dynamic data.
+---
+
+## Convention
+
+A Dynamic Segment can be created by wrapping a folder's name in square brackets: `[folderName]`. For example, `[id]` or `[slug]`.
+
+Dynamic Segments are passed as the `params` prop to [`layout`](/docs/file-conventions/layout) and [`page`](/docs/file-conventions/page).
+
+## Example
+
+For example, a blog could include the following route `/src/routes/blog/[slug]/page.js` where `[slug]` is the Dynamic Segment for blog posts.
+
+```tsx title="/src/routes/blog/[slug]/page.tsx"
+import { type PageProps } from "another-react-router"
+export default function Page({ params }: PageProps) {
+  return <div>My Post: {params.slug}</div>
+}
+```
+
+| Route                             | Example URL | `params`        |
+| --------------------------------- | ----------- | --------------- |
+| `/src/routes/blog/[slug]/page.js` | `/blog/a`   | `{ slug: 'a' }` |
+| `/src/routes/blog/[slug]/page.js` | `/blog/b`   | `{ slug: 'b' }` |
+| `/src/routes/blog/[slug]/page.js` | `/blog/c`   | `{ slug: 'c' }` |
+
+## Catch-all Segments
+
+Dynamic Segments can be extended to **catch-all** subsequent segments by adding an ellipsis inside the brackets `[...folderName]`.
+
+For example, `/src/routes/shop/[...slug]/page.js` will match `/shop/clothes`, but also `/shop/clothes/tops`, `/shop/clothes/tops/t-shirts`, and so on.
+
+| Route                                | Example URL   | `params`                    |
+| ------------------------------------ | ------------- | --------------------------- |
+| `/src/routes/shop/[...slug]/page.js` | `/shop/a`     | `{ slug: ['a'] }`           |
+| `/src/routes/shop/[...slug]/page.js` | `/shop/a/b`   | `{ slug: ['a', 'b'] }`      |
+| `/src/routes/shop/[...slug]/page.js` | `/shop/a/b/c` | `{ slug: ['a', 'b', 'c'] }` |
+
+## TypeScript
+
+When using TypeScript, you can add types for `params` depending on your configured route segment.
+
+```tsx title="/src/routes/blog/[slug]/page.tsx"
+export default function Page({ params }: { params: { slug: string } }) {
+  return <h1>My Page</h1>
+}
+```
+
+Or just use type from package
+
+```tsx title="/src/routes/blog/[slug]/page.tsx"
+import { type PageProps } from "another-react-router"
+export default function Page({ params }: PageProps) {
+  return <div>My Post: {params.slug}</div>
+}
+```
+
+| Route                                       | `params` Type Definition                 |
+| ------------------------------------------- | ---------------------------------------- |
+| `/src/routes/blog/[slug]/page.js`           | `{ slug: string }`                       |
+| `/src/routes/shop/[...slug]/page.js`        | `{ slug: string[] }`                     |
+| `/src/routes/[categoryId]/[itemId]/page.js` | `{ categoryId: string, itemId: string }` |

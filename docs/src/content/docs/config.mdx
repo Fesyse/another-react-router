@@ -23,7 +23,7 @@ const rawRoutes: RawRoute[] = [
 ]
 const routes = await getRoutesComponents(rawRoutes)
 
-type HrefType = "" | `user/${string}`
+type HrefType = "/" | `/user/${string}`
 
 export { routes, type HrefType }
 ```

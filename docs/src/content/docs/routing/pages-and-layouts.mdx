@@ -1,0 +1,103 @@
+---
+title: Pages and Layouts
+description: The special files layout.js and page.js allow you to create UI for a route. This page will guide you through how and when to use these special files.
+---
+
+## Page
+
+A page is UI that is **unique** to a route. You can define a page by default exporting a component from a `page.js` file.
+
+For example, to create your `index` page, add the `page.js` file inside the `app` directory:
+
+<Image
+  alt='page.js special file'
+  src='/page-special-file.avif'
+  width='1600'
+  height='444'
+/>
+
+```tsx title="/src/routes/page.tsx"
+// `/src/routes/page.tsx` is the UI for the `/` URL
+export default function Page() {
+  return <h1>Hello, Home page!</h1>
+}
+```
+
+Then, to create further pages, create a new folder and add the `page.js` file inside it. For example, to create a page for the `/dashboard` route, create a new folder called `dashboard`, and add the `page.js` file inside it:
+
+```tsx title="/src/routes/dashboard/page.tsx"
+// `/src/routes/dashboard/page.tsx` is the UI for the `/dashboard` URL
+export default function Page() {
+  return <h1>Hello, Dashboard Page!</h1>
+}
+```
+
+## Layouts
+
+The special file [layout.js](#layouts) allow you to create UI that is shared between [routes](/docs//routing/defining-routes#creating-routes).
+
+A layout is UI that is **shared** between multiple routes. On navigation, layouts preserve state, remain interactive, and do not re-render. Layouts can also be [nested](#nesting-layouts).
+
+You can define a layout by default exporting a React component from a `layout.js` file. The component should accept a `children` prop that will be populated with a child layout (if it exists) or a page during rendering.
+
+For example, the layout will be shared with the `/dashboard` and `/dashboard/settings` pages:
+
+<Image
+  alt='layout.js special file'
+  src='/layout-special-file.avif'
+  width='1600'
+  height='606'
+/>
+
+```tsx title="/src/routes/dashboard/layout.tsx"
+export default function DashboardLayout({
+  children, // will be a page or nested layout
+}: React.PropsWithChildren) {
+  return (
+    <section>
+      {/* Include shared UI here e.g. a header or sidebar */}
+      <nav></nav>
+
+      {children}
+    </section>
+  )
+}
+```
+
+### Nesting Layouts
+
+NESTING LAYOUTS ARE IN WIP
+
+{/* prettier-ignore */}
+{/* By default, layouts in the folder hierarchy are **nested**, which means they wrap child layouts via their `children` prop. You can nest layouts by adding `layout.js` inside specific route segments (folders).
+
+For example, to create a layout for the `/dashboard` route, add a new `layout.js` file inside the `dashboard` folder:
+
+<Image
+  alt='Nested Layout'
+  src='/nested-layout.avif'
+  width='1600'
+  height='606'
+/>
+
+```tsx title="/src/routes/dashboard/layout.tsx"
+export default function DashboardLayout({ children }: React.PropsWithChildren) {
+  return <section>{children}</section>
+}
+```
+
+If you were to combine the two layouts above, the root layout (`/src/routes/layout.js`) would wrap the dashboard layout (`/src/routes/dashboard/layout.js`), which would wrap route segments inside `/src/routes/dashboard/*`.
+
+The two layouts would be nested as such:
+
+<Image
+  alt='Nested Layouts'
+  src='/nested-layouts-ui.avif'
+  width='1600'
+  height='1026'
+/> */}
+
+> **Good to know**
+>
+> - When a `layout.js` and `page.js` file are defined in the same folder, the layout will wrap the page.
+> - `.js`, `.jsx`, `ts` or `.tsx` file extensions can be used for special files.
