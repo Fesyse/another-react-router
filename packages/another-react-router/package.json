@@ -34,7 +34,7 @@
   "bugs": {
     "url": "https://github.com/Fesyse/another-react-router/issues"
   },
-  "homepage": "https://github.com/Fesyse/another-react-router#readme",
+  "homepage": "https://another-react-router.vercel.app/",
   "dependencies": {
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
