@@ -10,16 +10,16 @@ A page is UI that is **unique** to a route. You can define a page by default exp
 For example, to create your `index` page, add the `page.js` file inside the `app` directory:
 
 <Image
-  alt='page.js special file'
-  src='/page-special-file.avif'
-  width='1600'
-  height='444'
+	alt="page.js special file"
+	src="/page-special-file.avif"
+	width="1600"
+	height="444"
 />
 
 ```tsx title="/src/routes/page.tsx"
 // `/src/routes/page.tsx` is the UI for the `/` URL
 export default function Page() {
-  return <h1>Hello, Home page!</h1>
+	return <h1>Hello, Home page!</h1>
 }
 ```
 
@@ -28,7 +28,7 @@ Then, to create further pages, create a new folder and add the `page.js` file in
 ```tsx title="/src/routes/dashboard/page.tsx"
 // `/src/routes/dashboard/page.tsx` is the UI for the `/dashboard` URL
 export default function Page() {
-  return <h1>Hello, Dashboard Page!</h1>
+	return <h1>Hello, Dashboard Page!</h1>
 }
 ```
 
@@ -43,24 +43,24 @@ You can define a layout by default exporting a React component from a `layout.js
 For example, the layout will be shared with the `/dashboard` and `/dashboard/settings` pages:
 
 <Image
-  alt='layout.js special file'
-  src='/layout-special-file.avif'
-  width='1600'
-  height='606'
+	alt="layout.js special file"
+	src="/layout-special-file.avif"
+	width="1600"
+	height="606"
 />
 
 ```tsx title="/src/routes/dashboard/layout.tsx"
 export default function DashboardLayout({
-  children, // will be a page or nested layout
+	children // will be a page or nested layout
 }: React.PropsWithChildren) {
-  return (
-    <section>
-      {/* Include shared UI here e.g. a header or sidebar */}
-      <nav></nav>
+	return (
+		<section>
+			{/* Include shared UI here e.g. a header or sidebar */}
+			<nav></nav>
 
-      {children}
-    </section>
-  )
+			{children}
+		</section>
+	)
 }
 ```
 
@@ -74,15 +74,15 @@ NESTING LAYOUTS ARE IN WIP
 For example, to create a layout for the `/dashboard` route, add a new `layout.js` file inside the `dashboard` folder:
 
 <Image
-  alt='Nested Layout'
-  src='/nested-layout.avif'
-  width='1600'
-  height='606'
+	alt="Nested Layout"
+	src="/nested-layout.avif"
+	width="1600"
+	height="606"
 />
 
 ```tsx title="/src/routes/dashboard/layout.tsx"
 export default function DashboardLayout({ children }: React.PropsWithChildren) {
-  return <section>{children}</section>
+	return <section>{children}</section>
 }
 ```
 
@@ -91,10 +91,10 @@ If you were to combine the two layouts above, the root layout (`/src/routes/layo
 The two layouts would be nested as such:
 
 <Image
-  alt='Nested Layouts'
-  src='/nested-layouts-ui.avif'
-  width='1600'
-  height='1026'
+	alt="Nested Layouts"
+	src="/nested-layouts-ui.avif"
+	width="1600"
+	height="1026"
 /> */}
 
 > **Good to know**

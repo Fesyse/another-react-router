@@ -14,38 +14,38 @@ npm install another-react-router
 ### Create directory where all routes will contain
 
 <Tree
-  className='rounded-md h-60 bg-background overflow-hidden p-2'
-  initialSelectedId='6'
-  initialExpendedItems={["1", "2"]}
+	className="h-60 overflow-hidden rounded-md bg-background p-2"
+	initialSelectedId="6"
+	initialExpendedItems={["1", "2"]}
 >
-  <Folder element='src' value='1'>
-    <Folder value='2' element='routes'>
-      <File value='6'>
-        <p> page.tsx </p>
-      </File>
-    </Folder>
-    <Folder value='3' element='components' />
-    <File value='4'>
-      <p> app.tsx </p>
-    </File>
-    <File value='5'>
-      <p> main.tsx </p>
-    </File>
-  </Folder>
-  <File value='7'>
-    <p> tsconfig.json </p>
-  </File>
-  <File value='8'>
-    <p> package.json </p>
-  </File>
-  <CollapseButton />
+	<Folder element="src" value="1">
+		<Folder value="2" element="routes">
+			<File value="6">
+				<p> page.tsx </p>
+			</File>
+		</Folder>
+		<Folder value="3" element="components" />
+		<File value="4">
+			<p> app.tsx </p>
+		</File>
+		<File value="5">
+			<p> main.tsx </p>
+		</File>
+	</Folder>
+	<File value="7">
+		<p> tsconfig.json </p>
+	</File>
+	<File value="8">
+		<p> package.json </p>
+	</File>
+	<CollapseButton />
 </Tree>
 
 Open `page.tsx` file and paste example code
 
 ```tsx
 export default function Page() {
-  return <div>Hello another react router!</div>
+	return <div>Hello another react router!</div>
 }
 ```
 
@@ -65,7 +65,7 @@ import { AnotherReactRouterProvider } from "another-react-router"
 import { routes } from "another-react-router.config.ts"
 
 export function App() {
-  return <AnotherReactRouterProvider routes={routes} />
+	return <AnotherReactRouterProvider routes={routes} />
 }
 ```
 
@@ -73,14 +73,14 @@ To import `routes` from **another-react-router.config.ts** you need to change yo
 
 ```json title="tsconfig.json" {6-7} showLineNumbers
 {
-  // ... other options ...
-  "compilerOptions": {
-    // ... compiler options ...
-    "paths": {
-      "baseUrl": ".",
-      "another-react-router.config.ts": ["another-react-router.config.ts"]
-    }
-  }
+	// ... other options ...
+	"compilerOptions": {
+		// ... compiler options ...
+		"paths": {
+			"baseUrl": ".",
+			"another-react-router.config.ts": ["another-react-router.config.ts"]
+		}
+	}
 }
 ```
 

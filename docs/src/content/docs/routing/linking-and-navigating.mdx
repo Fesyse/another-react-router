@@ -22,7 +22,7 @@ You can use it by importing it from path where your \<Link> is exported from, an
 import { Link } from "@/components/link"
 
 export default function Page() {
-  return <Link href='/dashboard'>Dashboard</Link>
+	return <Link href="/dashboard">Dashboard</Link>
 }
 ```
 
@@ -38,15 +38,15 @@ When linking to [dynamic segments](/docs/routing/dynamic-routes), you can use [t
 import { Link } from "@/components/link"
 
 export default function PostList({ posts }) {
-  return (
-    <ul>
-      {posts.map(post => (
-        <li key={post.id}>
-          <Link href={`/blog/${post.slug}`}>{post.title}</Link>
-        </li>
-      ))}
-    </ul>
-  )
+	return (
+		<ul>
+			{posts.map(post => (
+				<li key={post.id}>
+					<Link href={`/blog/${post.slug}`}>{post.title}</Link>
+				</li>
+			))}
+		</ul>
+	)
 }
 ```
 
@@ -59,22 +59,22 @@ import { usePathname } from "another-react-router"
 import { Link } from "@/components/link"
 
 export function Links() {
-  const pathname = usePathname()
+	const pathname = usePathname()
 
-  return (
-    <nav>
-      <Link className={`link ${pathname === "/" ? "active" : ""}`} href='/'>
-        Home
-      </Link>
+	return (
+		<nav>
+			<Link className={`link ${pathname === "/" ? "active" : ""}`} href="/">
+				Home
+			</Link>
 
-      <Link
-        className={`link ${pathname === "/about" ? "active" : ""}`}
-        href='/about'
-      >
-        About
-      </Link>
-    </nav>
-  )
+			<Link
+				className={`link ${pathname === "/about" ? "active" : ""}`}
+				href="/about"
+			>
+				About
+			</Link>
+		</nav>
+	)
 }
 ```
 
@@ -83,7 +83,7 @@ export function Links() {
 If you'd like to scroll to a specific `id` on navigation, you can append your URL with a `#` hash link or just pass a hash link to the `href` prop.
 
 ```jsx
-<Link href='/dashboard#settings'>Settings</Link>
+<Link href="/dashboard#settings">Settings</Link>
 ```
 
 ## `useRouter()` hook
@@ -94,13 +94,13 @@ The `useRouter` hook allows you manipulate with current URL.
 import { useRouter } from "another-react-router"
 
 export default function Page() {
-  const router = useRouter()
+	const router = useRouter()
 
-  return (
-    <button type='button' onClick={() => router.push("/dashboard")}>
-      Dashboard
-    </button>
-  )
+	return (
+		<button type="button" onClick={() => router.push("/dashboard")}>
+			Dashboard
+		</button>
+	)
 }
 ```
 

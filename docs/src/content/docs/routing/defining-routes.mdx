@@ -4,8 +4,8 @@ description: This page will guide you through how to define and organize routes 
 ---
 
 <Callout>
-  We recommend reading the [Routing Fundamentals](/docs/routing/) page before
-  continuing.
+	We recommend reading the [Routing Fundamentals](/docs/routing/) page before
+	continuing.
 </Callout>
 
 ## Creating Routes
@@ -15,19 +15,19 @@ Another react router uses a file-system based router where folders are used to d
 Each folder represents a [**route** segment](/docs/routing#route-segments) that maps to a **URL** segment. To create a [nested route](/docs/routing#nested-routes), you can nest folders inside each other.
 
 <Image
-  alt='Route segments to path segments'
-  src='/route-segments-to-path-segments.avif'
-  width='1600'
-  height='594'
+	alt="Route segments to path segments"
+	src="/route-segments-to-path-segments.avif"
+	width="1600"
+	height="594"
 />
 
 A special [`page.js` file](/docs/routing/pages) is used to make route segments publicly accessible.
 
 <Image
-  alt='Defining Routes'
-  src='/defining-routes.avif'
-  width='1600'
-  height='687'
+	alt="Defining Routes"
+	src="/defining-routes.avif"
+	width="1600"
+	height="687"
 />
 
 In this example, the `/dashboard/analytics` URL path is _not_ publicly accessible because it does not have a corresponding `page.js` file. This folder could be used to store components, stylesheets, images, or other colocated files.
@@ -42,6 +42,6 @@ For example, to create your first page, add a `page.js` file inside the `routes 
 
 ```tsx title="/src/routes/page.tsx"
 export default function Page() {
-  return <h1>Hello, Next.js!</h1>
+	return <h1>Hello, Next.js!</h1>
 }
 ```

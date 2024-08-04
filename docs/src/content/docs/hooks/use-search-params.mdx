@@ -4,9 +4,9 @@ description: useSearchParams is a hook that can be used to get search params fro
 ---
 
 <Callout>
-  **Note**: This hook uses
-  [URLSearchParams](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams)
-  class based on current pathname.
+	**Note**: This hook uses
+	[URLSearchParams](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams)
+	class based on current pathname.
 </Callout>
 
 `useSearchParams` return's [URLSearchParams](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams) class.
@@ -18,19 +18,19 @@ So you can manipulate with them however you want.
 import { useSearchParams } from "another-react-router"
 
 export const ExampleComponent = () => {
-  const searchParams = useSearchParams()
+	const searchParams = useSearchParams()
 
-  return (
-    <div>
-      <h1>Search Params:</h1>
-      <ul>
-        {Array.from(searchParams.entries()).map(([key, value]) => (
-          <li key={key}>
-            {key}: {value}
-          </li>
-        ))}
-      </ul>
-    </div>
-  )
+	return (
+		<div>
+			<h1>Search Params:</h1>
+			<ul>
+				{Array.from(searchParams.entries()).map(([key, value]) => (
+					<li key={key}>
+						{key}: {value}
+					</li>
+				))}
+			</ul>
+		</div>
+	)
 }
 ```

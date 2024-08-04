@@ -3,21 +3,21 @@ title: useRouter
 description: useRouter is a hook that can be used to manipulate with router
 ---
 
-<Callout className='mt-6'>
-  **Tip**: Use created \<Link /> component for navigation unless you have a
-  specific requirement for using useRouter.
+<Callout className="mt-6">
+	**Tip**: Use created \<Link /> component for navigation unless you have a
+	specific requirement for using useRouter.
 </Callout>
 
 `useRouter` return's following object
 
 ```ts
 interface Router {
-  pathname: string
-  push: (pathname: string) => void
-  replace: (pathname: string) => void
-  refresh: () => void
-  back: () => void
-  forward: () => void
+	pathname: string
+	push: (pathname: string) => void
+	replace: (pathname: string) => void
+	refresh: () => void
+	back: () => void
+	forward: () => void
 }
 ```
 
@@ -32,22 +32,22 @@ interface Router {
 
 ```tsx
 import { useRouter } from "another-react-router"
-import { Button } from "@/components/ui/button"
 import { Breadcrumbs } from "@/components/ui/breadcrumbs"
+import { Button } from "@/components/ui/button"
 
 function Navigation() {
-  const router = useRouter()
+	const router = useRouter()
 
-  return (
-    <div className='navigation'>
-      <Breadcrumbs pathname={router.pathname} />
-      <Button onClick={() => router.push("/home")}>Home</Button>
-      <Button onClick={() => router.push("/about")}>About</Button>
-      <Button onClick={() => router.push("/contact")}>Contact</Button>
-      <Button onClick={() => router.back()}>Back</Button>
-      <Button onClick={() => router.forward()}>Forward</Button>
-      <Button onClick={() => router.refresh()}>Refresh</Button>
-    </div>
-  )
+	return (
+		<div className="navigation">
+			<Breadcrumbs pathname={router.pathname} />
+			<Button onClick={() => router.push("/home")}>Home</Button>
+			<Button onClick={() => router.push("/about")}>About</Button>
+			<Button onClick={() => router.push("/contact")}>Contact</Button>
+			<Button onClick={() => router.back()}>Back</Button>
+			<Button onClick={() => router.forward()}>Forward</Button>
+			<Button onClick={() => router.refresh()}>Refresh</Button>
+		</div>
+	)
 }
 ```

@@ -10,14 +10,14 @@ Answer: it's not in package, it's in your app. You need to create it.
 Just copy and paste following code
 
 ```tsx title="/src/routes/home-page.tsx" /HrefType/
-import type { FC, DetailedHTMLProps, AnchorHTMLAttributes } from "react"
 import { type HrefType } from "another-react-router.config.ts"
+import type { AnchorHTMLAttributes, DetailedHTMLProps, FC } from "react"
 
 export const Link: FC<
-  DetailedHTMLProps<
-    AnchorHTMLAttributes<HTMLAnchorElement>,
-    HTMLAnchorElement
-  > & { href?: HrefType }
+	DetailedHTMLProps<
+		AnchorHTMLAttributes<HTMLAnchorElement>,
+		HTMLAnchorElement
+	> & { href?: HrefType }
 > = props => <a {...props} />
 ```
 

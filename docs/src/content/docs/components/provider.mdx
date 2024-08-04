@@ -18,7 +18,7 @@ import { AnotherReactRouterProvider } from "another-react-router"
 import { routes } from "another-react-router.config.ts"
 
 export function App() {
-  return <AnotherReactRouterProvider routes={routes} />
+	return <AnotherReactRouterProvider routes={routes} />
 }
 ```
 
@@ -29,7 +29,7 @@ import { AnotherReactRouterProvider } from "another-react-router"
 import { routes } from "another-react-router.config.ts"
 
 export function RouterProvider() {
-  return <AnotherReactRouterProvider routes={routes} />
+	return <AnotherReactRouterProvider routes={routes} />
 }
 ```
 
@@ -37,25 +37,25 @@ Even tho we recommend using **file based** routing with [CLI](/docs/cli) you can
 
 ```tsx title="/src/components/router.tsx" {8-18}
 import {
-  AnotherReactRouterProvider,
-  type RouteWithComponent,
+	AnotherReactRouterProvider,
+	type RouteWithComponent
 } from "another-react-router"
-import { HomePage, HomeLayout } from "@/routes/home-page"
+import { HomeLayout, HomePage } from "@/routes/home-page"
 import { VideoPage } from "@/routes/video-page"
 
 export function RouterProvider() {
-  const routes: RouteWithComponent[] = [
-    {
-      path: "/",
-      page: HomePage,
-      layout: HomeLayout,
-    },
-    {
-      path: "/video/[id]/",
-      page: VideoPage,
-      layout: HomeLayout,
-    },
-  ]
-  return <AnotherReactRouterProvider routes={routes} />
+	const routes: RouteWithComponent[] = [
+		{
+			path: "/",
+			page: HomePage,
+			layout: HomeLayout
+		},
+		{
+			path: "/video/[id]/",
+			page: VideoPage,
+			layout: HomeLayout
+		}
+	]
+	return <AnotherReactRouterProvider routes={routes} />
 }
 ```

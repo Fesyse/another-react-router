@@ -15,8 +15,9 @@ For example, a blog could include the following route `/src/routes/blog/[slug]/p
 
 ```tsx title="/src/routes/blog/[slug]/page.tsx"
 import { type PageProps } from "another-react-router"
+
 export default function Page({ params }: PageProps) {
-  return <div>My Post: {params.slug}</div>
+	return <div>My Post: {params.slug}</div>
 }
 ```
 
@@ -44,7 +45,7 @@ When using TypeScript, you can add types for `params` depending on your configur
 
 ```tsx title="/src/routes/blog/[slug]/page.tsx"
 export default function Page({ params }: { params: { slug: string } }) {
-  return <h1>My Page</h1>
+	return <h1>My Page</h1>
 }
 ```
 
@@ -52,8 +53,9 @@ Or just use type from package
 
 ```tsx title="/src/routes/blog/[slug]/page.tsx"
 import { type PageProps } from "another-react-router"
+
 export default function Page({ params }: PageProps) {
-  return <div>My Post: {params.slug}</div>
+	return <div>My Post: {params.slug}</div>
 }
 ```
 
