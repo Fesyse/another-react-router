@@ -1,6 +1,6 @@
 {
   "name": "another-react-router",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "description": "Another react router is a npm package, that allowes developers and users comfortable route between pages on their web applications",
   "main": "dist/browser/index.js",
   "module": "dist/browser/index.mjs",
