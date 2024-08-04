@@ -41,7 +41,7 @@ export default function Page() {
 Then run our cli to initialize router
 
 ```bash
-npx another-react-router init
+npx arr init
 ```
 
 Create RouterProvider component for your app
