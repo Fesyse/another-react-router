@@ -9,7 +9,7 @@ This project is inspired by [react-router](https://reactrouter.com/en/main) and 
 
 So why then dont use **react router** or **NEXT.js** then?
 
-The idea behind another react router to combine react router simpleness and NEXT.js file routing for react developers a better developer experience. It is also perfect choice for people that want to stay away from **RSC**, but want to try file based routing with blazingly fast bundler's like **vite**.
+The idea behind another react router to combine react router simpleness and NEXT.js file routing for developers a better DX. It is also perfect choice for people that want to stay away from **RSC**, but want to try file based routing with blazingly fast bundler's like **vite**.
 
 ## Features
 
@@ -29,7 +29,7 @@ There was a quite hard decision between **VitePress**, **Docusaurus** and **NEXT
 
 First of VitePress:
 
-- Does not use React (it will just be really funny if website wont use React, when package itself based on React)
+- Does not use React. Vue is not bad my any means, great tool overall but we dont feel like it
 - We are did not quite liked theme of site, and customizing it was really painfull
 
 Docusaurus:
@@ -43,6 +43,19 @@ NEXT.js:
 - RSC (even tho package does not support RSC, but we are really like this tool)
 
 </AccordionContent>
+</AccordionItem>
+
+<AccordionItem value="faq-2">
+	<AccordionTrigger>
+		Why use CLI for generating routes from routes directory?
+	</AccordionTrigger>
+	<AccordionContent>
+		Unlike **NEXT.js** we are using [CLI](/docs/cli) to generate routes in
+		config, that's because of some [Node.js](https://nodejs.com/) **path and
+		fs** packages that runs **only on Node.js runtime**. That means theres no
+		way to get routes from **routes directory** on browser runtime. Hope that
+		helps understanding this concept.
+	</AccordionContent>
 </AccordionItem>
 
 </Accordion>
