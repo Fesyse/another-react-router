@@ -1,5 +1,11 @@
 # another-react-router-app
 
+## 1.2.5
+
+### Patch Changes
+
+- b49843a: fix typo in README.md file's
+
 ## 1.2.4
 
 ### Patch Changes
