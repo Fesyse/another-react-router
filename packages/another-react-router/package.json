@@ -9,7 +9,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "bun lint && tsup src/browser/index.ts src/cli/index.ts --format cjs,esm --dts",
+    "build": "bun rimraf dist && bun lint && tsup src/browser/index.ts src/cli/index.ts --format cjs,esm --dts",
     "lint": "tsc",
     "arr": "bun run src/cli/index.ts",
     "changeset:release": "pnpm run build && changeset publish",
@@ -40,18 +40,19 @@
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
-    "@types/lodash.debounce": "^4.0.9",
-    "chokidar": "^3.6.0",
-    "commander": "^10.0.0",
-    "@types/react": "^18.3.1",
+    "@changesets/cli": "^2.27.7",
     "@types/bun": "^1.1.6",
     "@types/fs-extra": "^11.0.4",
-    "type-fest": "^4.21.0",
+    "@types/lodash.debounce": "^4.0.9",
+    "@types/react": "^18.3.1",
     "chalk": "^5.3.0",
+    "chokidar": "^3.6.0",
+    "commander": "^10.0.0",
     "lodash.debounce": "^4.0.8",
-    "@changesets/cli": "^2.27.7",
     "prettier": "^3.3.2",
+    "rimraf": "^6.0.1",
     "tsup": "^8.1.0",
+    "type-fest": "^4.21.0",
     "typescript": "^5.5.3"
   }
 }
