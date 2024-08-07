@@ -55,7 +55,7 @@ interface RouteWithModules {
   useOleg?: boolean
 }
 
-export * from "@/shared/get-routes-components"
+export * from "@/browser/get-routes-components"
 export {
   type InitRouterOptions,
   type Route,
