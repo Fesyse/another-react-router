@@ -71,7 +71,7 @@ Now your app is ready to go!
 
 ## Documentation
 
-See more informations on **DOCS SITE IS IN WIP**
+See more informations on <https://another-react-router.vercel.com>
 
 ## Changelog
 
