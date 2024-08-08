@@ -11,10 +11,11 @@ type Route = {
 
 const getHrefType = (routes: RawRoute[]) => {
   const types = routes
-    .map(route => (route as Route).path)
+    .map(route => ("path" in route ? route.path : undefined))
+    .filter(r => !!r)
     .map(type => {
       let withAngledBrackets = false
-      const splittedType = type
+      const splittedType = type!
         .split("/")
         .filter(type => type !== "")
         .map(type => {
@@ -24,6 +25,7 @@ const getHrefType = (routes: RawRoute[]) => {
           }
           return `/${type}`
         })
+      splittedType.unshift("/")
       if (withAngledBrackets) return "`" + splittedType.join("/") + "`"
       return "'" + splittedType.join("/") + "'"
     })
