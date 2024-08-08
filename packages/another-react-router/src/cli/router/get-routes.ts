@@ -42,17 +42,6 @@ const getRoutes: GetRoutes = options => {
   const routesPath = options.routesPath
   const originalRoutesPath =
     "originalRoutesPath" in options ? options.originalRoutesPath! : routesPath
-  /*
-  [
-    "page.tsx",
-    "layout.tsx",
-    "user": [
-      "id": [
-        "page.tsx"
-      ]
-    ]
-  ]
-  */
 
   const folders: string[] = []
   const routeFiles: RawFileRoute[] = fs

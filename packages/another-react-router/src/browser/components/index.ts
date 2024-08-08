@@ -7,6 +7,7 @@ type Params = Record<string, string | string[] | undefined>
 type PageProps = {
   params: Params
 }
+type LayoutProps = PageProps
 
 type PageComponent = FC<PageProps>
 type LayoutComponent = FC<PropsWithChildren<PageProps>>
@@ -22,6 +23,7 @@ type LinkComponent<THref extends string> = React.FC<
 export type {
   Params,
   PageProps,
+  LayoutProps,
   PageComponent,
   LayoutComponent,
   NotFoundComponent,

@@ -42,12 +42,15 @@ const isRouterPathMatcheWithCurrentPath = (
 
 const flatRoutes = (routes: Route[]): FlattenRoute[] => {
   return routes
-    .map(route =>
+    .map<FlattenRoute[]>(route =>
       "path" in route
         ? [
             {
-              ...route,
-              routes: undefined,
+              path: route.path,
+              page: route.page,
+              layout: route.layout,
+              "not-found": route["not-found"],
+              useOleg: route.useOleg,
             },
             ...flatRoutes(route.routes),
           ]

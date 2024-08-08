@@ -6,6 +6,7 @@ import { type FlattenRoute, type InitRouterOptions } from "@/browser"
 import { useParams } from "@/browser/hooks"
 import { useInitRouter } from "@/browser/hooks/use-init-router"
 import { flatRoutes, isRouterPathMatcheWithCurrentPath } from "@/browser/utils"
+import { Layouts, LayoutsProps } from "./layouts"
 
 const findRouteFromPath = (
   path: string,
@@ -40,13 +41,17 @@ const AnotherReactRouterProvider: React.FC<InitRouterOptions> = props => {
         ? isRouterPathMatcheWithCurrentPath(route.path, currentPath)
         : FontFaceSetLoadEvent
     )
-    // !("path" in route) is for typescript to be happy
-    if (!route || !("path" in route))
-      return setComponent(getNotFoundPage(currentPath, flattenRoutes))
+    if (!route) return setComponent(getNotFoundPage(currentPath, flattenRoutes))
 
+    const layoutsProps: LayoutsProps = {
+      route,
+      routes: props.routes,
+      flattenRoutes,
+      params,
+    }
     setComponent(
-      route.layout ? (
-        <route.layout params={params}>
+      !route.useOleg ? (
+        <Layouts {...layoutsProps}>
           {route.useOleg ? (
             <WithOleg>
               <route.page params={params} />
@@ -54,13 +59,11 @@ const AnotherReactRouterProvider: React.FC<InitRouterOptions> = props => {
           ) : (
             <route.page params={params} />
           )}
-        </route.layout>
-      ) : route.useOleg ? (
+        </Layouts>
+      ) : (
         <WithOleg>
           <route.page params={params} />
         </WithOleg>
-      ) : (
-        <route.page params={params} />
       )
     )
   }, [currentPath])

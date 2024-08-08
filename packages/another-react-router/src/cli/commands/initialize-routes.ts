@@ -53,12 +53,10 @@ export const initializeRoutes = new Command("init")
   .action(async (options: InitializeRoutesActionOptions) => {
     try {
       function initializeRoutes() {
-        const routesPath = path
-          .join(
-            options.cwd,
-            options.routes.endsWith("/") ? options.routes : options.routes + "/"
-          )
-          .replaceAll("\\", "/")
+        const routesPath = options.routes.endsWith("/")
+          ? options.routes
+          : options.routes + "/"
+
         const routes: RawRoute[] = getRoutes({
           routesPath,
           cwd: options.cwd,
