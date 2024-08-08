@@ -1,5 +1,11 @@
 # another-react-router-app
 
+## 1.3.0
+
+### Minor Changes
+
+- 92f8468: nested layouts
+
 ## 1.2.5
 
 ### Patch Changes
