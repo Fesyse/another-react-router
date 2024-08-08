@@ -48,12 +48,20 @@ export function RouterProvider() {
 		{
 			path: "/",
 			page: HomePage,
-			layout: HomeLayout
-		},
-		{
-			path: "/video/[id]/",
-			page: VideoPage,
-			layout: HomeLayout
+			layout: HomeLayout,
+			routes: [
+				{
+					path: "/video/",
+					page: VideoPage,
+					routes: [
+						{
+							path: "/video/[id]/",
+							page: VideoPage,
+							routes: []
+						}
+					]
+				}
+			]
 		}
 	]
 	return <AnotherReactRouterProvider routes={routes} />
