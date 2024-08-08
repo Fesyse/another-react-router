@@ -32,13 +32,18 @@ type Module<Key extends string, Type> =
   | Record<Key, Type>
   | Record<"default", Type>
 
-interface RawRoute {
-  path: string
-  page: string
-  layout?: string
-  "not-found"?: string
-  useOleg?: boolean
-}
+type RawRoute =
+  | {
+      routes: RawRoute[]
+    }
+  | {
+      path: string
+      page: string
+      layout?: string
+      "not-found"?: string
+      useOleg?: boolean
+      routes: RawRoute[]
+    }
 interface Route {
   path: string
   page: PageComponent

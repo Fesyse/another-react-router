@@ -14,5 +14,8 @@
       "@/*": ["./src/*"]
     }
   },
-  "exclude": ["another-react-router.config.ts"]
+  "exclude": [
+    "another-react-router.config.ts",
+    "./src/cli/router/get-routes.ts"
+  ]
 }

@@ -15,7 +15,8 @@
     "changeset:release": "pnpm run build && changeset publish",
     "pub:beta": "bun run build && pnpm publish --no-git-checks --access public --tag beta",
     "pub:next": "bun run build && pnpm publish --no-git-checks --access public --tag next",
-    "pub:release": "bun run build && pnpm publish --access public"
+    "pub:release": "bun run build && pnpm publish --access public",
+    "test": "vitest"
   },
   "bin": {
     "arr": "dist/cli/index.js"
@@ -53,6 +54,7 @@
     "rimraf": "^6.0.1",
     "tsup": "^8.1.0",
     "type-fest": "^4.21.0",
-    "typescript": "^5.5.3"
+    "typescript": "^5.5.3",
+    "vitest": "^2.0.5"
   }
 }
