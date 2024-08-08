@@ -5,25 +5,25 @@ export * from "./provider"
 type Params = Record<string, string | string[] | undefined>
 
 type PageProps = {
-	params: Params
+  params: Params
 }
 
 type PageComponent = FC<PageProps>
 type LayoutComponent = FC<PropsWithChildren<PageProps>>
 type NotFoundComponent = FC
 
-type LinkComponent<THref extends string = string> = React.FC<
-	React.DetailedHTMLProps<
-		React.AnchorHTMLAttributes<HTMLAnchorElement>,
-		HTMLAnchorElement
-	> & { href?: THref }
+type LinkComponent<THref extends string> = React.FC<
+  React.DetailedHTMLProps<
+    React.AnchorHTMLAttributes<HTMLAnchorElement>,
+    HTMLAnchorElement
+  > & { href?: THref }
 >
 
 export type {
-	Params,
-	PageProps,
-	PageComponent,
-	LayoutComponent,
-	NotFoundComponent,
-	LinkComponent
+  Params,
+  PageProps,
+  PageComponent,
+  LayoutComponent,
+  NotFoundComponent,
+  LinkComponent,
 }

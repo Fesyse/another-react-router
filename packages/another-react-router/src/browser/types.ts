@@ -44,7 +44,20 @@ type RawRoute =
       useOleg?: boolean
       routes: RawRoute[]
     }
-interface Route {
+type Route =
+  | {
+      routes: Route[]
+    }
+  | {
+      path: string
+      page: PageComponent
+      layout?: LayoutComponent
+      "not-found"?: NotFoundComponent
+      useOleg?: boolean
+      routes: Route[]
+    }
+
+interface FlattenRoute {
   path: string
   page: PageComponent
   layout?: LayoutComponent
@@ -52,13 +65,18 @@ interface Route {
   useOleg?: boolean
 }
 
-interface RouteWithModules {
-  path: string
-  page: Promise<Module<"Page", PageComponent>>
-  layout?: Promise<Module<"Layout", LayoutComponent>>
-  "not-found"?: Promise<Module<"NotFoundPage", NotFoundComponent>>
-  useOleg?: boolean
-}
+type RouteWithModules =
+  | {
+      path: string
+      page: Promise<Module<"Page", PageComponent>>
+      layout?: Promise<Module<"Layout", LayoutComponent>>
+      "not-found"?: Promise<Module<"NotFoundPage", NotFoundComponent>>
+      useOleg?: boolean
+      routes: RouteWithModules[]
+    }
+  | {
+      routes: RouteWithModules[]
+    }
 
 export * from "@/browser/get-routes-components"
 export {
@@ -67,5 +85,6 @@ export {
   type RawRoute,
   type RouteWithModules,
   type FileType,
+  type FlattenRoute,
   FILE_TYPE,
 }

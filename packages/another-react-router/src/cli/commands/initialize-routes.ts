@@ -117,7 +117,6 @@ export const initializeRoutes = new Command("init")
       const debouncedInitializeRoutes = debounce(initializeRoutes, 500)
 
       const watcher = watch(options.routes)
-
       watcher.on("all", debouncedInitializeRoutes)
     } catch (err) {
       handleCliError(err)
