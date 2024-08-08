@@ -18,6 +18,11 @@ type InitializeRoutesActionOptions = {
   ts: boolean
 }
 
+export const getRouteAsString = (route: RawRoute): string =>
+  "page" in route
+    ? `{path:"${route.path}",page:import('./${route.page}')${route.layout ? `,layout:import('./${route.layout}')` : ""}${route["not-found"] ? `,"not-found":import('./${route["not-found"]}')` : ""}${route?.useOleg ? `,useOleg:true` : ""},routes:[${route.routes.map(_route => getRouteAsString(_route)).join("/")}]}`
+    : `{routes:[${route.routes.map(_route => getRouteAsString(_route)).join("/")}]}`
+
 export const initializeRoutes = new Command("init")
   .option(
     "-w, --watch",
@@ -48,39 +53,39 @@ export const initializeRoutes = new Command("init")
   .action(async (options: InitializeRoutesActionOptions) => {
     try {
       function initializeRoutes() {
-        const routesPath = path
-          .join(
-            options.cwd,
-            options.routes.endsWith("/") ? options.routes : options.routes + "/"
-          )
-          .replaceAll("\\", "/")
+        const routesPath = options.routes.endsWith("/")
+          ? options.routes
+          : options.routes + "/"
+
         const routes: RawRoute[] = getRoutes({
           routesPath,
           cwd: options.cwd,
-        }).map(route => ({
-          path: route.path,
-          page: path.relative(options.config, route.page).replaceAll("\\", "/"),
-          layout: route.layout
-            ? path.relative(options.config, route.layout).replaceAll("\\", "/")
-            : undefined,
-          "not-found": route["not-found"]
-            ? path
-                .relative(options.config, route["not-found"])
-                .replaceAll("\\", "/")
-            : undefined,
-          useOleg: route.useOleg ? true : undefined,
-        }))
+        }).map(route =>
+          "page" in route
+            ? {
+                path: route.path,
+                page: path
+                  .relative(options.config, route.page)
+                  .replaceAll("\\", "/"),
+                layout: route.layout
+                  ? path
+                      .relative(options.config, route.layout)
+                      .replaceAll("\\", "/")
+                  : undefined,
+                "not-found": route["not-found"]
+                  ? path
+                      .relative(options.config, route["not-found"])
+                      .replaceAll("\\", "/")
+                  : undefined,
+                useOleg: route.useOleg ? true : undefined,
+                routes: route.routes,
+              }
+            : { routes: route.routes }
+        )
         const hrefType = getHrefType(routes)
 
         const routesAsString =
-          "[" +
-          routes
-            .map(
-              route =>
-                `{path:"${route.path}",page:import('./${route.page}')${route.layout ? `,layout:import('./${route.layout}')` : ""}${route["not-found"] ? `,"not-found":import('./${route["not-found"]}')` : ""}${route?.useOleg ? `,useOleg:true` : ""}}`
-            )
-            .join(",") +
-          "]"
+          "[" + routes.map(getRouteAsString).join(",") + "]"
 
         const configPath = path.join(
           options.cwd,
@@ -107,10 +112,9 @@ export const initializeRoutes = new Command("init")
       }
 
       if (!options.watch) return initializeRoutes()
-      const debouncedInitializeRoutes = debounce(initializeRoutes, 1000)
+      const debouncedInitializeRoutes = debounce(initializeRoutes, 500)
 
       const watcher = watch(options.routes)
-
       watcher.on("all", debouncedInitializeRoutes)
     } catch (err) {
       handleCliError(err)

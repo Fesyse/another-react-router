@@ -1,10 +1,10 @@
 import { useContext } from "react"
-import { RouterContext } from "../components/context"
+import { RouterContext } from "@/browser/components/context"
 
 const usePathname = () => {
-	const { pathname } = useContext(RouterContext)!
+  const { pathname } = useContext(RouterContext)!
 
-	return pathname
+  return pathname
 }
 
 export { usePathname }
