@@ -2,15 +2,16 @@ import React, { useEffect, useState } from "react"
 import { RouterContextProvider } from "./context"
 import { NotFound } from "./not-found"
 import { WithOleg } from "./with-oleg"
-import { type InitRouterOptions, type Route } from "@/browser"
+import { type FlattenRoute, type InitRouterOptions } from "@/browser"
 import { useParams } from "@/browser/hooks"
 import { useInitRouter } from "@/browser/hooks/use-init-router"
-import { isRouterPathMatcheWithCurrentPath } from "@/browser/utils"
+import { flatRoutes, isRouterPathMatcheWithCurrentPath } from "@/browser/utils"
+import { Layouts, LayoutsProps } from "./layouts"
 
 const findRouteFromPath = (
   path: string,
-  routes: Route[]
-): Route | undefined => {
+  routes: FlattenRoute[]
+): FlattenRoute | undefined => {
   for (const route of routes) {
     if (isRouterPathMatcheWithCurrentPath(route.path, path)) return route
     else continue
@@ -18,7 +19,10 @@ const findRouteFromPath = (
   return undefined
 }
 
-const getNotFoundPage = (path: string, routes: Route[]): React.ReactNode => {
+const getNotFoundPage = (
+  path: string,
+  routes: FlattenRoute[]
+): React.ReactNode => {
   const route = findRouteFromPath(path, routes)
   const NotFoundComponent = route?.["not-found"] ?? NotFound
   return <NotFoundComponent />
@@ -29,16 +33,25 @@ const AnotherReactRouterProvider: React.FC<InitRouterOptions> = props => {
   const params = useParams()
 
   const [currentPath, setCurrentPath] = useInitRouter(props)
+  const flattenRoutes = flatRoutes(props.routes)
 
   useEffect(() => {
-    const route = props.routes.find(route =>
-      isRouterPathMatcheWithCurrentPath(route.path, currentPath)
+    const route = flattenRoutes.find(route =>
+      "path" in route
+        ? isRouterPathMatcheWithCurrentPath(route.path, currentPath)
+        : FontFaceSetLoadEvent
     )
-    if (!route) return setComponent(getNotFoundPage(currentPath, props.routes))
+    if (!route) return setComponent(getNotFoundPage(currentPath, flattenRoutes))
 
+    const layoutsProps: LayoutsProps = {
+      route,
+      routes: props.routes,
+      flattenRoutes,
+      params,
+    }
     setComponent(
-      route.layout ? (
-        <route.layout params={params}>
+      !route.useOleg ? (
+        <Layouts {...layoutsProps}>
           {route.useOleg ? (
             <WithOleg>
               <route.page params={params} />
@@ -46,13 +59,11 @@ const AnotherReactRouterProvider: React.FC<InitRouterOptions> = props => {
           ) : (
             <route.page params={params} />
           )}
-        </route.layout>
-      ) : route.useOleg ? (
+        </Layouts>
+      ) : (
         <WithOleg>
           <route.page params={params} />
         </WithOleg>
-      ) : (
-        <route.page params={params} />
       )
     )
   }, [currentPath])
@@ -61,7 +72,7 @@ const AnotherReactRouterProvider: React.FC<InitRouterOptions> = props => {
     <RouterContextProvider
       pathname={currentPath}
       setPathname={setCurrentPath}
-      routesPathnames={props.routes.map(route => route.path)}
+      routesPathnames={flattenRoutes.map(route => route.path)}
     >
       {component}
     </RouterContextProvider>

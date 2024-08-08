@@ -32,14 +32,32 @@ type Module<Key extends string, Type> =
   | Record<Key, Type>
   | Record<"default", Type>
 
-interface RawRoute {
-  path: string
-  page: string
-  layout?: string
-  "not-found"?: string
-  useOleg?: boolean
-}
-interface Route {
+type RawRoute =
+  | {
+      routes: RawRoute[]
+    }
+  | {
+      path: string
+      page: string
+      layout?: string
+      "not-found"?: string
+      useOleg?: boolean
+      routes: RawRoute[]
+    }
+type Route =
+  | {
+      routes: Route[]
+    }
+  | {
+      path: string
+      page: PageComponent
+      layout?: LayoutComponent
+      "not-found"?: NotFoundComponent
+      useOleg?: boolean
+      routes: Route[]
+    }
+
+interface FlattenRoute {
   path: string
   page: PageComponent
   layout?: LayoutComponent
@@ -47,20 +65,26 @@ interface Route {
   useOleg?: boolean
 }
 
-interface RouteWithModules {
-  path: string
-  page: Promise<Module<"Page", PageComponent>>
-  layout?: Promise<Module<"Layout", LayoutComponent>>
-  "not-found"?: Promise<Module<"NotFoundPage", NotFoundComponent>>
-  useOleg?: boolean
-}
+type RouteWithModules =
+  | {
+      path: string
+      page: Promise<Module<"Page", PageComponent>>
+      layout?: Promise<Module<"Layout", LayoutComponent>>
+      "not-found"?: Promise<Module<"NotFoundPage", NotFoundComponent>>
+      useOleg?: boolean
+      routes: RouteWithModules[]
+    }
+  | {
+      routes: RouteWithModules[]
+    }
 
-export * from "@/shared/get-routes-components"
+export * from "@/browser/get-routes-components"
 export {
   type InitRouterOptions,
   type Route,
   type RawRoute,
   type RouteWithModules,
   type FileType,
+  type FlattenRoute,
   FILE_TYPE,
 }

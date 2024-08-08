@@ -4,16 +4,11 @@ import { FILE_TYPE, FileType, type RawRoute } from "@/browser"
 
 const supportedFileExtensions = ["tsx", "jsx", "js", "ts"] as const
 
-type NeccessaryRoutesOptions = {
+type GetRoutesOptions = {
+  originalRoutesPath?: string
   routesPath: string
   cwd: string
 }
-type GetRoutesOptions =
-  | (NeccessaryRoutesOptions & {
-      prevRoutes: RawRoute[]
-      originalRoutesPath: string
-    })
-  | NeccessaryRoutesOptions
 
 type GetRoutes = (options: GetRoutesOptions) => RawRoute[]
 interface RawFileRoute {
@@ -43,15 +38,14 @@ function getFileType(fileName: string): FileType | undefined {
 }
 
 const getRoutes: GetRoutes = options => {
-  const routes = "prevRoutes" in options ? options.prevRoutes : []
+  const routes: RawRoute[] = []
   const routesPath = options.routesPath
   const originalRoutesPath =
-    "originalRoutesPath" in options ? options.originalRoutesPath : routesPath!
-  nodePath.sep
+    "originalRoutesPath" in options ? options.originalRoutesPath! : routesPath
 
   const folders: string[] = []
   const routeFiles: RawFileRoute[] = fs
-    .readdirSync(routesPath!, { withFileTypes: true })
+    .readdirSync(routesPath, { withFileTypes: true })
     .map(file => {
       if (file.isDirectory()) {
         if (file.name.startsWith("_")) return
@@ -64,8 +58,10 @@ const getRoutes: GetRoutes = options => {
       if (!fileType) return undefined
       if (fileType !== FILE_TYPE.PAGE) return { fileType, file }
 
-      //@ts-expect-error asd
-      const content = fs.readFileSync(file.path + file.name).toString()
+      const content = fs
+        // @ts-expect-error path property is included in file
+        .readFileSync(nodePath.join(file.path, file.name))
+        .toString()
 
       const useOleg =
         content.includes('"use oleg"') || content.includes("'use oleg'")
@@ -74,41 +70,46 @@ const getRoutes: GetRoutes = options => {
     })
     .filter(route => !!route)
 
+  // now we are creating new route
+  const newRoute: Partial<RawRoute> = {
+    // settings default children routes to empty array
+    routes: [],
+  }
+
   // making sure there always page.(js/ts/jsx/tsx) file - otherwise skipping this route
   if (routeFiles.some(file => file.fileType === FILE_TYPE.PAGE)) {
-    // now we are creating new route
-    const newRoute: Partial<RawRoute> = {}
-
-    // @ts-expect-error asd
+    // @ts-expect-error path property is included in file
     const path = routeFiles[0]!.file.path as string
     const newRoutePath =
       "/" + path.slice(originalRoutesPath.length, path.length - 1)
+    // @ts-expect-error
     newRoute.path =
       newRoutePath.length === 1 ? newRoutePath : newRoutePath + "/"
-    routeFiles.map(routeFile => {
-      if (routeFile?.useOleg) {
-        newRoute.useOleg = true
-      }
 
+    routeFiles.map(routeFile => {
+      // @ts-expect-error
+      if (routeFile?.useOleg) newRoute.useOleg = true
+
+      // @ts-expect-error
       newRoute[routeFile.fileType] = nodePath
         .join(path, routeFile.file.name)
         .replaceAll("\\", "/")
     })
-
-    routes.push(newRoute as RawRoute)
   }
 
   // then mapping through all folders in directory
-  folders
-    .map(folder => {
-      return getRoutes({
+  const childrenRoutes = folders
+    .map(folder =>
+      getRoutes({
         ...options,
         routesPath: routesPath + folder + "/",
-        prevRoutes: routes,
         originalRoutesPath,
       })
-    })
-    .flatMap(routes => routes)
+    )
+    .flat()
+
+  newRoute.routes = childrenRoutes
+  routes.push(newRoute as RawRoute)
 
   return routes
 }
