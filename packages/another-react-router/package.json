@@ -12,7 +12,7 @@
     "build": "bun rimraf dist && bun lint && tsup src/browser/index.ts src/cli/index.ts --format cjs,esm --dts",
     "lint": "tsc",
     "arr": "bun run src/cli/index.ts",
-    "changeset:release": "pnpm run build && changeset publish",
+    "changeset:release": "bun run build && changeset publish",
     "pub:beta": "bun run build && pnpm publish --no-git-checks --access public --tag beta",
     "pub:next": "bun run build && pnpm publish --no-git-checks --access public --tag next",
     "pub:release": "bun run build && pnpm publish --access public",
