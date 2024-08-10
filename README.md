@@ -1,6 +1,8 @@
 # Another react router
 
-Another react router is a npm package, that allowes developers and users comfortable route between pages on their web applications built with `react` library.
+[![npm version](https://img.shields.io/npm/v/another-react-router)](https://www.npmjs.com/package/another-react-router)
+[![npm downloads](https://img.shields.io/npm/dt/another-react-router)](https://www.npmjs.com/package/another-react-router)
+![img](/public/og-image.png)
 
 ## Installation
 
