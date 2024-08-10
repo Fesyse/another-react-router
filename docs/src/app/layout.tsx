@@ -3,7 +3,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next"
 import type { Metadata, Viewport } from "next"
 import { Comfortaa } from "next/font/google"
 import { PropsWithChildren } from "react"
-import { siteConfig } from "@/config/site"
+import { siteMetadata } from "@/config/site"
 import { Footer } from "@/components/footer"
 import { Header } from "@/components/header"
 import { ThemeProvider } from "@/components/theme-provider"
@@ -16,7 +16,7 @@ const comfortaa = Comfortaa({
 	variable: "--comfortaa-font-family"
 })
 
-export const metadata: Metadata = siteConfig
+export const metadata: Metadata = siteMetadata
 export const viewport: Viewport = {
 	themeColor: [
 		{ media: "(prefers-color-scheme: light)", color: "white" },
