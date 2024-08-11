@@ -12,7 +12,7 @@ type Route = {
 const getHrefType = (routes: RawRoute[]) => {
   const types = routes
     .map(route => ("path" in route ? route.path : undefined))
-    .filter(r => !!r)
+    .filter(r => r)
     .map(type => {
       let withAngledBrackets = false
       const splittedType = type!

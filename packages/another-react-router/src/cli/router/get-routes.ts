@@ -71,7 +71,7 @@ const getRoutes: GetRoutes = options => {
     .filter(route => !!route)
 
   // now we are creating new route
-  const newRoute: Partial<RawRoute> = {
+  const newRoute: RawRoute = {
     // settings default children routes to empty array
     routes: [],
   }
@@ -82,10 +82,10 @@ const getRoutes: GetRoutes = options => {
     const path = routeFiles[0]!.file.path as string
     const newRoutePath =
       "/" + path.slice(originalRoutesPath.length, path.length - 1)
+
     // @ts-expect-error
     newRoute.path =
       newRoutePath.length === 1 ? newRoutePath : newRoutePath + "/"
-
     routeFiles.map(routeFile => {
       // @ts-expect-error
       if (routeFile?.useOleg) newRoute.useOleg = true
@@ -109,7 +109,7 @@ const getRoutes: GetRoutes = options => {
     .flat()
 
   newRoute.routes = childrenRoutes
-  routes.push(newRoute as RawRoute)
+  routes.push(newRoute)
 
   return routes
 }

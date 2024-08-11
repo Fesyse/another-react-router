@@ -29,7 +29,7 @@ export const getLayouts = (
       // @ts-expect-error below we checked if path is in route
       .map(route => [route.layout, ...getLayouts(route.routes, routePath)])
       .flat()
-      .filter(l => !!l)
+      .filter(l => l)
   )
 }
 
