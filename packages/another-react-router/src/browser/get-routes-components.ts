@@ -1,5 +1,9 @@
 import { type Route, type RouteWithModules } from "@/browser/"
 
+/**
+ * This function is used in `config` file to get all routes from generated `rawRoutes`,
+ * so its not usefull in other scenarios
+ */
 const getRoutesComponents = (routes: RouteWithModules[]): Promise<Route[]> => {
   return Promise.all(
     routes.map<Promise<Route>>(async route => {

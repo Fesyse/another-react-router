@@ -39,7 +39,7 @@ function Navigation() {
 	const router = useRouter()
 
 	return (
-		<div className="navigation">
+		<nav className="navigation">
 			<Breadcrumbs pathname={router.pathname} />
 			<Button onClick={() => router.push("/home")}>Home</Button>
 			<Button onClick={() => router.push("/about")}>About</Button>
@@ -47,7 +47,7 @@ function Navigation() {
 			<Button onClick={() => router.back()}>Back</Button>
 			<Button onClick={() => router.forward()}>Forward</Button>
 			<Button onClick={() => router.refresh()}>Refresh</Button>
-		</div>
+		</nav>
 	)
 }
 ```
