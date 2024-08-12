@@ -21,13 +21,13 @@ Create directory where all of your routes will be located
 for example:
 
 ```json
-[
-  "src": [
+{
+  "src": {
     "routes": [
       "page.tsx"
     ]
-  ],
-]
+  },
+}
 ```
 
 Create a file with name `page.tsx` and add the following code:

@@ -4,8 +4,7 @@ export const siteConfig = {
 	name: "Another react router",
 	url: "https://another-react-router.vercel.app",
 	author: "Fesyse",
-	description:
-		"Another react router is a npm package, that allowes developers and users comfortable route between pages on their web applications.",
+	description: "Fast. File-based. Router.",
 	links: {
 		github: "https://github.com/fesyse/another-react-router/"
 	},
@@ -25,7 +24,7 @@ export const siteMetadata: Metadata = {
 		title: "Another react router",
 		description: siteConfig.description,
 		images: [siteConfig.ogImage],
-		creator: "@shadcn"
+		creator: "@fesyse"
 	},
 	authors: {
 		name: "Another react router team",

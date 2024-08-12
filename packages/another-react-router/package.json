@@ -1,7 +1,7 @@
 {
   "name": "another-react-router",
   "version": "1.3.0",
-  "description": "Another react router is a npm package, that allowes developers and users comfortable route between pages on their web applications",
+  "description": "Fast. File-based. Router.",
   "main": "dist/browser/index.js",
   "module": "dist/browser/index.mjs",
   "types": "dist/browser/index.d.ts",
@@ -15,7 +15,7 @@
     "changeset:release": "bun run build && changeset publish",
     "pub:beta": "bun run build && pnpm publish --no-git-checks --access public --tag beta",
     "pub:next": "bun run build && pnpm publish --no-git-checks --access public --tag next",
-    "pub:release": "bun run build && pnpm publish --access public",
+    "pub:release": "bun run build && pnpm publish --access public --tag latest",
     "test": "vitest"
   },
   "bin": {
@@ -28,7 +28,9 @@
   },
   "keywords": [
     "router",
-    "react"
+    "react",
+    "file-based",
+    "files"
   ],
   "author": "fesyse",
   "license": "MIT",

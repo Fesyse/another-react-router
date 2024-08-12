@@ -22,7 +22,7 @@ const homeFeatures: HomeFeature[] = [
 	{
 		title: "Lightweight",
 		description:
-			"Our package does not use any dependencies (except for dev one's), and the codebase is not that big, so you dont need to worry about performance.",
+			"Our package does not use any dependencies (except for dev one's) under the hood, and the codebase is not that big, so you dont need to worry about performance.",
 		icon: <Zap />
 	},
 	{
@@ -50,23 +50,20 @@ export default function Home() {
 	return (
 		<div className="container md:mt-20 mt-10 relative flex flex-col items-center gap-2">
 			<h1 className="text-center lg:text-6xl md:text-5xl text-3xl font-bold">
-				<Balancer>Another react router</Balancer>
+				<Balancer>{siteConfig.name}</Balancer>
 			</h1>
 			<h2 className="text-center text-base sm:text-lg md:text-xl text-foreground/50 max-w-[40rem] mx-auto">
-				<Balancer>
-					is a npm package, that allowes developers and users comfortable route
-					between pages on their web applications.
-				</Balancer>
+				<Balancer>{siteConfig.description}</Balancer>
 			</h2>
 			<div className="my-4 md:my-10 flex gap-1 items-center p-2 max-[400px]:text-[0.885rem] md:text-lg md:p-4 bg-muted/50 rounded-lg lg:w-[28rem] md:w-[24rem] w-[20rem] max-[400px]:w-full max-[400px]:justify-center text-nowrap  overflow-hidden relative text-base dark:border-border border-border/50 border-2">
-				<span className="font-bold hidden min-[400px]:inline">npm</span>
-				<span className="text-foreground/[0.533] hidden min-[400px]:inline">
+				<span className="font-bold">npm</span>
+				<span className="text-foreground/[0.533]">
 					install another-react-router
 				</span>
-				<span className="font-bold min-[400px]:hidden inline">bun</span>
+				{/* <span className="font-bold min-[400px]:hidden inline">bun</span>
 				<span className="text-foreground/[0.533] min-[400px]:hidden inline">
 					add another-react-router
-				</span>
+				</span> */}
 				<CopyCommandButton
 					className="w-7 h-7 absolute right-2 top-1/2 -translate-y-1/2 max-[400px]:hidden"
 					iconClassName="w-5 h-5"
