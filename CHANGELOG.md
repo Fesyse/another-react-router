@@ -1,5 +1,12 @@
 # another-react-router-app
 
+## 1.3.1
+
+### Patch Changes
+
+- 8f95c2f: new description
+  jsDoc for hooks
+
 ## 1.3.0
 
 ### Minor Changes
