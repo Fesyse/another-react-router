@@ -73,7 +73,7 @@ Now your app is ready to go!
 
 ## Documentation
 
-See more informations on <https://another-react-router.vercel.com>
+See more informations on <https://another-react-router.vercel.app>
 
 ## Changelog
 
